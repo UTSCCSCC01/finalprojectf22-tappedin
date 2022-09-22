@@ -1,14 +1,35 @@
 {
-  "name": "src",
+  "name": "tappedin-api",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/bin/www.js"
+    "prestart": "babel ./src --out-dir build",
+    "start": "node ./build/bin/www",
+    "dev": "nodemon --exec babel-node ./src/bin/www",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint --fix ./src",
+    "pretty": "prettier --write src/*.js",
+    "postpretty": "npm run lint:fix"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.0.2",
     "express": "~4.16.1",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-node": "^0.0.1-security",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "eslint": "^8.23.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1"
   }
 }
