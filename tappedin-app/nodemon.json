@@ -1,0 +1,10 @@
+{
+    "watch": [
+      "package.json",
+      "nodemon.json",
+      ".eslintrc.json",
+      ".prettierrc",
+      "src/"
+    ],
+    "verbose": true
+}
