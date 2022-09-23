@@ -1,0 +1,20 @@
+# Competition
+TappedIn allows users to share information with each other, including social media accounts, links to personal websites/projects, etc. with just a tap using NFC technology. The main draw of our application comes from the speed and convenience of simply tapping your phone onto an NFC tag to bring up another user's TappedIn page, so our main competition will come from other applications which make use of similar technology.
+
+## Linq
+### Website: https://buy.linqapp.com/
+Linq offers "digital business cards for modern networking", and their products include the aforementioned cards, wristbands, and small tags that allow the user to share contact info, social profiles, payment profiles (CashApp, Venmo, PayPal), photos, videos, websites, and more via NFC technology. Users can build their own custom profiles accessible to other people via just a tap of their phones, or via scanning a QR code for older devices without NFC support. Additionally, as a very business-oriented product, Linq for Teams exists to allow for organization and coordination of Linq profiles among all employees of a business.
+
+Our product differs due to a broader focus of audience. We aim to offer TappedIn to students, people searching for jobs, recruiters, etc. as well as those currently employed by businesses. We believe that Linq simply views their product as an extension of the traditional sharing of business cards at a meeting, while our product recognizes the potential of NFC technology in other scenarios, like sharing socials with friends. Furthermore, TappedIn can be used as a social network itself, allowing users to add each other as friends and share posts. We hope this will allow us to capture a greater audience than Linq.
+
+## Messagenes
+### Website: https://www.messagenes.com/index
+Messagenes offers NFC/QR code stickers that allow quick access to social media channels like Instagram, Facebook, YouTube, etc. They also offer an "NFC Hub" that allows for a user to remotely manage their NFC tags and change where they direct to on the fly. Through these tags, they also offer a service called "activity platforms", which allow users who scan Messagenes NFC tags to participate in an "activity": examples given on their website include "Restaurant Menu Activity" (scanning to access a menu), "Hotel Activity" (scanning to learn about room services), or "Business Activity" (scanning to share documents to a client in an organized way).
+
+Like Linq, Messagenes seems to primarily focus on business owners as their target audience, offering not just their NFC tags but also services to go along with it that aid in the running of a business. As such, much of the comparisons made above between Linq and TappedIn also apply here. To add to this, Messagenes is a Europe-based company (Tarragona, Spain), which may further reduce the overlap between our target audiences.
+
+## Wave Tag
+### Website: https://www.wavetag.co.uk/
+The eponymous Wave Tag, when tapped onto another phone, uses NFC technology to share "custom links, business, contact, or social media profiles" to the recipient. Their website provides a list of what information can be shared, and it includes common social media networks (Facebook, Instagram, Twitter, etc.), music streaming services (Spotify, Soundcloud, etc.) to share you work with others, phone contact info, and more.
+
+The scope of this product is more limited than TappedIn, as it's essentially just a vehicle to quickly share links with other users. They likely focused on making a simple, easy to understand product that requires very little setup to get working. In comparison, TappedIn offers more options, such as creating a profile/biography in-app, as well as the ability to network with other users of our product. We hope that our product will attract users who want a more customizable/personalizable experience.
