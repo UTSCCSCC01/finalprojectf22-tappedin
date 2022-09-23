@@ -1,0 +1,4 @@
+# Definition of "Done"
+Each user story will have an accompanying testing rubric that defines the tests that the feature must pass before it is considered "done". This testing rubric will be created alongside the user story, and may be adjusted/reviewed as requirements change, or as the user story is added to the backlog for the current spring. Additionally, a feature should pass all existing unit tests to be considered "done", i.e; the addition of the feature does not cause existing tests to fail in some way.
+
+Once the above conditions are passed, the pull request must be reviewed and approved by at least 1 other contributor before it can be merged with the development branch.
