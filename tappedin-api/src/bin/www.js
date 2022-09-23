@@ -12,13 +12,16 @@ dotenv.config();
 /**
  * Normalize a port into a number, string, or false.
  */
-const normalizePort = (val) => {
+const normalizePort = (val) =>
+{
     const port = parseInt(val, 10);
-    if (Number.isNaN(port)) {
+    if (Number.isNaN(port))
+    {
         // named pipe
         return val;
     }
-    if (port >= 0) {
+    if (port >= 0)
+    {
         // port number
         return port;
     }
@@ -39,13 +42,16 @@ const server = http.createServer(app);
 /**
  * Event listener for HTTP server "error" event.
  */
-const onError = (error) => {
-    if (error.syscall !== "listen") {
+const onError = (error) =>
+{
+    if (error.syscall !== "listen")
+    {
         throw error;
     }
     const bind = typeof port === "string" ? `Pipe ${port}` : `Port ${port}`;
     // handle specific listen errors with friendly messages
-    switch (error.code) {
+    switch (error.code)
+    {
     case "EACCES":
         console.error(`${bind} requires elevated privileges`);
         process.exit(1);
@@ -62,7 +68,8 @@ const onError = (error) => {
 /**
  * Event listener for HTTP server "listening" event.
  */
-const onListening = () => {
+const onListening = () =>
+{
     const addr = server.address();
     const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
     debug(`Listening on ${bind}`);
