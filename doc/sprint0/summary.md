@@ -16,7 +16,7 @@ To build a centralized web application for **sharing basic-notable information**
 
 ## The Key Scenarios
 
-**Beth**, being the "keep it in" type, is entering the University of Toronto Scarborough campus in Fall 2023. None of her friends are transferring in as well. She is looking to establish new friendships and meeting new people in the upcoming Frosh event. It is difficult for her to share her interests, hobbies, and information about herself. **She needs an easy way to give people a glimpse of who she is.**
+**Beth**, being the extroverted type, is entering the University of Toronto Scarborough campus in Fall 2023. None of her friends are transferring in as well. She is looking to establish new friendships and meeting new people in the upcoming Frosh event. It is tedious for her to share her interests, hobbies, and information about herself. **She needs an easy way to give people a glimpse of who she is.**
 
 **Beth**, studying Computer Science, is looking to pursue her career in Software Engineering. With a bit of experience by joining a coding club back in high school, she is looking to join Hack the Valley to talk with various recruiter for potential internship opportunities. **She needs a quick way to share information about herself (e.g., Resume, Experiences, etc...) in order to network herself.**
 
