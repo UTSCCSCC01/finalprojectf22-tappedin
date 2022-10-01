@@ -1,7 +1,7 @@
 # Sprint 0 Marking Scheme
 
-**Team Name:** [Team Name]  
-**Github:** [GitHub Repo Link]  
+**Team Name:** tappedin
+**Github:** https://github.com/UTSCCSCC01/finalprojectf22-tappedin 
 
 ---
 ## summary.md (Max 8 marks)
