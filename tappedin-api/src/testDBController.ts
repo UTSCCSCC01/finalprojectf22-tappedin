@@ -2,7 +2,7 @@ import * as mongo from "mongodb";
 
 export default async function addLike()
 {
-    const uri = process.env.MONGO_CONNECTION_STRING;
+    const uri = process.env.MONGO_CONNECTION_STRING || "";
     const client = new mongo.MongoClient(uri);
     try
     {

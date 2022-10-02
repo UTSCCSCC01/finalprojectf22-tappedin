@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 import debug from "debug";
-import http from "http";
+import * as http from "http";
 import * as dotenv from "dotenv";
 import app from "../app";
 
@@ -12,7 +12,7 @@ dotenv.config();
 /**
  * Normalize a port into a number, string, or false.
  */
-const normalizePort = (val) =>
+const normalizePort = (val: string) =>
 {
     const port = parseInt(val, 10);
     if (Number.isNaN(port))
@@ -42,7 +42,7 @@ const server = http.createServer(app);
 /**
  * Event listener for HTTP server "error" event.
  */
-const onError = (error) =>
+const onError = (error: NodeJS.ErrnoException) =>
 {
     if (error.syscall !== "listen")
     {
@@ -71,12 +71,13 @@ const onError = (error) =>
 const onListening = () =>
 {
     const addr = server.address();
-    const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
+    const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr!.port}`;
     debug(`Listening on ${bind}`);
 };
 /**
  * Listen on provided port, on all network interfaces.
  */
+console.log("nop");
 server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
