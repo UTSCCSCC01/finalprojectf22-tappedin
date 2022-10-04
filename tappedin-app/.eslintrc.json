@@ -10,7 +10,6 @@
       "node": true,
       "mocha": true
     },
-    "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint"],
     "globals": {
       "Atomics": "readonly",
