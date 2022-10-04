@@ -10,11 +10,6 @@
       "node": true,
       "mocha": true
     },
-    // "extends": [
-    //   "eslint:recommended",
-    //   "plugin:react/recommended",
-    //   "plugin:react/jsx-runtime"
-    // ],
     "globals": {
       "Atomics": "readonly",
       "SharedArrayBuffer": "readonly"
