@@ -3,12 +3,12 @@
         "browser": true,
         "es2021": true
     },
-    "extends": "standard-with-typescript",
-    "overrides": [
-    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
     "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "tappedin-api/tsconfig.json"
     },
     "rules": {
       "indent": ["warn", 4],

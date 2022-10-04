@@ -5,7 +5,7 @@
 import debug from "debug";
 import * as http from "http";
 import * as dotenv from "dotenv";
-import app from "../app";
+import app from "./app";
 
 // Config .env file
 dotenv.config();
@@ -31,7 +31,7 @@ const normalizePort = (val: string) =>
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(process.env.PORT || "3000");
+const port = normalizePort(process.env.PORT ?? "3000");
 app.set("port", port);
 
 /**
