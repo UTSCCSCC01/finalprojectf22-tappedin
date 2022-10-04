@@ -10,6 +10,8 @@
       "node": true,
       "mocha": true
     },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
     "globals": {
       "Atomics": "readonly",
       "SharedArrayBuffer": "readonly"
@@ -19,7 +21,8 @@
       "sourceType": "module",
       "ecmaFeatures": {
         "jsx": true
-      }
+      },
+      "project": "tappedin-api/tsconfig.json"
     },
     "rules": {
       "indent": ["warn", 4],
