@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import logger from "morgan";
 import cors from "cors";
 import express from "express";

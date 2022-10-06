@@ -2,11 +2,14 @@ import { Result } from "../../common/commonTypes";
 import { UserIdentifier, UserInfo } from "../../common/userDataTypes";
 import { IDBAccessService } from "../DBAccessService/IDBAccessService";
 import { IUserAccountService } from "./IUserAccountService";
+import { injectable, inject } from "inversify";
+import TYPES from "../../TYPES";
 
+@injectable()
 export class UserAccountService implements IUserAccountService
 {
     private dbAccessService: IDBAccessService;
-    constructor(dbAccessService: IDBAccessService)
+    constructor(@inject(TYPES.IDBAccessService) dbAccessService: IDBAccessService)
     {
         this.dbAccessService = dbAccessService;
     }
