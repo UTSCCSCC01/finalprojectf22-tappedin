@@ -1,7 +1,7 @@
 import { RequireAtLeastOne } from "./commonTypes";
 
 
-export type UserInfo =
+export interface UserInfo
 {
     firstName: string;
     lastName: string;
@@ -11,11 +11,11 @@ export type UserInfo =
     dateCreated: Date;
 }
 
-type BaseUserIdentifier =
+export interface UserIdentifier
 {
     userID?: string;
     username?: string;
     email?: string;
 }
 
-export type UserIdentifier = RequireAtLeastOne<BaseUserIdentifier, "username" | "email">;
+//export type UserIdentifier = RequireAtLeastOne<BaseUserIdentifier, "username" | "email">;

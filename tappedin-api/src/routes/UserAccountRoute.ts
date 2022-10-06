@@ -1,31 +1,24 @@
-import express, { Request, Response, Router } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { IUserAccountService } from "../services/accountCreationService/IUserAccountService";
 import container from "../inversify.config";
-import TYPES from "../TYPES";
+import TYPES from "../types";
+import { UserInfo } from "../common/userDataTypes";
+import { Result } from "../common/commonTypes";
 
-const accountCreationRouter = express.Router();
+export const accountCreationRouter = express.Router();
+const userAccountService: IUserAccountService = container.get<IUserAccountService>(TYPES.IUserAccountService);
 
 
-
-accountCreationRouter.post("/", (req: Request, res: Response) =>
+accountCreationRouter.post("/", async (req: Request, res: Response, next: NextFunction) =>
 {
-    res.send().status(200);
-    console.log("Recieved POST req");
+    console.log("Received POST req");
+    try
+    {
+        let result: Result<string> = await userAccountService.createNewUser(req.body.UserInfo as UserInfo);
+        res.send(result.data).status(200);
+    }
+    catch (err)
+    {
+        next(err);
+    }
 });
-
-
-export class UserAccountRoute
-{
-    private _accountCreationRouter: Router = express.Router();
-    private _userAccountService: IUserAccountService = container.get<IUserAccountService>(TYPES.IUserAccountService);
-
-    public constructor(userAccountService: IUserAccountService)
-    {
-        this._userAccountService = userAccountService;
-    }
-
-    private configureEndpoints()
-    {
-
-    }
-}

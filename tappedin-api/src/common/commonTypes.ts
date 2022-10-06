@@ -10,4 +10,5 @@ type BaseResult<T> =
   error?: Error;
 }
 
+// JUST THROW AN ERROR, async function error will just auto error handler for express 5.0...
 export type Result<T> = RequireAtLeastOne<BaseResult<T>, "error" | "data">;

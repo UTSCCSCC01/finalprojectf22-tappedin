@@ -3,7 +3,7 @@ import { UserIdentifier, UserInfo } from "../../common/userDataTypes";
 import { IDBAccessService } from "../DBAccessService/IDBAccessService";
 import { IUserAccountService } from "./IUserAccountService";
 import { injectable, inject } from "inversify";
-import TYPES from "../../TYPES";
+import TYPES from "../../types";
 
 @injectable()
 export class UserAccountService implements IUserAccountService

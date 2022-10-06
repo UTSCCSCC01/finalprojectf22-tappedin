@@ -36,7 +36,7 @@ export class MockUserDBAccessService implements IDBAccessService
                 resolve({ data: id });
             }
             else
-                reject({ error: new Error("Collection does not exist.") });
+                throw new Error("Collection does not exist.");
         });
     }
 

@@ -3,7 +3,7 @@ import { UserAccountService } from "./services/accountCreationService/AccountCre
 import { IUserAccountService } from "./services/accountCreationService/IUserAccountService";
 import { IDBAccessService } from "./services/DBAccessService/IDBAccessService";
 import { MockUserDBAccessService } from "./services/DBAccessService/MockUserDBAccessService";
-import TYPES from "./TYPES";
+import TYPES from "./types";
 
 var container: Container = new Container();
 container.bind<IUserAccountService>(TYPES.IUserAccountService).to(UserAccountService);
