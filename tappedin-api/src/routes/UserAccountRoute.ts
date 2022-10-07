@@ -15,18 +15,31 @@ accountCreationRouter.post("/", async (req: Request, res: Response, next: NextFu
     {
         let resultUser: UserInfo | null;
         let result: string;
+        let username: string = (req.body.UserInfo as UserInfo).username ?? "";
+        let email: string = (req.body.UserInfo as UserInfo).email ?? "";
 
-        resultUser = await userAccountService.getUserInfo({ username: (req.body.UserInfo as UserInfo).username });
+        if (username === "")
+        {
+            res.send("No username provided.").status(400);
+            return;
+        }
+        else if (email === "")
+        {
+            res.send("No email provided.").status(400);
+            return;
+        }
+
+        resultUser = await userAccountService.getUserInfo({ username: username });
         if (resultUser)
         {
-            res.send(`Username: ${(req.body.UserInfo as UserInfo).username} already exists.`).status(400);
+            res.send(`Username: ${username} already exists.`).status(400);
             return;
         }
         
-        resultUser = await userAccountService.getUserInfo({ email: (req.body.UserInfo as UserInfo).email });
+        resultUser = await userAccountService.getUserInfo({ email: email });
         if (resultUser)
         {
-            res.send(`Email: ${(req.body.UserInfo as UserInfo).email} already exists.`).status(400);
+            res.send(`Email: ${email} already exists.`).status(400);
             return;
         }
 
