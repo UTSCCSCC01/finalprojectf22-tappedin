@@ -14,3 +14,9 @@ export interface UserIdentifier
     username?: string;
     email?: string;
 }
+
+export interface LoginInfo
+{
+    username?: string;
+    password?: string;
+}
