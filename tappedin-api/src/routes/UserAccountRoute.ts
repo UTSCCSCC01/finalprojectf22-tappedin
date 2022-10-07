@@ -31,6 +31,7 @@ accountCreationRouter.post("/", async (req: Request, res: Response, next: NextFu
         }
 
         result = await userAccountService.createNewUser(req.body.UserInfo as UserInfo);
+        res.send(result).status(200);
     }
     catch (err)
     {
