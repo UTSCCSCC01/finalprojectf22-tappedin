@@ -21,6 +21,6 @@
       "object-curly-spacing": ["warn", "always"],
       "array-bracket-spacing": ["warn", "always"],
       "import/prefer-default-export": [0],
-      "max-len": ["warn", { "code": 100 }]
+      "max-len": ["warn", { "code": 125 }]
     }
 }
