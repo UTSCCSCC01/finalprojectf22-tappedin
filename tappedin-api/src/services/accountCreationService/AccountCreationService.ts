@@ -23,20 +23,28 @@ export class UserAccountService implements IUserAccountService
         return this._dbAccessService.createDocument(this._collectionName, userInfo);
     }
 
-    async getUserInfo(userIdentifier: UserIdentifier): Promise<UserInfo>
+    async getUserInfo(userIdentifier: UserIdentifier): Promise<UserInfo | null>
     {
         let result;
 
         if (userIdentifier.userID)
+        {
             result = await this._dbAccessService.readDocument(this._collectionName, userIdentifier.userID);
+            return Promise.resolve((result as UserInfo));
+        }
         else if (userIdentifier.username)
-            result = await this._dbAccessService.getCollection(this._collectionName, { username: userIdentifier.username });
+            result = await this._dbAccessService.getCollection(this._collectionName, { username: { $eq: userIdentifier.username } });
         else if (userIdentifier.email)
-            result = await this._dbAccessService.getCollection(this._collectionName, { email: userIdentifier.email });
+            result = await this._dbAccessService.getCollection(this._collectionName, { email: { $eq: userIdentifier.email } });
         else
             throw new Error("User Identifier does not have any of the user identifiers.");
 
+        if (result.length > 1)
+            console.warn("There are multiple users for a single user identifier.");
+        
+        if (result.length == 0)
+            return Promise.resolve(null);
 
-        return Promise.resolve((result as UserInfo));
+        return Promise.resolve((result[0] as UserInfo));
     }
 }
