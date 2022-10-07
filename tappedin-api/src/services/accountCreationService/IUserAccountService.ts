@@ -3,7 +3,7 @@ import { RequireAtLeastOne, Result } from "../../common/commonTypes";
 
 export interface IUserAccountService
 {
-    createNewUser(userInfo: UserInfo): Promise<Result<string>>;
-    getUserInfo(userIdentifier: RequireAtLeastOne<UserIdentifier>): Promise<Result<UserInfo>>;
+    createNewUser(userInfo: UserInfo): Promise<string>;
+    getUserInfo(userIdentifier: UserIdentifier): Promise<UserInfo | null>;
     //updateUserInfo(userID, fields);
 }

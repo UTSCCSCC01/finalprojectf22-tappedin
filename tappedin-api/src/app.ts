@@ -3,7 +3,6 @@ import logger from "morgan";
 import cors from "cors";
 import express from "express";
 import cookieParser from "cookie-parser";
-import indexRouter from "./routes/indexRouter";
 import { accountCreationRouter } from "./routes/UserAccountRoute";
 import { loginAccountRouter } from "./routes/LoginAccountRoute";
 

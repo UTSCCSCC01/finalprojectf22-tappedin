@@ -1,6 +1,3 @@
-import { RequireAtLeastOne } from "./commonTypes";
-
-
 export interface UserInfo
 {
     firstName: string;
@@ -17,5 +14,3 @@ export interface UserIdentifier
     username?: string;
     email?: string;
 }
-
-//export type UserIdentifier = RequireAtLeastOne<BaseUserIdentifier, "username" | "email">;
