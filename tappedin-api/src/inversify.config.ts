@@ -10,5 +10,5 @@ import { IUserAuthenticationService } from "./services/UserAuthenticationService
 var container: Container = new Container();
 container.bind<IUserAccountService>(TYPES.IUserAccountService).to(UserAccountService);
 container.bind<IDBAccessService>(TYPES.IDBAccessService).to(MongoDBAccessService);
-
+container.bind<IUserAuthenticationService>(TYPES.IUserAuthenticationService).to(UserAuthenticationService)
 export default container;
