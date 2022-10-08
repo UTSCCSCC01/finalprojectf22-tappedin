@@ -71,7 +71,7 @@ export default function SignUpForm ()
                 }
             };
             console.log(usr);
-            axios.post("http://localhost:5000/createUser", usr)
+            axios.post("http://localhost:3001/createUser", usr)
                 .then((res) => 
                 {
                     console.log(res.data);
