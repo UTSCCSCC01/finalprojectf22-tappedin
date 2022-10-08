@@ -1,8 +1,9 @@
+import "reflect-metadata";
 import logger from "morgan";
 import cors from "cors";
 import express from "express";
 import cookieParser from "cookie-parser";
-import indexRouter from "./routes/indexRouter";
+import { accountCreationRouter } from "./routes/UserAccountRoute";
 
 const app = express();
 app.use(logger("dev"));
@@ -13,6 +14,6 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use("/v1", indexRouter);
+app.use("/createUser", accountCreationRouter);
 
 export default app;
