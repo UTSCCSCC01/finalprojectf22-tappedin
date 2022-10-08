@@ -1,0 +1,9 @@
+{
+    "UserInfo": [
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "dateCreated"
+    ]
+}
