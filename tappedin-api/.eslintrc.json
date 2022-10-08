@@ -3,12 +3,12 @@
         "browser": true,
         "es2021": true
     },
-    "extends": "standard-with-typescript",
-    "overrides": [
-    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
     "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "tappedin-api/tsconfig.json"
     },
     "rules": {
       "indent": ["warn", 4],
@@ -21,6 +21,6 @@
       "object-curly-spacing": ["warn", "always"],
       "array-bracket-spacing": ["warn", "always"],
       "import/prefer-default-export": [0],
-      "max-len": ["warn", { "code": 100 }]
+      "max-len": ["warn", { "code": 125 }]
     }
 }
