@@ -1,3 +1,77 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+// Google Font Import
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap');
+
+
+// GENERAL
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    color: #252525;
+}
+
+
+// Typography
+h1 
+{
+    font-size: 30px;
+}
+
+h2 
+{
+    font-size: 24px;
+}
+
+h3
+{
+    font-size: 16px;
+}
+
+p 
+{
+    font-size: 16px;
+}
+
+label 
+{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.title 
+{
+    font-size: 64px;
+    font-weight: bold;
+}
+
+li
+{
+    font-size: 24px;
+}
+
+// Button
+.button
+{
+    color: white;
+    background-color: #EF626C;
+    border-radius: 20px;
+
+    &.large
+    {
+        width: 15rem;
+        height: 4rem;
+        font-size: 24px;
+    }
+
+    &.link
+    {
+        width: 15rem;
+        height: 4rem;
+
+        color: #252525;
+        background-color: transparent;
+        font-size: 24px;
+    }
+}
