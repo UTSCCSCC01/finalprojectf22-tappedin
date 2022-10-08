@@ -21,38 +21,15 @@ loginAccountRouter.post("/", async (req: Request, res: Response, next: NextFunct
     console.log("Received Login req");
     try
     {
-        // Queries to check if username exists in DB
         let result;
-        let userQuery: UserInfo | null;
-        userQuery = await userAccountService.getUserInfo({ username: (req.body.LoginInfo as UserInfo).username });
-        if (userQuery){
-            result = await userAuthenticationService.validateUser(req.body.LoginInfo as LoginInfo, userQuery as UserInfo )
-        }
-        else{
-            res.send(`Username: ${(req.body.LoginInfo as LoginInfo).username} does not exist.`).status(401);
-        }
-        
+        result = await userAuthenticationService.validateUser(req.body.LoginInfo as LoginInfo)
+
         if (result) {
             res.send(result).status(200);
         }
         else{
-            res.status(401).send(`Password is incorrect.`);
+            res.status(401).send(`Username ${(req.body.LoginInfo as LoginInfo).username} / Password is incorrect.`);
         }
-        // if (userQuery){
-        //     // console.log(userQuery)
-        //     if(userQuery.password === req.body.LoginInfo.password) {
-        //         res.send(userQuery).status(200);
-        //         console.log('Login successful')
-        //     }
-        //     else {
-        //         res.status(401).send(`Password is incorrect.`);
-        //     }
-
-
-        // }
-        // else {
-        //     res.send(`Username: ${(req.body.UserInfo as UserInfo).username} does not exist.`).status(401);
-        // }
             
     }
     catch (err)
