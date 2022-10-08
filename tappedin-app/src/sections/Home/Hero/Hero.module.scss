@@ -1,0 +1,25 @@
+.customNavbar
+{
+    border-bottom: 1px solid #E8E5E5;
+    width: 50rem;
+}
+
+
+.background
+{
+    min-height: 50rem;
+    width: 100%;
+
+    background: linear-gradient(180deg, #639FAB 0%, rgba(99, 159, 171, 0) 100%);
+}
+
+.circle
+{
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    background-color: #639FAB;
+    border: 3px solid #95D5E2;
+}
