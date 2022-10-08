@@ -39,7 +39,7 @@ export default function LoginForm () {
                 }
             };
             console.log(usr);
-            axios.post('http://localhost:5000/login', usr)
+            axios.post('http://localhost:3001/login', usr)
             .then((res) => {
                 console.log(res.data);
                 //redirect

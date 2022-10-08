@@ -1,4 +1,5 @@
 import styles from "./Hero.module.scss";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 export default function Hero() 
 {
@@ -25,7 +26,9 @@ export default function Hero()
                                 <h3>FAQ</h3>
                             </div>
                             <div>
-                                <h3 className="font-bold">Sign In</h3>
+                                <a href="/Login">
+                                    <h3 className="font-bold">Sign In</h3>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -45,19 +48,24 @@ export default function Hero()
                                     <div className={styles["circle"]}></div>
                                     <li className="pl-3">
                                         Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit.
+                                        adipiscing elit.
                                     </li>
                                 </div>
                                 <div className="flex items-center pb-10">
                                     <div className={styles["circle"]}></div>
                                     <li className="pl-3">
-                                    sed do eiusmod tempor incididunt.
+                                        sed do eiusmod tempor incididunt.
                                     </li>
                                 </div>
-                                
                             </ul>
-                            <button className="button large">Sign Up</button>
-                            <button className="button link">Sign In</button>
+                            <a href="/Register">
+                                <button className="button large">
+                                    Sign Up
+                                </button>
+                            </a>
+                            <a href="/Login">
+                                <button className="button link">Sign In</button>
+                            </a>
                         </div>
                     </div>
                 </div>
