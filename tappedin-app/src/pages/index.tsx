@@ -9,5 +9,6 @@ export default function HomePage()
             <Hero></Hero>
             <About></About>
         </div>
+        
     );
 }

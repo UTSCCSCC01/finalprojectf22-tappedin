@@ -21,7 +21,7 @@
       "ecmaFeatures": {
         "jsx": true
       },
-      "project": "tappedin-app/tsconfig.json"
+      "project": "tsconfig.json"
     },
     "rules": {
       "indent": ["warn", 4],
