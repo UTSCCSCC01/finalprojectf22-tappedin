@@ -1,3 +1,52 @@
+# TappedIn - System Design Document
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+# Table of Contents
+
+1. [System Design](#sysdes)
+   1. [External Interaction with the Application](#sysdes1)
+   2. [Application Architecture](#sysdes2)
+   3. [Backend Structure](#sysdes3)
+   4. [Exception Handling](#sysdes4)
+2. [CRC Cards](#crc)
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a name="sysdes"></a>
 # System Design
 
 ## External Interaction with the Application
@@ -7,6 +56,7 @@
 
 ---
 
+<a name="sysdes1"></a>
 ## Application Architecture
 
 ### High Level view on how the application will be structured
@@ -22,6 +72,7 @@ The database chosen for this project is MongoDB, it will store all of the inform
 
 ---
 
+<a name="sysdes2"></a>
 ## Backend Structure
 ### High Level, early view on how the server will be designed
 
@@ -37,6 +88,7 @@ This design of using interfaces allows for separation of concern and   dependenc
 
 ---
 
+<a name="sysdes3"></a>
 ## Exception Handling
 A general flow for exception handling:
 - Error caught in frontend, handle it and notify user if necessary.
@@ -47,6 +99,8 @@ A general flow for exception handling:
 - If an error is caught, the operation **should not** be performed. i.e if some step of creating a new user fails, the DB should not have a new entry.
 
 ---
+
+<a name="crc"></a>
 # CRC Cards
 ## Backend
 
