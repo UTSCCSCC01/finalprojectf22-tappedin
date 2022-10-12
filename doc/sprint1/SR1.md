@@ -1,5 +1,13 @@
 # TappedIn Retro 1
 
+## Attendance
+- Vincent
+- Ben
+- Arib
+- Terren
+- Arthur
+- Sean
+
 ## Start
 * To add documentation about API endpoints onto confluence, so people know how to use them (5)
 * Better communication on commits or changes with code (1)
