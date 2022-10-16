@@ -1,15 +1,19 @@
-// import typeCheckJson from "./typeCheckConfig.json"
+import { UserIdentifier } from "./userDataTypes";
 
-// export default function checkTypeMatch(obj: Object, type: string): boolean
-// {
-//     if (!typeCheckJson[type])
-//         throw new Error("Type from JSON does not exist");
-//     if (!(typeCheckJson[type] === Array))
-//         throw new Error("Type from JSON is not an array");
-
+export function createUserIdentifier(obj: any): UserIdentifier
+{
+    let userIdentifier: UserIdentifier = {};
+    if (!obj.hasOwnProperty("email") && !obj.hasOwnProperty("username") && !obj.hasOwnProperty("userID"))
+        throw new Error("Object has no properties of UserIdentifier!");
     
-//     typeCheckJson[type].forEach(element => 
-//     {
-//         if (!obj[element])
-//     });
-// }
+    if (obj.hasOwnProperty("email"))
+        userIdentifier.email = obj.email;
+    
+    if (obj.hasOwnProperty("username"))
+        userIdentifier.email = obj.username;
+    
+    if (obj.hasOwnProperty("userID"))
+        userIdentifier.email = obj.usrID;
+
+    return userIdentifier;
+}

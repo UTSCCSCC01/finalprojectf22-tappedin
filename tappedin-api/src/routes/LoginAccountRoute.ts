@@ -5,7 +5,8 @@ import { LoginInfo } from "../common/userDataTypes";
 import { IUserAuthenticationService } from "../services/UserAuthenticationService/IUserAuthenticationService";
 
 export const loginAccountRouter = express.Router();
-const userAuthenticationService: IUserAuthenticationService = container.get<IUserAuthenticationService>(TYPES.IUserAuthenticationService);
+const userAuthenticationService: IUserAuthenticationService = 
+    container.get<IUserAuthenticationService>(TYPES.IUserAuthenticationService);
 
 
 loginAccountRouter.post("/", async (req: Request, res: Response, next: NextFunction) =>

@@ -4,13 +4,13 @@ import container from "../inversify.config";
 import TYPES from "../types";
 import { UserInfo } from "../common/userDataTypes";
 
-export const accountCreationRouter = express.Router();
+export const accountServicesRouter = express.Router();
 const userAccountService: IUserAccountService = container.get<IUserAccountService>(TYPES.IUserAccountService);
 
 
-accountCreationRouter.post("/", async (req: Request, res: Response, next: NextFunction) =>
+accountServicesRouter.post("/", async (req: Request, res: Response, next: NextFunction) =>
 {
-    console.log("Received POST req");
+    console.log("Received POST req for create user");
     try
     {
         let resultUser: UserInfo | null;

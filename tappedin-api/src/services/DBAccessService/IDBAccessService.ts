@@ -1,11 +1,8 @@
 export interface IDBAccessService
 {
     createDocument(collectionName: string, data: Object): Promise<string>;
-    readDocument(collectionName: string, id: string): Promise<Object>; // Return Data
+    readDocument(collectionName: string, id: string): Promise<Object | null>;
     getCollection(collectionName: string, filter?: Object): Promise<Array<Object>>;
-    //updateDocument<T>(id: string, data: T): Promise<string>; // Should return status? not string?
-    //deleteDocument(id: string): Promise<string>; // Should return status? not string?
-    // no need to explicitly call close/connect, should do for every call.
-    // connect(): Promise<Result<string>>; // Should return status? not string?
-    // close() needed?
+    updateDocument(collectionName: string, id: string, data: Object): Promise<string>;
+    deleteDocument(collectionName: string, id: string): Promise<boolean>;
 }

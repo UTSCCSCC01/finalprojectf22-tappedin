@@ -1,14 +1,21 @@
-export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
-    Pick<T, Exclude<keyof T, Keys>> 
-    & {
-        [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
-    }[Keys]
+import { UserIdentifier } from "./userDataTypes";
 
-type BaseResult<T> =
+export type WithUserID<T> =
 {
-  data?: T;
-  error?: Error;
-}
+    userID: string,
+    data: T
+};
 
-// JUST THROW AN ERROR, async function error will just auto error handler for express 5.0...
-export type Result<T> = RequireAtLeastOne<BaseResult<T>, "error" | "data">;
+export type WithUserIdentifier<T> =
+{
+    userIdentifier: UserIdentifier,
+    data: T
+};
+
+export enum UserFieldReqType
+{   
+    GET_FIELD = 0,
+    ADD_FIELD = 1,
+    UPDATE_FIELD = 2,
+    DELETE_FIELD = 3
+}
