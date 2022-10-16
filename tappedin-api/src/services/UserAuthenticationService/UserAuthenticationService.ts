@@ -1,6 +1,6 @@
 import { Result } from "../../common/commonTypes";
 import { UserIdentifier, UserInfo, LoginInfo } from "../../common/userDataTypes";
-import { IUserAccountService } from "../accountCreationService/IUserAccountService";
+import { IUserAccountService } from "../UserAccountService/IUserAccountService";
 import { IUserAuthenticationService } from "./IUserAuthenticationService";
 import { injectable, inject } from "inversify";
 import TYPES from "../../types";

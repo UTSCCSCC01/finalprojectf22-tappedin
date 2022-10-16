@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import { Collection, MongoClient } from "mongodb";
+import { Collection, MongoClient, ObjectId } from "mongodb";
 import { IDBAccessService } from "./IDBAccessService";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -29,7 +29,7 @@ export class MongoDBAccessService implements IDBAccessService
             await this._client.connect();
             const coll: Collection = this._client.db(this._databaseName).collection(collectionName);
 
-            const result = await coll.findOne({ _id: id }) ?? {};
+            const result = await coll.findOne({ _id: ObjectId.createFromHexString(id) }) ?? {};
 
             return new Promise((resolve) =>
             {

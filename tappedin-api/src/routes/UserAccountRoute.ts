@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import { IUserAccountService } from "../services/accountCreationService/IUserAccountService";
+import { IUserAccountService } from "../services/UserAccountService/IUserAccountService";
 import container from "../inversify.config";
 import TYPES from "../types";
 import { UserInfo } from "../common/userDataTypes";

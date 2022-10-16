@@ -8,6 +8,20 @@ export interface UserInfo
     dateCreated: Date;
 }
 
+export interface EducationInfo
+{
+    schoolName: string,
+    schoolCity?: string,
+    schoolState?: string,
+    schoolCountry: string,
+    programOfStudy: string,
+    dateStarted: Date,
+    dateEnded: Date | null,
+    expectedGrad: Date,
+    currentlyAttending: boolean,
+    description?: string
+}
+
 export interface UserIdentifier
 {
     userID?: string;
@@ -19,4 +33,11 @@ export interface LoginInfo
 {
     username?: string;
     password?: string;
+}
+
+export type UserFields = EducationInfo;
+
+export enum UserFieldTypes
+{
+    EDUCATIONINFO = 0
 }
