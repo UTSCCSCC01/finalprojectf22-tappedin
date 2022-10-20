@@ -22,6 +22,19 @@ export interface EducationInfo
     description?: string
 }
 
+export interface WorkInfo
+{
+    workName: string,
+    workCity?: string,
+    workState?: string,
+    workCountry: string,
+    workPositionName: string,
+    dateStarted: Date,
+    dateEnded?: Date, 
+    currentlyWorking: boolean,
+    description?: string
+}
+
 export interface UserIdentifier
 {
     userID?: string;
@@ -39,5 +52,6 @@ export type UserFields = EducationInfo;
 
 export enum UserFieldTypes
 {
-    EDUCATION_INFO = 0
+    EDUCATION_INFO = 0,
+    WORK_INFO      = 1
 }

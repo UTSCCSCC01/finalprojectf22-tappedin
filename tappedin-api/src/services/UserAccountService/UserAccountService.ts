@@ -6,7 +6,6 @@ import TYPES from "../../types";
 import * as dotenv from "dotenv";
 import { ObjectId, WithId } from "mongodb";
 import { WithUserID } from "../../common/commonTypes";
-import e from "cors";
 dotenv.config();
 
 @injectable()
@@ -186,6 +185,17 @@ export class UserAccountService implements IUserAccountService
                 return Promise.resolve(null);
 
             return Promise.resolve(result[0] as WithId<UserFields>);
+        case UserFieldTypes.WORK_INFO:
+            result = await this._dbAccessService.getCollection(this._workCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            // should be flag?
+            if (result.length > 1)
+                console.warn("There are multiple entries for a single user.");
+    
+            if (result.length == 0)
+                return Promise.resolve(null);
+
+            return Promise.resolve(result[0] as WithId<UserFields>);
 
         default:
             throw new Error("Invalid Field Passed.");
@@ -216,20 +226,23 @@ export class UserAccountService implements IUserAccountService
         if (objectID == null)
             return Promise.resolve("null");
         
-        toInsert = { userID: ObjectId.createFromHexString(objectID), ...data }; 
+        toInsert = { userID: ObjectId.createFromHexString(objectID), ...data };
+
+        if (resultObj = await this.getUserField(userIdentifier, field))
+        {
+            console.log("Field info already exists");
+            userIdentifier.userID = objectID;
+            return this.updateUserField(userIdentifier, field, data, resultObj._id.toHexString());
+        }
         
         switch (field)
         {
         case UserFieldTypes.EDUCATION_INFO:
             // TODO: Check if the information exists already + if its valid.
-            if (resultObj = await this.getUserField(userIdentifier, field))
-            {
-                console.log("Education info already exists");
-                userIdentifier.userID = objectID;
-                return this.updateUserField(userIdentifier, field, data, resultObj._id.toHexString());
-            }
-            
             result = await this._dbAccessService.createDocument(this._eduCollectionName, toInsert);
+            break;
+        case UserFieldTypes.WORK_INFO:
+            result = await this._dbAccessService.createDocument(this._workCollectionName, toInsert);
             break;
         default:
             throw new Error("Invalid Field Passed.");
@@ -278,6 +291,9 @@ export class UserAccountService implements IUserAccountService
         {
         case UserFieldTypes.EDUCATION_INFO:
             result = await this._dbAccessService.updateDocument(this._eduCollectionName, objectID, data);
+            break;
+        case UserFieldTypes.WORK_INFO:
+            result = await this._dbAccessService.updateDocument(this._workCollectionName, objectID, data);
             break;
         default:
             throw new Error("Invalid Field Passed.");

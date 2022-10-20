@@ -65,7 +65,6 @@ accountServicesRouter.post("/", async (req: Request, res: Response, next: NextFu
     }
     catch (err)
     {
-        console.log(err);
         next(err);
     }
 });

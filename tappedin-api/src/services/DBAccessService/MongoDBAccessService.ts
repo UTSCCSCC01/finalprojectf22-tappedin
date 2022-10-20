@@ -94,7 +94,6 @@ export class MongoDBAccessService implements IDBAccessService
             await this._client.connect();
 
             const coll = this._client.db(this._databaseName).collection(collectionName);
-            console.log(data);
             const result = await coll.insertOne(data);
 
             return new Promise((resolve, reject) => 
