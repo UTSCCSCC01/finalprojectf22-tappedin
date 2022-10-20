@@ -6,6 +6,7 @@ import TYPES from "../../types";
 import * as dotenv from "dotenv";
 import { ObjectId, WithId } from "mongodb";
 import { WithUserID } from "../../common/commonTypes";
+import e from "cors";
 dotenv.config();
 
 @injectable()
@@ -14,6 +15,7 @@ export class UserAccountService implements IUserAccountService
     private _dbAccessService: IDBAccessService;
     private _userCollectionName: string = process.env.USER_COLLECTION_NAME ?? "testCol";
     private _eduCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testEduCol";
+    private _workCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testWorkCol";
 
     /**
      * @constructor
@@ -77,8 +79,10 @@ export class UserAccountService implements IUserAccountService
     */
     public async createNewUser(userInfo: UserInfo): Promise<string>
     {
+        let result: string | null;
         // TODO: Add checks on valid user info
-        return this._dbAccessService.createDocument(this._userCollectionName, userInfo);
+        result = await this._dbAccessService.createDocument(this._userCollectionName, userInfo);
+        return result ? Promise.resolve(result) : Promise.reject("ERROR");
     }
 
     /** 
@@ -94,6 +98,7 @@ export class UserAccountService implements IUserAccountService
     public async updateUserInfo(userIdentifier: UserIdentifier, userInfo: Object): Promise<string> 
     {
         let id: string | null;
+        let result: string | null;
 
         if (userIdentifier.userID)
             id = userIdentifier.userID;
@@ -103,7 +108,8 @@ export class UserAccountService implements IUserAccountService
         if (id == null)
             throw new Error("User to update not found!");
 
-        return this._dbAccessService.updateDocument(this._userCollectionName, id, userInfo);
+        result = await this._dbAccessService.updateDocument(this._userCollectionName, id, userInfo);
+        return result ? Promise.resolve(result) : Promise.reject("Problem updating user info.");
     }
 
     /** 
@@ -154,7 +160,7 @@ export class UserAccountService implements IUserAccountService
     * 
     * @returns {Promise<UserFields | null>} The UserField requested corresponding to that user if found, null otherwise. 
     */
-    public async getUserField(userIdentifier: UserIdentifier, field: UserFieldTypes): Promise<UserFields | null>
+    public async getUserField(userIdentifier: UserIdentifier, field: UserFieldTypes): Promise<WithId<UserFields> | null>
     {
         let result;
         let objectID: string | null;
@@ -165,12 +171,13 @@ export class UserAccountService implements IUserAccountService
             objectID = await this.getUserId(userIdentifier);
 
         if (objectID == null)
-            throw new Error("UserID cannot be found!");
+            return Promise.resolve(null);
 
         switch (field)
         {
         case UserFieldTypes.EDUCATION_INFO:
-            result = await this._dbAccessService.getCollection(this._eduCollectionName, { userID: { $eq: objectID } });
+            result = await this._dbAccessService.getCollection(this._eduCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
             // should be flag?
             if (result.length > 1)
                 console.warn("There are multiple entries for a single user.");
@@ -178,7 +185,7 @@ export class UserAccountService implements IUserAccountService
             if (result.length == 0)
                 return Promise.resolve(null);
 
-            return Promise.resolve(result[0] as EducationInfo);
+            return Promise.resolve(result[0] as WithId<UserFields>);
 
         default:
             throw new Error("Invalid Field Passed.");
@@ -196,9 +203,10 @@ export class UserAccountService implements IUserAccountService
     */
     public async addUserField(userIdentifier: UserIdentifier, field: UserFieldTypes, data: Object): Promise<string>
     {
-        let result: string;
+        let result: string | null;
         let objectID: string | null;
-        let toInsert: WithUserID<Object>;
+        let resultObj: WithId<UserFields> | null;
+        let toInsert: WithUserID;
  
         if (userIdentifier.userID)
             objectID = userIdentifier.userID;
@@ -206,19 +214,28 @@ export class UserAccountService implements IUserAccountService
             objectID = await this.getUserId(userIdentifier);
  
         if (objectID == null)
-            throw new Error("UserID cannot be found!");
+            return Promise.resolve("null");
         
-        toInsert = { userID: objectID, data: data }; 
- 
+        toInsert = { userID: ObjectId.createFromHexString(objectID), ...data }; 
+        
         switch (field)
         {
         case UserFieldTypes.EDUCATION_INFO:
             // TODO: Check if the information exists already + if its valid.
-            return this._dbAccessService.createDocument(this._eduCollectionName, toInsert);
- 
+            if (resultObj = await this.getUserField(userIdentifier, field))
+            {
+                console.log("Education info already exists");
+                userIdentifier.userID = objectID;
+                return this.updateUserField(userIdentifier, field, data, resultObj._id.toHexString());
+            }
+            
+            result = await this._dbAccessService.createDocument(this._eduCollectionName, toInsert);
+            break;
         default:
             throw new Error("Invalid Field Passed.");
         }
+
+        return result ? Promise.resolve(result) : Promise.reject("Problem Adding user.");
     }
 
     /** 
@@ -230,28 +247,43 @@ export class UserAccountService implements IUserAccountService
     * 
     * @returns {Promise<string>} The updated document's ObjectID hexstring. 
     */
-    public async updateUserField(userIdentifier: UserIdentifier, field: UserFieldTypes, data: Object): Promise<string>
+    public async updateUserField(userIdentifier: UserIdentifier, field: UserFieldTypes, data: Object, 
+        fObjectID?: string): Promise<string>
     {
-        let result: string;
+        let result: string | null;
+        let resultObj: WithId<UserFields> | null;
         let objectID: string | null;
+        let userID: string | null;
 
         if (userIdentifier.userID)
-            objectID = userIdentifier.userID;
+            userID = userIdentifier.userID;
         else
-            objectID = await this.getUserId(userIdentifier);
+            userID = await this.getUserId(userIdentifier);
 
-        if (objectID == null)
-            throw new Error("UserID cannot be found!");
+        if (userID == null)
+            return Promise.resolve("null");
+
+        if (fObjectID)
+            objectID = fObjectID;
+        else
+        {
+            resultObj = await this.getUserField(userIdentifier, field);
+            if (resultObj)
+                objectID = resultObj._id.toHexString();
+            else
+                return Promise.reject("Problem Updating User field.");
+        }
 
         switch (field)
         {
         case UserFieldTypes.EDUCATION_INFO:
-            return this._dbAccessService.updateDocument(this._eduCollectionName, objectID, data);
-
+            result = await this._dbAccessService.updateDocument(this._eduCollectionName, objectID, data);
+            break;
         default:
             throw new Error("Invalid Field Passed.");
         }
-    }
 
+        return result ? Promise.resolve(result) : Promise.reject("Problem Updating User field.");
+    }
     
 }

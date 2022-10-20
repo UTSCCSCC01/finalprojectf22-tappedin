@@ -1,21 +1,20 @@
+import { ObjectId } from "mongodb";
 import { UserIdentifier } from "./userDataTypes";
 
-export type WithUserID<T> =
+export interface WithUserID
 {
-    userID: string,
-    data: T
+    userID: ObjectId
 };
 
-export type WithUserIdentifier<T> =
-{
-    userIdentifier: UserIdentifier,
-    data: T
-};
+// export enum UserFieldReqType
+// {   
+//     ADD_FIELD = 0,
+//     UPDATE_FIELD = 1,
+// }
 
-export enum UserFieldReqType
+export enum UserIDType
 {   
-    GET_FIELD = 0,
-    ADD_FIELD = 1,
-    UPDATE_FIELD = 2,
-    DELETE_FIELD = 3
+    USER_ID = 0,
+    USERNAME = 1,
+    EMAIL = 2
 }
