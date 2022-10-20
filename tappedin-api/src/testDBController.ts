@@ -2,7 +2,7 @@ import * as mongo from "mongodb";
 
 export default async function addLike()
 {
-    const uri = process.env.MONGO_CONNECTION_STRING || "";
+    const uri = "mongodb+srv://tappedin-api:HLiuUHDRySbpCFkB@tappedin-db.miw0jsz.mongodb.net/?retryWrites=true&w=majority";
     const client = new mongo.MongoClient(uri);
     try
     {
@@ -16,3 +16,5 @@ export default async function addLike()
         await client.close();
     }
 }
+
+addLike().catch(console.dir);

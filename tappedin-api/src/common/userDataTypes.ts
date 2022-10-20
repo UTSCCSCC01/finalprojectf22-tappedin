@@ -16,7 +16,7 @@ export interface EducationInfo
     schoolCountry: string,
     programOfStudy: string,
     dateStarted: Date,
-    dateEnded: Date | null,
+    dateEnded?: Date,
     expectedGrad: Date,
     currentlyAttending: boolean,
     description?: string

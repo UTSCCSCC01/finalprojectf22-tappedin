@@ -1,19 +1,23 @@
+import { UserIDType } from "./commonTypes";
 import { UserIdentifier } from "./userDataTypes";
 
-export function createUserIdentifier(obj: any): UserIdentifier
+export function createUserIdentifier(userID: string, userIDType: UserIDType): UserIdentifier
 {
     let userIdentifier: UserIdentifier = {};
-    if (!obj.hasOwnProperty("email") && !obj.hasOwnProperty("username") && !obj.hasOwnProperty("userID"))
-        throw new Error("Object has no properties of UserIdentifier!");
-    
-    if (obj.hasOwnProperty("email"))
-        userIdentifier.email = obj.email;
-    
-    if (obj.hasOwnProperty("username"))
-        userIdentifier.email = obj.username;
-    
-    if (obj.hasOwnProperty("userID"))
-        userIdentifier.email = obj.usrID;
+    switch(userIDType)
+    {
+    case UserIDType.USER_ID:
+        userIdentifier.userID = userID;
+        break;
+    case UserIDType.USERNAME:
+        userIdentifier.username = userID;
+        break;
+    case UserIDType.EMAIL:
+        userIdentifier.email = userID;
+        break;
+    default:
+        throw new Error("User ID type is invalid.");
+    }
 
     return userIdentifier;
 }
