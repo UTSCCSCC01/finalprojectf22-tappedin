@@ -7,6 +7,7 @@
     "dependencies": {
         "axios": "^1.1.2",
         "classnames": "^2.3.2",
+        "feather-icons-react": "^0.5.0",
         "next": "^12.3.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
