@@ -35,11 +35,24 @@ accountServicesRouter.post("/", async (req: Request, res: Response, next: NextFu
         let requestUserIdentifier: UserIdentifier;
         let fieldType: UserFieldTypes;
         let userID: string;
+        let objectID: string;
         let userIDType: UserIDType;
 
         if (!req.query.field)
             return res.send("Field type not specified.").status(400);
         
+        fieldType = parseInt(req.query.field.toString());
+    
+        if (!Number.isInteger(fieldType))
+            return res.send("Field type is of invalid form.").status(400);
+
+        if (req.query.objectid)
+        {
+            objectID = req.query.objectid.toString();
+            result = await userAccountService.updateUserField(objectID, fieldType, requestBody);
+            return res.send(result).status(200);
+        }
+
         if (!req.query.idtype)
             return res.send("User ID type not specified.").status(400);
         
@@ -48,11 +61,7 @@ accountServicesRouter.post("/", async (req: Request, res: Response, next: NextFu
         else
             userID = req.query.id.toString();
 
-        fieldType = parseInt(req.query.field.toString());
         userIDType = parseInt(req.query.idtype.toString());
-
-        if (!Number.isInteger(fieldType))
-            return res.send("Field type is of invalid form.").status(400);
         
         if (!Number.isInteger(userIDType))
             return res.send("User ID type is of invalid form.").status(400);
