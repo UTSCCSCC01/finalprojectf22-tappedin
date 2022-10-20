@@ -11,32 +11,41 @@ import CoverImage from "../../components/CoverImage";
 import WorkExperienceCard from "../../components/WorkExperienceCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import WorkExperience from "../../sections/Dashboard/WorkExperience";
 
 export default function DashboardPage() 
 {
-    const [ workExperienceData, setWorkExperienceData ] = useState();
-
-    var config = {
-        method: "get",
-        url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
-        headers: { }
-    };
+    const [ workExperiencesData, setWorkExperiencesData ] = useState();
 
     useEffect(() => 
     {
-        axios(config)
-            .then(function (response) 
-            {
-                setWorkExperienceData(response.data);
-                console.log(
-                    "HELLO"
-                );
-            })
-            .catch(function (error) 
-            {
-                console.log(error);
-            });
-    });
+        fetchWorkExperiences();
+    }, []);
+
+    async function fetchWorkExperiences(): Promise<void>
+    {
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+            headers: { }
+        };
+    
+        try
+        {
+            const t = await axios(config);
+            
+            // FIXME: Backend Fix and Remove
+            if (t.data == "Nothing was found for this query.")
+                setWorkExperiencesData(null);
+            else
+                setWorkExperiencesData(t.data);
+        }
+        catch (e)
+        {
+            console.error(e);
+        }
+    }
 
     return (
         <div className={`${customBackground}`}>
@@ -53,31 +62,8 @@ export default function DashboardPage()
                         <h1 className="mb-3 font-bold">Edit</h1>
                         <div className={`${editContainer}`}>
                             {/* TODO: Insert Content Here */}
-                            <div>
-                                <div className="mb-3">
-                                    <label>Work</label>
-                                </div>
-                                { workExperienceData && 
-                                workExperienceData.map((workExperience, index) => 
-                                {
-                                    return <WorkExperienceCard data={workExperience}></WorkExperienceCard>;
-                                })}
-                                <div
-                                    className={`${addWorkExperienceContainer} 
-                                flex items-center justify-center`}
-                                >
-                                    <a href="/CreateWorkExperience">
-                                        <div className="cursor-pointer">
-                                            <FeatherIcon
-                                                icon="plus"
-                                                size="54"
-                                                stroke-width="1"
-                                                color="#BBCDE5"
-                                            />
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
+                            <WorkExperience workExperiencesData={workExperiencesData}
+                            ></WorkExperience>
                         </div>
                     </div>
                 </div>

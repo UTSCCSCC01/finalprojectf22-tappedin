@@ -1,6 +1,6 @@
 import { workExperienceContainer } from "./WorkExperienceCard.module.scss";
 
-export default function WorkExperienceCard({ data }) 
+export default function WorkExperienceCard({ workExperienceData: workExperienceData }) 
 {
     return (
         <div>
@@ -8,18 +8,18 @@ export default function WorkExperienceCard({ data })
                 <div className={`${workExperienceContainer}`}>
                     <div className="mb-6">
                         <label>
-                            {data.workPositionName} @ {data.workName}
+                            {workExperienceData.workPositionName} @ {workExperienceData.workName}
                         </label>
                         <p>
-                            {data.workAddress}, {data.workState} {data.workCity} {data.workCountry} 
+                            {workExperienceData.workAddress}, {workExperienceData.workState} {workExperienceData.workCity} {workExperienceData.workCountry} 
                         </p>
-                        <p>{ data.dateStarted } - { data.dateEnded }</p>
+                        <p>{ workExperienceData.dateStarted } - { workExperienceData.dateEnded }</p>
                     </div>
                     <div className="mb-3">
                         <label>Description</label>
                     </div>
                     <p>
-                        { data.description }
+                        { workExperienceData.description }
                     </p>
                 </div>
             </div>
