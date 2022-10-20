@@ -9,8 +9,12 @@ export default function WorkExperience( { workExperiencesData: workExperiencesDa
 {
     return (
         <div>
-            <div className="mb-3">
-                <label>Work</label>
+            <div className="mb-4">
+                <div className="flex items-center">
+                    <FeatherIcon icon="briefcase"></FeatherIcon>
+                    <h2 className="font-bold ml-2">Work Experience</h2>
+                </div>
+                
             </div>
             { 
                 workExperiencesData &&

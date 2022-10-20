@@ -1,4 +1,6 @@
-import { workExperienceContainer } from "./WorkExperienceCard.module.scss";
+import { 
+    workExperienceContainer 
+} from "./WorkExperienceCard.module.scss";
 
 export default function WorkExperienceCard({ workExperienceData: workExperienceData }) 
 {
