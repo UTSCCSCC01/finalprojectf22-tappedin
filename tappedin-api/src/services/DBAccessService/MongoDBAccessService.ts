@@ -2,7 +2,6 @@ import { injectable } from "inversify";
 import { Collection, DeleteResult, MongoClient, ObjectId, UpdateResult } from "mongodb";
 import { IDBAccessService } from "./IDBAccessService";
 import * as dotenv from "dotenv";
-import { setTimeout } from "timers/promises";
 dotenv.config();
 
 @injectable()
@@ -45,7 +44,7 @@ export class MongoDBAccessService implements IDBAccessService
         }
         finally
         {
-            await setTimeout(1, () => this._client.close());
+            await setTimeout(() => this._client.close(), 1);
         }
     }
 
@@ -74,7 +73,7 @@ export class MongoDBAccessService implements IDBAccessService
         }
         finally
         {
-            await setTimeout(1, () => this._client.close());
+            await setTimeout(() => this._client.close(), 1);
         }
     }
 
@@ -107,7 +106,7 @@ export class MongoDBAccessService implements IDBAccessService
         }
         finally
         {
-            await setTimeout(1, () => this._client.close());
+            await setTimeout(() => this._client.close(), 1);
         }
     }
 
@@ -141,7 +140,7 @@ export class MongoDBAccessService implements IDBAccessService
         }
         finally
         {
-            await setTimeout(1, () => this._client.close());
+            await setTimeout(() => this._client.close(), 1);
         }
     }
 
@@ -167,7 +166,7 @@ export class MongoDBAccessService implements IDBAccessService
         }
         finally
         {
-            await setTimeout(1, () => this._client.close());
+            await setTimeout(() => this._client.close(), 1);
         }
     }
 }

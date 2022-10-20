@@ -5,11 +5,39 @@ import {
     workExperienceContainer,
     addWorkExperienceContainer
 } from "./Dashboard.module.scss";
+
 import FeatherIcon from "feather-icons-react";
 import CoverImage from "../../components/CoverImage";
+import WorkExperienceCard from "../../components/WorkExperienceCard";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function DashboardPage() 
 {
+    const [ workExperienceData, setWorkExperienceData ] = useState();
+
+    var config = {
+        method: "get",
+        url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+        headers: { }
+    };
+
+    useEffect(() => 
+    {
+        axios(config)
+            .then(function (response) 
+            {
+                setWorkExperienceData(response.data);
+                console.log(
+                    "HELLO"
+                );
+            })
+            .catch(function (error) 
+            {
+                console.log(error);
+            });
+    });
+
     return (
         <div className={`${customBackground}`}>
             <CoverImage></CoverImage>
@@ -25,59 +53,15 @@ export default function DashboardPage()
                         <h1 className="mb-3 font-bold">Edit</h1>
                         <div className={`${editContainer}`}>
                             {/* TODO: Insert Content Here */}
-
                             <div>
                                 <div className="mb-3">
                                     <label>Work</label>
                                 </div>
-                                <div className="mb-3">
-                                    <div
-                                        className={`${workExperienceContainer}`}
-                                    >
-                                        <div className="mb-6">
-                                            <label>
-                                                Software Engineer @ ABC Inc.
-                                            </label>
-                                            <p>
-                                                123 Street St, ON Welland Canada
-                                            </p>
-                                            <p>Jan, 2022 - Oct, 2022</p>
-                                        </div>
-                                        <div className="mb-3">
-                                            <label>Description</label>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet,
-                                            consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore
-                                            et dolore magna aliqua. Tortor vitae
-                                            purus faucibus ornare suspendisse
-                                            sed nisi lacus sed. Sed egestas
-                                            egestas fringilla phasellus faucibus
-                                            scelerisque eleifend donec. Morbi
-                                            tempus iaculis urna id volutpat
-                                            lacus. Mattis molestie a iaculis at
-                                            erat pellentesque adipiscing commodo
-                                            elit. Imperdiet nulla malesuada
-                                            pellentesque elit. Volutpat blandit
-                                            aliquam etiam erat velit. Mollis
-                                            aliquam ut porttitor leo. Lacus
-                                            laoreet non curabitur gravida arcu
-                                            ac tortor dignissim convallis.
-                                            Cursus in hac habitasse platea
-                                            dictumst quisque. Vitae turpis massa
-                                            sed elementum tempus. Risus
-                                            ultricies tristique nulla aliquet
-                                            enim tortor. Neque aliquam
-                                            vestibulum morbi blandit cursus
-                                            risus at ultrices. Eget felis eget
-                                            nunc lobortis mattis aliquam
-                                            faucibus purus in. Turpis nunc eget
-                                            lorem dolor sed viverra ipsum nunc
-                                            aliquet.
-                                        </p>
-                                    </div>
-                                </div>
+                                { workExperienceData && 
+                                workExperienceData.map((workExperience, index) => 
+                                {
+                                    return <WorkExperienceCard data={workExperience}></WorkExperienceCard>;
+                                })}
                                 <div
                                     className={`${addWorkExperienceContainer} 
                                 flex items-center justify-center`}

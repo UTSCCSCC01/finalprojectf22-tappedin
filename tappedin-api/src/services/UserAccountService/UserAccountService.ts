@@ -158,8 +158,9 @@ export class UserAccountService implements IUserAccountService
     * @param {UserFieldTypes} field - The information type requested.
     * 
     * @returns {Promise<UserFields | null>} The UserField requested corresponding to that user if found, null otherwise. 
+    * ITS ARRAY ANY?!?!? FIX IT>!!>!>!>!
     */
-    public async getUserField(userIdentifier: UserIdentifier, field: UserFieldTypes): Promise<WithId<UserFields> | null>
+    public async getUserField(userIdentifier: UserIdentifier, field: UserFieldTypes): Promise<Array<any> | null>
     {
         let result;
         let objectID: string | null;
@@ -184,7 +185,7 @@ export class UserAccountService implements IUserAccountService
             if (result.length == 0)
                 return Promise.resolve(null);
 
-            return Promise.resolve(result[0] as WithId<UserFields>);
+            return Promise.resolve(result);
         case UserFieldTypes.WORK_INFO:
             result = await this._dbAccessService.getCollection(this._workCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
@@ -194,8 +195,8 @@ export class UserAccountService implements IUserAccountService
     
             if (result.length == 0)
                 return Promise.resolve(null);
-
-            return Promise.resolve(result[0] as WithId<UserFields>);
+            
+            return Promise.resolve(result);
 
         default:
             throw new Error("Invalid Field Passed.");
@@ -228,12 +229,12 @@ export class UserAccountService implements IUserAccountService
         
         toInsert = { userID: ObjectId.createFromHexString(objectID), ...data };
 
-        if (resultObj = await this.getUserField(userIdentifier, field))
-        {
-            console.log("Field info already exists");
-            userIdentifier.userID = objectID;
-            return this.updateUserField(userIdentifier, field, data, resultObj._id.toHexString());
-        }
+        // if (resultObj = await this.getUserField(userIdentifier, field))
+        // {
+        //     console.log("Field info already exists");
+        //     userIdentifier.userID = objectID;
+        //     return this.updateUserField(userIdentifier, field, data, resultObj._id.toHexString());
+        // }
         
         switch (field)
         {
@@ -264,7 +265,7 @@ export class UserAccountService implements IUserAccountService
         fObjectID?: string): Promise<string>
     {
         let result: string | null;
-        let resultObj: WithId<UserFields> | null;
+        let resultObj: any | null;
         let objectID: string | null;
         let userID: string | null;
 
@@ -282,7 +283,7 @@ export class UserAccountService implements IUserAccountService
         {
             resultObj = await this.getUserField(userIdentifier, field);
             if (resultObj)
-                objectID = resultObj._id.toHexString();
+                objectID = resultObj[0]._id.toHexString();
             else
                 return Promise.reject("Problem Updating User field.");
         }
@@ -290,10 +291,10 @@ export class UserAccountService implements IUserAccountService
         switch (field)
         {
         case UserFieldTypes.EDUCATION_INFO:
-            result = await this._dbAccessService.updateDocument(this._eduCollectionName, objectID, data);
+            result = await this._dbAccessService.updateDocument(this._eduCollectionName, objectID ?? "", data);
             break;
         case UserFieldTypes.WORK_INFO:
-            result = await this._dbAccessService.updateDocument(this._workCollectionName, objectID, data);
+            result = await this._dbAccessService.updateDocument(this._workCollectionName, objectID ?? "", data);
             break;
         default:
             throw new Error("Invalid Field Passed.");

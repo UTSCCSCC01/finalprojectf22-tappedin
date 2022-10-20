@@ -29,6 +29,7 @@ export interface WorkInfo
     workState?: string,
     workCountry: string,
     workPositionName: string,
+    workAddress: string,
     dateStarted: Date,
     dateEnded?: Date, 
     currentlyWorking: boolean,

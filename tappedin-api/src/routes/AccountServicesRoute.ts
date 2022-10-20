@@ -103,9 +103,7 @@ accountServicesRouter.get("/", async (req: Request, res: Response, next: NextFun
             return res.send("User ID type is of invalid form.").status(400);
 
         requestUserIdentifier = createUserIdentifier(userID, userIDType);
-
-        result = userAccountService.getUserField(requestUserIdentifier, fieldType);
-    
+        result = await userAccountService.getUserField(requestUserIdentifier, fieldType);
         if (result)
             return res.send(result).status(200);
         else
