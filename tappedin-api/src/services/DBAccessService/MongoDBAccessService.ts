@@ -2,6 +2,7 @@ import { injectable } from "inversify";
 import { Collection, DeleteResult, MongoClient, ObjectId, UpdateResult } from "mongodb";
 import { IDBAccessService } from "./IDBAccessService";
 import * as dotenv from "dotenv";
+import { setTimeout } from "timers/promises";
 dotenv.config();
 
 @injectable()
@@ -44,7 +45,7 @@ export class MongoDBAccessService implements IDBAccessService
         }
         finally
         {
-            await this._client.close();
+            await setTimeout(1, () => this._client.close());
         }
     }
 
@@ -73,7 +74,7 @@ export class MongoDBAccessService implements IDBAccessService
         }
         finally
         {
-            await this._client.close();
+            await setTimeout(1, () => this._client.close());
         }
     }
 
@@ -91,8 +92,9 @@ export class MongoDBAccessService implements IDBAccessService
         try
         {
             await this._client.connect();
-            const coll = this._client.db(this._databaseName).collection(collectionName);
 
+            const coll = this._client.db(this._databaseName).collection(collectionName);
+            console.log(data);
             const result = await coll.insertOne(data);
 
             return new Promise((resolve, reject) => 
@@ -106,7 +108,7 @@ export class MongoDBAccessService implements IDBAccessService
         }
         finally
         {
-            await this._client.close();
+            await setTimeout(1, () => this._client.close());
         }
     }
 
@@ -120,7 +122,7 @@ export class MongoDBAccessService implements IDBAccessService
     * 
     * @returns {Promise<string>} The hex representation of the ObjectID of the document updated.
     */
-    public async updateDocument(collectionName: string, id: string, data: Object): Promise<string> 
+    public async updateDocument(collectionName: string, id: string, data: Object): Promise<string | null> 
     {
         try
         {
@@ -128,19 +130,19 @@ export class MongoDBAccessService implements IDBAccessService
             const coll = this._client.db(this._databaseName).collection(collectionName);
             const result: UpdateResult = await coll.updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: data }); 
 
-            return new Promise((resolve, reject) => 
-            {
-                if (result.acknowledged && result.upsertedId != null)
-                    resolve(result.upsertedId.toHexString());
-                else if (result.acknowledged && result.matchedCount == 0)
-                    reject(`No document found in collection ${collectionName} with the given id.`);
-                else
-                    reject("Something went wrong updating into the collection.");
-            });
+            if (result.acknowledged)
+                return Promise.resolve(id);
+            // else if (result.acknowledged && result.matchedCount == 0)
+            //      //Promise.reject(`No document found in collection ${collectionName} with the given id.`);
+            //     return Promise.resolve(null);
+            else
+                //return Promise.reject("Something went wrong updating into the collection.");
+                return Promise.resolve(null);
+
         }
         finally
         {
-            await this._client.close();
+            await setTimeout(1, () => this._client.close());
         }
     }
 
@@ -166,7 +168,7 @@ export class MongoDBAccessService implements IDBAccessService
         }
         finally
         {
-            await this._client.close();
+            await setTimeout(1, () => this._client.close());
         }
     }
 }
