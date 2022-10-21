@@ -20,6 +20,7 @@ export class UserAccountService implements IUserAccountService
     private _userCollectionName: string = process.env.USER_COLLECTION_NAME ?? "testCol";
     private _eduCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testEduCol";
     private _workCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testWorkCol";
+    private _covImgCollectionName: string = process.env.COV_IMG_COLLECTION_NAME ?? "testCovImgCol";
 
     /**
      * @constructor
@@ -190,6 +191,10 @@ export class UserAccountService implements IUserAccountService
             result = await this._dbAccessService.getCollection(this._workCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
             break;
+        case UserFieldTypes.COVER_IMAGE:
+            result = await this._dbAccessService.getCollection(this._covImgCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
         default:
             throw new Error("Invalid Field Passed.");
         }
@@ -229,6 +234,9 @@ export class UserAccountService implements IUserAccountService
         case UserFieldTypes.WORK_INFO:
             result = await this._dbAccessService.createDocument(this._workCollectionName, toInsert);
             break;
+        case UserFieldTypes.COVER_IMAGE:
+            result = await this._dbAccessService.createDocument(this._covImgCollectionName, toInsert);
+            break;
         default:
             throw new Error("Invalid Field Passed.");
         }
@@ -257,6 +265,9 @@ export class UserAccountService implements IUserAccountService
             break;
         case UserFieldTypes.WORK_INFO:
             result = await this._dbAccessService.updateDocument(this._workCollectionName, objectID ?? "", data);
+            break;
+        case UserFieldTypes.COVER_IMAGE:
+            result = await this._dbAccessService.updateDocument(this._covImgCollectionName, objectID ?? "", data);
             break;
         default:
             throw new Error("Invalid Field Passed.");

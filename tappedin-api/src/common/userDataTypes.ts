@@ -49,10 +49,18 @@ export interface LoginInfo
     password?: string;
 }
 
+export interface CoverImageInfo
+{
+    imageType: string,
+    imageName: string,
+    imageDataURL: string
+}
+
 export type UserFields = EducationInfo;
 
 export enum UserFieldTypes
 {
     EDUCATION_INFO = 0,
-    WORK_INFO      = 1
+    WORK_INFO      = 1,
+    COVER_IMAGE    = 2
 }
