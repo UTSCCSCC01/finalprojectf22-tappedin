@@ -28,7 +28,7 @@ export default function WorkExperience( { workExperiencesData: workExperiencesDa
                 className={`${addWorkExperienceContainer} 
                                 flex items-center justify-center`}
             >
-                <a href="/CreateWorkExperience">
+                <a href="/EditWorkExperience">
                     <div className="cursor-pointer">
                         <FeatherIcon
                             icon="plus"
