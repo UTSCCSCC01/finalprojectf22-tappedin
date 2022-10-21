@@ -117,9 +117,7 @@ export default function DashboardPage()
                             <WorkExperience
                                 workExperiencesData={workExperiencesData}
                             ></WorkExperience>
-                            <Location
-                                locationData={locationData}
-                            ></Location>
+                            <Location locationData={locationData}></Location>
                         </div>
                     </div>
                 </div>
