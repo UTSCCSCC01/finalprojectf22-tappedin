@@ -6,13 +6,12 @@ import {
     addWorkExperienceContainer
 } from "./Dashboard.module.scss";
 
-import FeatherIcon from "feather-icons-react";
+
 import CoverImage from "../../components/CoverImage";
-import WorkExperienceCard from "../../components/WorkExperienceCard";
-import AboutMeCard from "../../components/AboutMeCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import WorkExperience from "../../sections/Dashboard/WorkExperience";
+import FeatherIcon from "feather-icons-react";
 import AboutMe from "../../sections/Dashboard/AboutMe";
 
 export default function DashboardPage() 
