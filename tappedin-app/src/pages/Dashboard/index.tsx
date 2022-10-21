@@ -12,7 +12,7 @@ import axios from "axios";
 export default function DashboardPage()
 {
     
-    const [covImg, setCovImg] = useState('');
+    const [covImg, setCovImg] = useState("");
 
     const fetchCoverImage = async (): Promise<void> => {
         const config = {
