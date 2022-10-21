@@ -47,6 +47,7 @@ export default function EditCover ({ imgDataURL }: {imgDataURL: string}) {
 
         const config = {
             method: "put",
+            // Change me
             url: `http://localhost:3001/userFieldServices?field=1&objectid=${uid}`,
             headers: {
                 "Content-Type": "application/json",
@@ -70,7 +71,8 @@ export default function EditCover ({ imgDataURL }: {imgDataURL: string}) {
 
         const config = {
             method: "post",
-            url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+            // change me
+            url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
             headers: { 
                 "Content-Type": "application/json"
             },
@@ -110,7 +112,8 @@ export default function EditCover ({ imgDataURL }: {imgDataURL: string}) {
 
 
     return (
-        <div>
+        <div className='pb-2'>
+            <label >Cover Image</label>
             <div className={`${uploadBox} text-center flex flex-col place-content-center`}>
                 <label htmlFor="cover" className={`${fileUpload} text-xl`}>
                     <FeatherIcon icon='image' className='inline' size={50}></FeatherIcon>
@@ -119,7 +122,7 @@ export default function EditCover ({ imgDataURL }: {imgDataURL: string}) {
                 <input type="file" name="cover" id="cover" accept=".jpg,.png,.jpeg" onChange={(e) => handleChange(e)} className={`${input}`}/>
                 {error && <div> Wrong File Type/Too large (.jpg, .png only, less than 5MB) </div>}
             </div>
-            <button type="submit" className='button large mt-2' onClick={(e) => handleSubmit(e)}>Update</button>
+            <button type="submit" className='button mt-2' onClick={(e) => handleSubmit(e)}>Update</button>
                 {file && <img src={`${file.fileDataURL}`}></img>}
         </div>
     ) ;
