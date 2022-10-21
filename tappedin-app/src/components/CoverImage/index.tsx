@@ -1,13 +1,16 @@
-import { customBanner, coverImage } from "./CoverImage.module.scss";
+import { customBanner, coverImage, image } from "./CoverImage.module.scss";
 
-export default function CoverImage({ imgDataURL }: {imgDataURL: string})
+export default function CoverImage({ imgData: imgData })
 {
 
     return (
         <div>
             {
-                imgDataURL.length > 0 ? 
-                <img src={`${imgDataURL}`} className={`${coverImage}`}></img>:
+                imgData ? 
+                <div className={`${coverImage}`}>
+                    <img src={`${imgData.imageDataURL}`} className={`${image}`} alt={`${imgData.imageName}`}></img>
+                </div>
+                :
                 <div className={`${customBanner} mb-10`}></div>
             }
             

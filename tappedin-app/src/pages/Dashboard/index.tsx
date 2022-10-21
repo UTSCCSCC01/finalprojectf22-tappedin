@@ -17,7 +17,7 @@ import WorkExperience from "../../sections/Dashboard/WorkExperience";
 export default function DashboardPage() 
 {
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
-    const [covImg, setCovImg] = useState("");
+    const [covImg, setCovImg] = useState();
 
     useEffect(() => 
     {
@@ -56,15 +56,17 @@ export default function DashboardPage()
     const fetchCoverImage = async (): Promise<void> => {
         const config = {
             method: "get",
-            url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+            url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
             headers: {}
         };
 
         try 
         {
             const res = await axios(config);
-            setCovImg(res.data.fileDataURL);
-            return ;
+            if (res.data == "Nothing was found for this query.")
+                setCovImg(null);
+            else
+                setCovImg(res.data[0]);
         } 
         catch (e) 
         {
@@ -74,7 +76,7 @@ export default function DashboardPage()
 
     return (
         <div className={`${customBackground}`}>
-            <CoverImage imgDataURL={covImg}></CoverImage>
+            <CoverImage imgData={covImg}></CoverImage>
             <div className="container mx-auto px-4 lg:px-0">
                 <div className="grid grid-cols-1 lg:gap-10 lg:grid-cols-4">
                     <div className={`${customNavbar} justify-center mb-10`}>
@@ -87,7 +89,7 @@ export default function DashboardPage()
                         <h1 className="mb-3 font-bold">Edit</h1>
                         <div className={`${editContainer}`}>
                             {/* TODO: Insert Content Here */}
-                            <EditCover imgDataURL={covImg}/>
+                            <EditCover imgData={covImg}/>
                             <WorkExperience workExperiencesData={workExperiencesData}
                             ></WorkExperience>
                         </div>
