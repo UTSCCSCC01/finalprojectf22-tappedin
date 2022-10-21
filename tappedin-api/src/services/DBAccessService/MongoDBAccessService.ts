@@ -1,8 +1,8 @@
 import { injectable } from "inversify";
-import { Collection, DeleteResult, MongoClient, ObjectId, UpdateResult } from "mongodb";
+import { Collection, DeleteResult, MongoClient, ObjectId, UpdateResult, WithId } from "mongodb";
 import { IDBAccessService } from "./IDBAccessService";
 import * as dotenv from "dotenv";
-import { setTimeout } from "timers/promises";
+import { ItemNotFoundError, MongoDBTxError, MongoOperations } from "../../common/errors";
 dotenv.config();
 
 @injectable()
@@ -34,19 +34,18 @@ export class MongoDBAccessService implements IDBAccessService
     * 
     * @returns {Promise<Object | null>} The data within the document requested if it exists, null otherwise. 
     */
-    public async readDocument(collectionName: string, id: string): Promise<Object | null> 
+    public async readDocument(collectionName: string, id: string): Promise<Object> 
     {
-        try
-        {
-            await this._client.connect();
-            const coll: Collection = this._client.db(this._databaseName).collection(collectionName);
+        let result: Object;
+        await this._client.connect();
+        const coll: Collection = this._client.db(this._databaseName).collection(collectionName);
 
-            return coll.findOne({ _id: ObjectId.createFromHexString(id) });
-        }
-        finally
-        {
-            await setTimeout(1, () => this._client.close());
-        }
+        result = coll.findOne({ _id: ObjectId.createFromHexString(id) }) ?? {};
+
+        if (result)
+            return result;
+        else
+            throw new ItemNotFoundError(id);
     }
 
     /** 
@@ -62,20 +61,13 @@ export class MongoDBAccessService implements IDBAccessService
     */
     public async getCollection(collectionName: string, filter?: Object): Promise<Array<Object>> 
     {
-        try
-        {
-            await this._client.connect();
-            const coll = this._client.db(this._databaseName).collection(collectionName);
+        await this._client.connect();
+        const coll = this._client.db(this._databaseName).collection(collectionName);
 
-            if (filter)
-                return coll.find(filter).toArray();
-            else
-                return coll.find().toArray();
-        }
-        finally
-        {
-            await setTimeout(1, () => this._client.close());
-        }
+        if (filter)
+            return coll.find(filter).toArray();
+        else
+            return coll.find().toArray();
     }
 
     /** 
@@ -89,27 +81,19 @@ export class MongoDBAccessService implements IDBAccessService
     */
     public async createDocument(collectionName: string, data: Object): Promise<string> 
     {
-        try
-        {
-            await this._client.connect();
+        await this._client.connect();
 
-            const coll = this._client.db(this._databaseName).collection(collectionName);
-            console.log(data);
-            const result = await coll.insertOne(data);
+        const coll = this._client.db(this._databaseName).collection(collectionName);
+        const result = await coll.insertOne(data);
 
-            return new Promise((resolve, reject) => 
-            {
-                if (result.acknowledged && result.insertedId != null)
-                    resolve(result.insertedId.toHexString());
-                else
-                    reject("Something went wrong inserting into the collection.");
-                
-            });
-        }
-        finally
+        return new Promise((resolve, reject) => 
         {
-            await setTimeout(1, () => this._client.close());
-        }
+            if (result.acknowledged && result.insertedId != null)
+                resolve(result.insertedId.toHexString());
+            else
+                throw new MongoDBTxError(MongoOperations.CREATE);
+            
+        });
     }
 
     /** 
@@ -122,28 +106,18 @@ export class MongoDBAccessService implements IDBAccessService
     * 
     * @returns {Promise<string>} The hex representation of the ObjectID of the document updated.
     */
-    public async updateDocument(collectionName: string, id: string, data: Object): Promise<string | null> 
+    public async updateDocument(collectionName: string, id: string, data: Object): Promise<string> 
     {
-        try
-        {
-            await this._client.connect();
-            const coll = this._client.db(this._databaseName).collection(collectionName);
-            const result: UpdateResult = await coll.updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: data }); 
+        await this._client.connect();
+        const coll = this._client.db(this._databaseName).collection(collectionName);
+        const result: UpdateResult = await coll.updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: data }); 
 
-            if (result.acknowledged)
-                return Promise.resolve(id);
-            // else if (result.acknowledged && result.matchedCount == 0)
-            //      //Promise.reject(`No document found in collection ${collectionName} with the given id.`);
-            //     return Promise.resolve(null);
-            else
-                //return Promise.reject("Something went wrong updating into the collection.");
-                return Promise.resolve(null);
-
-        }
-        finally
-        {
-            await setTimeout(1, () => this._client.close());
-        }
+        if (result.acknowledged)
+            return Promise.resolve(id);
+        else if (result.matchedCount == 0)
+            throw new ItemNotFoundError(id);
+        else
+            throw new MongoDBTxError(MongoOperations.UPDATE);
     }
 
     /** 
@@ -158,17 +132,10 @@ export class MongoDBAccessService implements IDBAccessService
     */
     public async deleteDocument(collectionName: string, id: string): Promise<boolean> 
     {
-        try
-        {
-            await this._client.connect();
-            const coll = this._client.db(this._databaseName).collection(collectionName);
-            const result: DeleteResult = await coll.deleteOne({ _id: ObjectId.createFromHexString(id) }); 
+        await this._client.connect();
+        const coll = this._client.db(this._databaseName).collection(collectionName);
+        const result: DeleteResult = await coll.deleteOne({ _id: ObjectId.createFromHexString(id) }); 
 
-            return Promise.resolve(result.acknowledged);
-        }
-        finally
-        {
-            await setTimeout(1, () => this._client.close());
-        }
+        return Promise.resolve(result.acknowledged);
     }
 }

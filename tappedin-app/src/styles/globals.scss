@@ -5,11 +5,21 @@
 // Google Font Import
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap');
 
+// Variables
+$light-blue: #BBCDE5;
 
 // GENERAL
-body {
+html 
+{
+    height: 100vh;
+}
+
+body 
+{
     font-family: 'Nunito Sans', sans-serif;
     color: #252525;
+    
+    min-height: 100vh;
 }
 
 
@@ -40,6 +50,38 @@ label
     font-weight: bold;
 }
 
+input
+{
+    height: 3.375rem;
+    width: 100%;
+    
+    border: $light-blue solid 2px;
+    border-radius: 20px;
+    
+    padding: 0 1.25rem;
+}
+
+input::placeholder
+{
+    color: #DCD4D4;
+}
+
+textarea
+{
+    border: $light-blue solid 2px;
+    border-radius: 20px;
+    
+    padding: 1rem 1.25rem;
+    width: 100%;
+
+    resize: none;
+}
+
+textarea::placeholder
+{
+    color: #DCD4D4;
+}
+
 .title 
 {
     font-size: 64px;
@@ -58,6 +100,8 @@ li
     background-color: #EF626C;
     border-radius: 20px;
 
+    padding: 1rem 1.5rem;
+
     &.large
     {
         width: 15rem;
@@ -74,4 +118,16 @@ li
         background-color: transparent;
         font-size: 24px;
     }
+}
+
+// Iconography
+FeatherIcon
+{
+    stroke: #252525;
+}
+
+// Colour
+.is-lightblue
+{
+    color: $light-blue;
 }
