@@ -48,29 +48,29 @@ export default function EditSocialPage()
         window.open("/Dashboard", "_self"); // Redirect to Dashboard
     }
 
-    function createSocial(): void 
-    {
-        const data = getSocialJSON();
+    // function createSocial(): void 
+    // {
+    //     const data = getSocialJSON();
 
-        const config = {
-            method: "post",
-            url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            data: data,
-        };
+    //     const config = {
+    //         method: "post",
+    //         url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         data: data,
+    //     };
 
-        axios(config)
-            .then(function (response) 
-            {
-                console.log(JSON.stringify(response.data));
-            })
-            .catch(function (error) 
-            {
-                console.log(error);
-            });
-    }
+    //     axios(config)
+    //         .then(function (response) 
+    //         {
+    //             console.log(JSON.stringify(response.data));
+    //         })
+    //         .catch(function (error) 
+    //         {
+    //             console.log(error);
+    //         });
+    // }
 
     function updateSocial(socialId: string): void 
     {
