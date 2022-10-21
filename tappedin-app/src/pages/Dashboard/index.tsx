@@ -12,11 +12,12 @@ import WorkExperienceCard from "../../components/WorkExperienceCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import WorkExperience from "../../sections/Dashboard/WorkExperience";
+import Social from "../../sections/Dashboard/Social";
 
 export default function DashboardPage() 
 {
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
-
+    const [socialData, setSocialData] = useState();
     useEffect(() => 
     {
         fetchWorkExperiences();
@@ -64,6 +65,12 @@ export default function DashboardPage()
                             {/* TODO: Insert Content Here */}
                             <WorkExperience workExperiencesData={workExperiencesData}
                             ></WorkExperience>
+                        </div>
+                        <div className={`${editContainer}`}>
+                            {/* TODO: Insert Content Here */}
+                            <Social socialData={socialData}
+                            ></Social>
+                            
                         </div>
                     </div>
                 </div>
