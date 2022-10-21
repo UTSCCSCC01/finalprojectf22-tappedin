@@ -18,6 +18,7 @@ export interface EducationInfo
     dateStarted: Date,
     dateEnded?: Date,
     expectedGrad: Date,
+    schoolAddress: string,
     currentlyAttending: boolean,
     description?: string
 }
