@@ -1,14 +1,14 @@
 import {
     customBackground,
     editContainer,
-} from "./CreateWorkExperience.module.scss";
+} from "./EditWorkExperience.module.scss";
 
 import CoverImage from "../../components/CoverImage";
 import FeatherIcon from "feather-icons-react";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function CreateWorkExperiencePage() 
+export default function EditWorkExperiencePage() 
 {
     const [ workName, setWorkName ] = useState("");
     const [ workCountry, setWorkCountry ] = useState("");
@@ -19,42 +19,141 @@ export default function CreateWorkExperiencePage()
     const [ workAddress, setWorkAddress ] = useState("");
     const [ workState, setWorkState ] = useState("");
     const [ workCity, setWorkCity ] = useState("");
-    const [ currentlyWorking, setCurrentlyWorking ] = useState("");
 
-    function handleSubmit(): void
+    const [ isEdit, setIsEdit ] = useState(false);
+
+    useEffect(() => 
     {
-        var data = JSON.stringify({
-            "workName": workName,
-            "workCountry": workCountry,
-            "workPositionName": workPositionName,
-            "dateStarted": dateStarted,
-            "dateEnded": dateEnded,
-            "description": description,
-            "workAddress": workAddress,
-            "workState": workState,
-            "workCity": workCity,
-            "currentlyWorking": true
-        });
+        const workExperienceId = new URLSearchParams(
+            window.location.search
+        ).get("id");
 
-        var config = {
+        console.log(workExperienceId);
+
+        if (!workExperienceId) return;
+
+        setIsEdit(true);
+
+        fetchWorkExperience(workExperienceId).then((t) => 
+        {
+            setFormState(t);
+        });
+    }, []);
+
+    function handleSubmit(): void 
+    {
+        if (!isEdit) createWorkExperience();
+        else
+            updateWorkExperience(
+                new URLSearchParams(window.location.search).get("id")
+            );
+
+        window.open("/Dashboard", "_self"); // Redirect to Dashboard
+    }
+
+    function createWorkExperience(): void 
+    {
+        const data = getWorkExperienceJSON();
+
+        const config = {
             method: "post",
             url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
-            headers: { 
-                "Content-Type": "application/json"
+            headers: {
+                "Content-Type": "application/json",
             },
-            data : data
+            data: data,
         };
 
         axios(config)
             .then(function (response) 
             {
                 console.log(JSON.stringify(response.data));
-                window.open("/Dashboard", "_self");
             })
             .catch(function (error) 
             {
                 console.log(error);
             });
+    }
+
+    function updateWorkExperience(workExperienceId: string): void 
+    {
+        const data = getWorkExperienceJSON();
+
+        const config = {
+            method: "put",
+            url: `http://localhost:3001/userFieldServices?field=1&objectid=${workExperienceId}`,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            data: data,
+        };
+
+        axios(config)
+            .then(function (response) 
+            {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) 
+            {
+                console.log(error);
+            });
+    }
+
+    async function fetchWorkExperience(workExperienceId): Promise<any> 
+    {
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+            headers: {},
+        };
+
+        let workExperience;
+
+        try 
+        {
+            const res = await axios(config);
+            workExperience = res.data.filter(
+                (t) => t._id == workExperienceId
+            )[0];
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+
+        return workExperience;
+    }
+
+    function getWorkExperienceJSON(): any 
+    {
+        const data = JSON.stringify({
+            workName: workName,
+            workCountry: workCountry,
+            workPositionName: workPositionName,
+            dateStarted: dateStarted,
+            dateEnded: dateEnded,
+            description: description,
+            workAddress: workAddress,
+            workState: workState,
+            workCity: workCity,
+            currentlyWorking: true,
+        });
+
+        return data;
+    }
+
+    function setFormState(t): void 
+    {
+        setWorkName(t.workName);
+        setWorkCountry(t.workCountry);
+        setWorkPositionName(t.workPositionName);
+        setDateStarted(t.dateStarted);
+        setDateEnded(t.dateEnded);
+        setDescription(t.description);
+        setWorkAddress(t.workAddress);
+        setWorkState(t.workState);
+        setWorkCity(t.workCity);
     }
 
     return (
@@ -79,8 +178,12 @@ export default function CreateWorkExperiencePage()
                             <div className="mb-2">
                                 <label>Company Name</label>
                             </div>
-                            <input type="text" placeholder="ABC Inc." value={workName} 
-                                onChange={ (t) => setWorkName(t.target.value) } />
+                            <input
+                                type="text"
+                                placeholder="ABC Inc."
+                                value={workName}
+                                onChange={(t) => setWorkName(t.target.value)}
+                            />
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4 mb-6">
@@ -88,15 +191,23 @@ export default function CreateWorkExperiencePage()
                             <div className="mb-2">
                                 <label>Start Date</label>
                             </div>
-                            <input type="text" placeholder="Jan, 2022" value={dateStarted} 
-                                onChange={ (t) => setDateStarted(t.target.value) } />
+                            <input
+                                type="text"
+                                placeholder="Jan, 2022"
+                                value={dateStarted}
+                                onChange={(t) => setDateStarted(t.target.value)}
+                            />
                         </div>
                         <div>
                             <div className="mb-2">
                                 <label>End Date</label>
                             </div>
-                            <input type="text" placeholder="Dec, 2022" value={dateEnded} 
-                                onChange={ (t) => setDateEnded(t.target.value) } />
+                            <input
+                                type="text"
+                                placeholder="Dec, 2022"
+                                value={dateEnded}
+                                onChange={(t) => setDateEnded(t.target.value)}
+                            />
                         </div>
                     </div>
                     <div className="grid grid-cols-10 gap-4 mb-6">
@@ -104,33 +215,45 @@ export default function CreateWorkExperiencePage()
                             <div className="mb-2">
                                 <label>Address</label>
                             </div>
-                            <input type="text" placeholder="123 Street St" 
-                                value={workAddress} 
-                                onChange={ (t) => setWorkAddress(t.target.value) }/>
+                            <input
+                                type="text"
+                                placeholder="123 Street St"
+                                value={workAddress}
+                                onChange={(t) => setWorkAddress(t.target.value)}
+                            />
                         </div>
                         <div className="col-span-1">
                             <div className="mb-2">
                                 <label>Province</label>
                             </div>
-                            <input type="text" placeholder="ON" 
-                                value={workState} 
-                                onChange={ (t) => setWorkState(t.target.value) }/>
+                            <input
+                                type="text"
+                                placeholder="ON"
+                                value={workState}
+                                onChange={(t) => setWorkState(t.target.value)}
+                            />
                         </div>
                         <div className="col-span-2">
                             <div className="mb-2">
                                 <label>City</label>
                             </div>
-                            <input type="text" placeholder="Welland" 
-                                value={workCity} 
-                                onChange={ (t) => setWorkCity(t.target.value) }/>
+                            <input
+                                type="text"
+                                placeholder="Welland"
+                                value={workCity}
+                                onChange={(t) => setWorkCity(t.target.value)}
+                            />
                         </div>
                         <div className="col-span-2">
                             <div className="mb-2">
                                 <label>Country</label>
                             </div>
-                            <input type="text" placeholder="Canada" 
-                                value={workCountry} 
-                                onChange={ (t) => setWorkCountry(t.target.value) }/>
+                            <input
+                                type="text"
+                                placeholder="Canada"
+                                value={workCountry}
+                                onChange={(t) => setWorkCountry(t.target.value)}
+                            />
                         </div>
                     </div>
                     <div className="grid grid-cols-2 mb-6">
@@ -138,9 +261,14 @@ export default function CreateWorkExperiencePage()
                             <div className="mb-2">
                                 <label>Position</label>
                             </div>
-                            <input type="text" placeholder="Software Engineer" 
-                                value={workPositionName} 
-                                onChange={ (t) => setWorkPositionName(t.target.value) } />
+                            <input
+                                type="text"
+                                placeholder="Software Engineer"
+                                value={workPositionName}
+                                onChange={(t) =>
+                                    setWorkPositionName(t.target.value)
+                                }
+                            />
                         </div>
                     </div>
                     <div className="mb-6">
@@ -181,11 +309,16 @@ export default function CreateWorkExperiencePage()
                             lorem dolor sed viverra ipsum nunc
                             aliquet."
                             value={description}
-                            onChange={ (t) => setDescription(t.target.value) }
+                            onChange={(t) => setDescription(t.target.value)}
                         ></textarea>
                     </div>
                     <div className="grid grid-cols-4">
-                        <button className="button" onClick={() => handleSubmit()}>Create</button>
+                        <button
+                            className="button"
+                            onClick={() => handleSubmit()}
+                        >
+                            {isEdit ? "Update" : "Create"}
+                        </button>
                     </div>
                 </div>
             </div>
