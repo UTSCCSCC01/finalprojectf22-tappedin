@@ -39,7 +39,7 @@ accountServicesRouter.post("/", async (req: Request, res: Response, next: NextFu
 
         if (!req.query.field)
             return res.send("Field type not specified.").status(400);
-        
+
         if (!req.query.idtype)
             return res.send("User ID type not specified.").status(400);
         
@@ -48,8 +48,8 @@ accountServicesRouter.post("/", async (req: Request, res: Response, next: NextFu
         else
             userID = req.query.id.toString();
 
-        fieldType = parseInt(req.query.field.toString());
         userIDType = parseInt(req.query.idtype.toString());
+        fieldType = parseInt(req.query.field.toString());
 
         if (!Number.isInteger(fieldType))
             return res.send("Field type is of invalid form.").status(400);
@@ -61,6 +61,38 @@ accountServicesRouter.post("/", async (req: Request, res: Response, next: NextFu
         requestUserIdentifier = createUserIdentifier(userID, userIDType);
         // TODO: check if  user identifier is valid
         result = await userAccountService.addUserField(requestUserIdentifier, fieldType, requestBody);
+        return res.send(result).status(200);
+    }
+    catch (err)
+    {
+        next(err);
+    }
+});
+
+accountServicesRouter.put("/", async (req: Request, res: Response, next: NextFunction) =>
+{
+    console.log("Received POST req for user Field");
+    try
+    {
+        let result;
+        let requestBody = req.body;
+        let fieldType: UserFieldTypes;
+        let objectID: string;
+
+        if (!req.query.field)
+            return res.send("Field type not specified.").status(400);
+        
+        fieldType = parseInt(req.query.field.toString());
+    
+        if (!Number.isInteger(fieldType))
+            return res.send("Field type is of invalid form.").status(400);
+        
+        if (!req.query.objectid)
+            return res.send("Object ID not specified.").status(400);
+        else
+            objectID = req.query.objectid.toString();
+
+        result = await userAccountService.updateUserField(objectID, fieldType, requestBody);
         return res.send(result).status(200);
     }
     catch (err)
