@@ -36,6 +36,7 @@ accountServicesRouter.post("/", async (req: Request, res: Response, next: NextFu
         let fieldType: UserFieldTypes;
         let userID: string;
         let userIDType: UserIDType;
+
         if (!req.query.field)
             return res.send("Field type not specified.").status(400);
 
