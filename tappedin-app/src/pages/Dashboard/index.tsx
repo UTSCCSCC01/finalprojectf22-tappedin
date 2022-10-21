@@ -11,15 +11,18 @@ import { useEffect, useState } from "react";
 import WorkExperience from "../../sections/Dashboard/WorkExperience";
 import Location from "../../sections/Dashboard/Location";
 import FeatherIcon from "feather-icons-react";
+import EducationExperience from "../../sections/Dashboard/EducationExperience";
 
 export default function DashboardPage() 
 {
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
+    const [ educationExperiencesData, setEducationExperiencesData ] = useState();
     const [ locationData, setLocationData ] = useState();
 
     useEffect(() => 
     {
         fetchWorkExperiences();
+        fetchEducationExperiences();
         fetchLocationData();
     }, []);
 
@@ -71,6 +74,34 @@ export default function DashboardPage()
         }
     }
 
+    async function fetchEducationExperiences(): Promise<void>
+    {
+
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=0&idtype=1&id=testUser",
+            headers: { }
+        };
+    
+        try
+        {
+            const t = await axios(config);
+
+            console.log(t.data);
+            
+            // FIXME: Backend Fix and Remove
+            if (t.data == "Nothing was found for this query.")
+                setEducationExperiencesData(null);
+            else
+                setEducationExperiencesData(t.data);
+        }
+        catch (e)
+        {
+            console.error(e);
+        }
+    }
+
     return (
         <div className={`${customBackground}`}>
             <CoverImage></CoverImage>
@@ -117,6 +148,8 @@ export default function DashboardPage()
                             <WorkExperience
                                 workExperiencesData={workExperiencesData}
                             ></WorkExperience>
+                            <EducationExperience educationExperiencesData={educationExperiencesData}
+                            ></EducationExperience>
                             <Location locationData={locationData}></Location>
                         </div>
                     </div>
