@@ -56,15 +56,15 @@ export default function EditCover ({ imgData: imgData }) {
             data: data,
         };
 
-        // axios(config)
-        //     .then((response) =>
-        //     {
-        //         console.log(JSON.stringify(response.data));
-        //     })
-        //     .catch((error) =>
-        //     {
-        //         console.log(error);
-        //     });
+        axios(config)
+            .then((response) =>
+            {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            });
     }
 
     const createCoverImage = (): void => {
@@ -99,15 +99,14 @@ export default function EditCover ({ imgData: imgData }) {
         {
             // There exists a cover image -> update
             console.log("updating cover image");
-            const uid = new URLSearchParams(window.location.search).get("id");
-            updateCoverImage(uid);
+            updateCoverImage(imgData._id);
         } 
         else 
         {
             console.log("no cover image, setting new one");
             createCoverImage();
         }
-        //window.open('/Dashboard', '_self')
+        window.open('/Dashboard', '_self')
         
     }
 
@@ -122,10 +121,9 @@ export default function EditCover ({ imgData: imgData }) {
                     {file ? `${file.imageName}` : "Upload Image"}
                 </label>
                 <input type="file" name="cover" id="cover" accept=".jpg,.png,.jpeg" onChange={(e) => handleChange(e)} className={`${input}`}/>
-                {error && <div> Wrong File Type/Too large (.jpg, .png only, less than 5MB) </div>}
+                {error && <div> Wrong File Type/Too Large (.jpg, .png only, less than 5MB) </div>}
             </div>
             <button type="submit" className='button mt-2' onClick={(e) => handleSubmit(e)}>Update</button>
-                {file && <img src={`${file.imageDataURL}`}></img>}
         </div>
     ) ;
 }
