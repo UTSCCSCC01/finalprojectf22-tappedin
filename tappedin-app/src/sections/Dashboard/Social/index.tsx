@@ -1,12 +1,79 @@
 import { 
-    addSocialContainer 
+    addSocialContainer, editSocialContainer, disabled
 } from "./Social.module.scss";
 
 import FeatherIcon from "feather-icons-react";
 import SocialCard from "../../../components/SocialCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Social( { socialData: socialData } )
 {
+    const [ hasFacebook, setHasFacebook ] = useState(false);
+    const [ facebookURL, setFacebookURL] = useState("");
+
+    const [ hasInstagram, setHasInstagram ] = useState(false);
+    const [ instagramURL, setInstagramURL] = useState("");
+
+    const [ hasTwitter, setHasTwitter ] = useState(false);
+    const [ twitterURL, setTwitterURL] = useState("");
+
+    const [ hasGithub, setHasGithub ] = useState(false);
+    const [ githubURL, setGithubURL] = useState("");
+    useEffect(() => {
+        fetchSocial();
+    }, []);
+
+    async function fetchSocial(): Promise<any> 
+    {
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+
+        let social;
+
+        try 
+        {
+            const res = await axios(config);
+
+            if (res.data.length == 0)
+                return
+            else
+            {
+                social = res.data[0];
+                
+                if (social.facebookURL)
+                    setHasFacebook(true);
+                    setFacebookURL(social.facebookURL)
+                
+                if (social.instagramURL)
+                    setHasInstagram(true);
+                    setInstagramURL(social.instagramURL)
+
+                if (social.twitterURL)
+                    setHasTwitter(true);
+                    setTwitterURL(social.twitterURL)
+
+                if (social.githubURL)
+                    setHasGithub(true);
+                    setGithubURL(social.githubURL)
+            
+            }
+                
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+
+        return social;
+    }
+
     return (
         <div>
             <div className="mb-4">
@@ -16,71 +83,80 @@ export default function Social( { socialData: socialData } )
                 </div>
                 
             </div>
-            {/* { 
-                socialData &&
-                socialData.map((socialData, key) => 
-                    {
-                        return <SocialCard socialData={socialData} 
-                            key={key}></SocialCard>;
-                    })
-            } */}
             <div className=" grid grid-cols-4 gap-5 content-start">
 
             
                 <div
-                    className={`${addSocialContainer} 
+                    className={`${addSocialContainer} ${!hasFacebook ? disabled : ""}
                                     flex items-center justify-center`}
                 >
                     
                     
-                    <a href="/EditSocials">
-                        <div className="cursor-pointer">
+                    <a href={ `https://${facebookURL}` }>
+                        <div className={!hasFacebook ? "cursor-not-allowed" : "cursor-pointer"}>
                             <FeatherIcon
                                 icon="facebook"
                                 size="54"
                                 strokeWidth="1"
-                                color="#BBCDE5"
+                                color={!hasFacebook ? "#95989b" : "#BBCDE5"}
                             />
                         </div>
                     </a>
                 </div>
                 <div
-                    className={`${addSocialContainer} 
+                    className={`${addSocialContainer} ${!hasInstagram ? disabled : ""}
                                     flex items-center justify-center`}
                 >
                     
                     
                     
-                    <a href="/EditSocials">
-                        <div className="cursor-pointer">
+                    <a href={ `https://${instagramURL}` }>
+                        <div className={!hasInstagram ? "cursor-not-allowed" : "cursor-pointer"}>
                             <FeatherIcon
                                 icon="instagram"
                                 size="54"
                                 strokeWidth="1"
-                                color="#BBCDE5"
+                                color={!hasInstagram ? "#95989b" : "#BBCDE5"}
                             />
                         </div>
                     </a>
                 </div>
                 <div
-                    className={`${addSocialContainer} 
+                    className={`${addSocialContainer} ${!hasTwitter ? disabled : ""}
                                     flex items-center justify-center`}
                 >
                     
                     
-                    <a href="/EditSocials">
-                        <div className="cursor-pointer">
+                    <a href={ `https://${twitterURL}` }>
+                        <div className={!hasInstagram ? "cursor-not-allowed" : "cursor-pointer"}>
                             <FeatherIcon
                                 icon="twitter"
                                 size="54"
                                 strokeWidth="1"
-                                color="#BBCDE5"
+                                color={!hasTwitter ? "#95989b" : "#BBCDE5"}
                             />
                         </div>
                     </a>
                 </div>
                 <div
-                    className={`${addSocialContainer} 
+                    className={`${addSocialContainer} ${!hasGithub ? disabled : ""}
+                                    flex items-center justify-center`}
+                >
+                    
+                    
+                    <a href={ `https://${githubURL}` }>
+                        <div className={!hasGithub ? "cursor-not-allowed" : "cursor-pointer"}>
+                            <FeatherIcon
+                                icon="github"
+                                size="54"
+                                strokeWidth="1"
+                                color={!hasGithub ? "#95989b" : "#BBCDE5"}
+                            />
+                        </div>
+                    </a>
+                </div>
+                <div
+                    className={`${editSocialContainer} 
                                     flex items-center justify-center`}
                 >
                     

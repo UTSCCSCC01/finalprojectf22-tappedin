@@ -55,5 +55,6 @@ export enum UserFieldTypes
 {
     EDUCATION_INFO = 0,
     WORK_INFO      = 1,
-    SOCIAL_INFO    = 2
+    LOCATION_INFO  = 2,
+    SOCIAL_INFO    = 3
 }

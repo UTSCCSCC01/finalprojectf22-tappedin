@@ -20,7 +20,8 @@ export class UserAccountService implements IUserAccountService
     private _userCollectionName: string = process.env.USER_COLLECTION_NAME ?? "testCol";
     private _eduCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testEduCol";
     private _workCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testWorkCol";
-
+    private _locationCollectionName: string = process.env.LOCATION_COLLECTION_NAME ?? "testLocationCol";
+    private _socialCollectionName: string = process.env.SOCIAL_COLLECTION_NAME ?? "testSocialCol";
     /**
      * @constructor
      * @param {IDBAccessService} dbAccessService - The service used to interact with the DB. 
@@ -184,10 +185,17 @@ export class UserAccountService implements IUserAccountService
         case UserFieldTypes.EDUCATION_INFO:
             result = await this._dbAccessService.getCollection(this._eduCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
-            
             break;
         case UserFieldTypes.WORK_INFO:
             result = await this._dbAccessService.getCollection(this._workCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
+        case UserFieldTypes.LOCATION_INFO:
+            result = await this._dbAccessService.getCollection(this._locationCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
+        case UserFieldTypes.SOCIAL_INFO:
+            result = await this._dbAccessService.getCollection(this._socialCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
             break;
         default:
@@ -229,6 +237,12 @@ export class UserAccountService implements IUserAccountService
         case UserFieldTypes.WORK_INFO:
             result = await this._dbAccessService.createDocument(this._workCollectionName, toInsert);
             break;
+        case UserFieldTypes.LOCATION_INFO:
+            result = await this._dbAccessService.createDocument(this._locationCollectionName, toInsert);
+            break;
+        case UserFieldTypes.SOCIAL_INFO:
+            result = await this._dbAccessService.createDocument(this._socialCollectionName, toInsert);
+            break;
         default:
             throw new Error("Invalid Field Passed.");
         }
@@ -253,10 +267,16 @@ export class UserAccountService implements IUserAccountService
         switch (field)
         {
         case UserFieldTypes.EDUCATION_INFO:
-            result = await this._dbAccessService.updateDocument(this._eduCollectionName, objectID ?? "", data);
+            result = await this._dbAccessService.updateDocument(this._eduCollectionName, objectID, data);
             break;
         case UserFieldTypes.WORK_INFO:
-            result = await this._dbAccessService.updateDocument(this._workCollectionName, objectID ?? "", data);
+            result = await this._dbAccessService.updateDocument(this._workCollectionName, objectID, data);
+            break;
+        case UserFieldTypes.LOCATION_INFO:
+            result = await this._dbAccessService.updateDocument(this._locationCollectionName, objectID, data);
+            break;
+        case UserFieldTypes.SOCIAL_INFO:
+            result = await this._dbAccessService.updateDocument(this._socialCollectionName, objectID, data);
             break;
         default:
             throw new Error("Invalid Field Passed.");
