@@ -4,14 +4,43 @@ import {
     editContainer,
     customNavbar
 } from "./Dashboard.module.scss";
+import { useEffect, useState } from "react";
+import CoverImage from "../../components/CoverImage";
+import EditCover from "../../sections/Dashboard/EditCoverimage";
+import axios from "axios";
 
 export default function DashboardPage()
 {
+    
+    const [covImg, setCovImg] = useState('');
+
+    const fetchCoverImage = async (): Promise<void> => {
+        const config = {
+            method: "get",
+            url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+            headers: {}
+        };
+
+        try 
+        {
+            const res = await axios(config);
+            setCovImg(res.data.fileDataURL);
+            return ;
+        } 
+        catch (e) 
+        {
+            console.log(e); 
+        }
+    }
+
+    useEffect(() => 
+    {
+        fetchCoverImage();
+    },[]) 
+
     return (
         <div className={ `${customBackground}` }>
-            <div className={ `${customBanner} mb-10` }>
-                
-            </div>
+            <CoverImage imgDataURL={covImg}/>
             <div className="container mx-auto px-4 lg:px-0">
                 <div className="grid grid-cols-1 lg:gap-10 lg:grid-cols-4">
                     <div className={ `${customNavbar} justify-center mb-10` }>
@@ -28,6 +57,7 @@ export default function DashboardPage()
                         </h1>
                         <div className={ `${editContainer}` }>
                             {/* TODO: Insert Content Here */}
+                            <EditCover imgDataURL={covImg}/>
                         </div>
                     </div>
                 </div>

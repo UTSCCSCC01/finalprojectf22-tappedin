@@ -1,26 +1,16 @@
 import React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from "axios";
 import FeatherIcon from "feather-icons-react";
 import { input, fileUpload, uploadBox } from "./EditCover.module.scss";
 
-export default function EditCover () {
+export default function EditCover ({ imgDataURL }: {imgDataURL: string}) {
 
     const [file, setFile] = useState(null);
     const [error, setError] = useState(false);
     const ACCEPTED_TYPES = ['image/jpg', 'image/jpeg', 'image/png'];
     const ACCEPTED_SIZE = 5000000;
 
-    const _getFile = (src: File): Promise<string | ArrayBuffer> => {
-        return new Promise ((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const fileDataURL = reader.result.toString();
-                resolve(fileDataURL);
-            }
-            reader.readAsDataURL(src);
-        });
-    }
 
     const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         let newFile = e.target.files[0];
@@ -37,38 +27,84 @@ export default function EditCover () {
             return ;
         }
         setError(false);
-        _getFile(newFile).then(res =>{
-            console.log(res);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            console.log(reader.result.toString());
             setFile({
                 fileType: newFile.type,
-                fileDataURL: res,
+                fileDataURL: reader.result.toString(),
                 fileName: newFile.name
             });
-        });
+        }
+        reader.readAsDataURL(newFile);
         
         
     }
 
+    const updateCoverImage = (uid: string): void =>
+    {
+        const data = JSON.stringify(file);
+
+        const config = {
+            method: "put",
+            url: `http://localhost:3001/userFieldServices?field=1&objectid=${uid}`,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            data: data,
+        };
+
+        axios(config)
+            .then(function (response) 
+            {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) 
+            {
+                console.log(error);
+            });
+    }
+
+    const createCoverImage = (): void => {
+        const data = JSON.stringify(file);
+
+        const config = {
+            method: "post",
+            url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+            headers: { 
+                "Content-Type": "application/json"
+            },
+            data : data
+        };
+
+        axios(config)
+        .then((res) => {
+            console.log(JSON.stringify(res.data));
+        })
+        .catch((err) => {
+            console.log(err);  
+        })
+    }
+
+
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         console.log(file);
-        
-        // let config = {
-        //     method: "post",
-        //     url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
-        //     headers: { 
-        //         "Content-Type": "application/json"
-        //     },
-        //     data : file
-        // };
 
-        // axios(config)
-        // .then((res) => {
-        //     console.log(JSON.stringify(res.data));
-        // })
-        // .catch((err) => {
-        //     console.log(err);  
-        // })
+        if (imgDataURL.length > 0) 
+        {
+            // There exists a cover image -> update
+            console.log("updating cover image");
+            const uid = new URLSearchParams(window.location.search).get("id");
+            updateCoverImage(uid);
+        } 
+        else 
+        {
+            console.log("no cover image, setting new one");
+            createCoverImage();
+        }
+        
+        
     }
 
 
@@ -84,7 +120,7 @@ export default function EditCover () {
                 {error && <div> Wrong File Type/Too large (.jpg, .png only, less than 5MB) </div>}
             </div>
             <button type="submit" className='button large mt-2' onClick={(e) => handleSubmit(e)}>Update</button>
-                {/* {file && <img src={`${file.fileDataURL}`}></img>} */}
+                {file && <img src={`${file.fileDataURL}`}></img>}
         </div>
     ) ;
 }
