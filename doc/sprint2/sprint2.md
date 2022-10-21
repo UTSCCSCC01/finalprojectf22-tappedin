@@ -8,6 +8,13 @@
 - Arthur
 - Sean
 
+## Trello Link
+https://trello.com/invite/b/RMq8moHa/ATTIad61a4294b1d75329ff9e57441c953425D651254/tappedin
+
+## Documentation Confluence Link
+https://id.atlassian.com/invite/p/confluence?id=4M6vnsW8Qja5xRgPNUGxTQ
+
+
 ## Meeting Notes
 - Ported Jira over to Trello
 - Decided on which user stories to cover this sprint
