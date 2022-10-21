@@ -1,6 +1,5 @@
-import { Result } from "../../common/commonTypes";
-import { UserIdentifier, UserInfo, LoginInfo } from "../../common/userDataTypes";
-import { IUserAccountService } from "../accountCreationService/IUserAccountService";
+import { UserInfo, LoginInfo } from "../../common/userDataTypes";
+import { IUserAccountService } from "../UserAccountService/IUserAccountService";
 import { IUserAuthenticationService } from "./IUserAuthenticationService";
 import { injectable, inject } from "inversify";
 import TYPES from "../../types";
@@ -18,17 +17,20 @@ export class UserAuthenticationService implements IUserAuthenticationService
         let userInfo: UserInfo | null;
         userInfo = await this._userAccountService.getUserInfo({ username: (loginInfo as UserInfo).username });
         // console.log(userInfo)
-        if (userInfo){
-            if(loginInfo.password === userInfo.password) {
-                console.log('Login successful')
+        if (userInfo)
+        {
+            if(loginInfo.password === userInfo.password) 
+            {
+                console.log("Login successful");
                 return Promise.resolve((userInfo as UserInfo));
             }
-            else {
+            else 
+            {
                 return Promise.resolve(null);
             }
 
         }
-        return Promise.resolve(null)
+        return Promise.resolve(null);
     }
 
 

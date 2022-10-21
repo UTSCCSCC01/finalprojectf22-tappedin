@@ -1,5 +1,4 @@
 import styles from "./Hero.module.scss";
-import { BrowserRouter as Router, Link } from "react-router-dom";
 
 export default function Hero() 
 {
@@ -8,9 +7,7 @@ export default function Hero()
             <div className="flex flex-row">
                 <div className="px-10">
                     <div
-                        className={[ styles["customNavbar"], "py-7 px-3" ].join(
-                            " "
-                        )}
+                        className={ `${styles["customNavbar"]} py-7 px-3` }
                     >
                         <div className="columns-3 flex justify-between items-center">
                             <div>
@@ -69,7 +66,7 @@ export default function Hero()
                         </div>
                     </div>
                 </div>
-                <div className={[ styles["background"] ].join(" ")}></div>
+                <div className={ `${styles["background"]}` }></div>
             </div>
         </section>
     );
