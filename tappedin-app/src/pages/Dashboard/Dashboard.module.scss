@@ -2,16 +2,8 @@ $layout-breakpoint-small: 960px;
 
 .customBackground
 {
-    min-height: 100vh;
     background-color: #fbfbfb;
-}
-
-.customBanner
-{
-    height: 11.25rem;
-    width: 100%;
-
-    background: linear-gradient(271.61deg, #639FAB -16.87%, rgba(99, 159, 171, 0.34) 109.57%);
+    min-height: 100vh;
 }
 
 .editContainer

@@ -24,7 +24,7 @@ export default function About()
                             Dictum fusce ut placerat orci nulla.
                         </h2>
                     </div>
-                    <div className={ [ styles["imageContainer"] ].join(" ") }>
+                    <div className={ `${styles["imageContainer"]}` }>
                         
                     </div>
                 </div>
