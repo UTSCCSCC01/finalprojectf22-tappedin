@@ -20,7 +20,6 @@ export default function WorkExperienceCard({ workExperienceData: workExperienceD
                                     <FeatherIcon icon="edit" stroke="#639FAB"></FeatherIcon>
                                 </div>
                             </a>
-                            
                         </div>
                         <p>
                             {workExperienceData.workAddress}, {workExperienceData.workState} {workExperienceData.workCity} {workExperienceData.workCountry} 

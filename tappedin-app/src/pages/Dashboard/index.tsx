@@ -2,45 +2,70 @@ import {
     customBackground,
     editContainer,
     customNavbar,
-    profileImageContainer
+    profileImageContainer,
 } from "./Dashboard.module.scss";
 
 import CoverImage from "../../components/CoverImage";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import WorkExperience from "../../sections/Dashboard/WorkExperience";
+import Location from "../../sections/Dashboard/Location";
 import FeatherIcon from "feather-icons-react";
 
 export default function DashboardPage() 
 {
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
+    const [ locationData, setLocationData ] = useState();
 
     useEffect(() => 
     {
         fetchWorkExperiences();
+        fetchLocationData();
     }, []);
 
-    async function fetchWorkExperiences(): Promise<void>
+    async function fetchWorkExperiences(): Promise<void> 
     {
-
         const config = {
             method: "get",
             // FIXME: Change URL
             url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
-            headers: { }
+            headers: {},
         };
-    
-        try
+
+        try 
         {
             const t = await axios(config);
-            
+
             // FIXME: Backend Fix and Remove
             if (t.data == "Nothing was found for this query.")
                 setWorkExperiencesData(null);
-            else
-                setWorkExperiencesData(t.data);
+            else setWorkExperiencesData(t.data);
         }
-        catch (e)
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
+
+    async function fetchLocationData() 
+    {
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
+            headers: {},
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            // FIXME: Backend Fix and Remove
+            if (t.data == "Nothing was found for this query.")
+                setLocationData(null);
+            else setLocationData(t.data[0]); // Since we can only have 1 location
+        }
+        catch (e) 
         {
             console.error(e);
         }
@@ -51,7 +76,9 @@ export default function DashboardPage()
             <CoverImage></CoverImage>
             <div className="container mx-auto px-4 lg:px-0">
                 <div className="grid grid-cols-1 lg:gap-10 lg:grid-cols-4">
-                    <div className={`${customNavbar} flex flex-col items-center justify-center mb-10`}>
+                    <div
+                        className={`${customNavbar} flex flex-col items-center justify-center mb-10`}
+                    >
                         <h1 className="font-bold text-center mb-6">
                             Tapped
                             <span style={{ color: "#639FAB" }}>In.</span>
@@ -61,26 +88,38 @@ export default function DashboardPage()
                         <h2 className="text-center font-bold">Ben Saobuppha</h2>
 
                         <div className="mt-16 w-full">
-                            <button className="button is-blue is-dashed">Feed</button>
-                            <button className="button is-blue mt-3">Edit</button>
+                            <button className="button is-blue is-dashed">
+                                Feed
+                            </button>
+                            <button className="button is-blue mt-3">
+                                Edit
+                            </button>
                         </div>
 
                         <div className="mt-16 w-full">
                             <a href="/">
                                 <div className="flex items-center cursor-pointer">
-                                    <FeatherIcon icon="log-out" stroke="#BBCDE5"></FeatherIcon>
-                                    <label className="ml-3 cursor-pointer">Sign Out</label>
+                                    <FeatherIcon
+                                        icon="log-out"
+                                        stroke="#BBCDE5"
+                                    ></FeatherIcon>
+                                    <label className="ml-3 cursor-pointer">
+                                        Sign Out
+                                    </label>
                                 </div>
                             </a>
-                            
                         </div>
                     </div>
                     <div className="flex flex-col col-span-3">
                         <h1 className="mb-3 font-bold">Edit</h1>
                         <div className={`${editContainer}`}>
                             {/* TODO: Insert Content Here */}
-                            <WorkExperience workExperiencesData={workExperiencesData}
+                            <WorkExperience
+                                workExperiencesData={workExperiencesData}
                             ></WorkExperience>
+                            <Location
+                                locationData={locationData}
+                            ></Location>
                         </div>
                     </div>
                 </div>
