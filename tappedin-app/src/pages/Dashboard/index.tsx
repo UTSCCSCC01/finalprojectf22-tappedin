@@ -10,14 +10,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import WorkExperience from "../../sections/Dashboard/WorkExperience";
 import FeatherIcon from "feather-icons-react";
+import EducationExperience from "../../sections/Dashboard/EducationExperience";
 
 export default function DashboardPage() 
 {
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
+    const [ educationExperiencesData, setEducationExperiencesData ] = useState();
 
     useEffect(() => 
     {
         fetchWorkExperiences();
+        fetchEducationExperiences();
     }, []);
 
     async function fetchWorkExperiences(): Promise<void>
@@ -39,6 +42,34 @@ export default function DashboardPage()
                 setWorkExperiencesData(null);
             else
                 setWorkExperiencesData(t.data);
+        }
+        catch (e)
+        {
+            console.error(e);
+        }
+    }
+
+    async function fetchEducationExperiences(): Promise<void>
+    {
+
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=0&idtype=1&id=testUser",
+            headers: { }
+        };
+    
+        try
+        {
+            const t = await axios(config);
+
+            console.log(t.data);
+            
+            // FIXME: Backend Fix and Remove
+            if (t.data == "Nothing was found for this query.")
+                setEducationExperiencesData(null);
+            else
+                setEducationExperiencesData(t.data);
         }
         catch (e)
         {
@@ -81,6 +112,8 @@ export default function DashboardPage()
                             {/* TODO: Insert Content Here */}
                             <WorkExperience workExperiencesData={workExperiencesData}
                             ></WorkExperience>
+                            <EducationExperience educationExperiencesData={educationExperiencesData}
+                            ></EducationExperience>
                         </div>
                     </div>
                 </div>
