@@ -7,6 +7,7 @@
 
 // Variables
 $light-blue: #BBCDE5;
+$black: #252525;
 
 // GENERAL
 html 
@@ -96,6 +97,10 @@ li
 // Button
 .button
 {
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+
     color: white;
     background-color: #EF626C;
     border-radius: 20px;
@@ -107,6 +112,19 @@ li
         width: 15rem;
         height: 4rem;
         font-size: 24px;
+    }
+
+    &.is-blue
+    {   
+        color: $black;
+        background: rgba(187, 205, 229, 0.2);
+        border: 2px solid #BBCDE5;
+
+        &.is-dashed
+        {
+            background-color: transparent;
+            border: 2px dashed #BBCDE5;
+        }
     }
 
     &.link
@@ -126,7 +144,7 @@ FeatherIcon
     stroke: #252525;
 }
 
-// Colour
+// Color
 .is-lightblue
 {
     color: $light-blue;

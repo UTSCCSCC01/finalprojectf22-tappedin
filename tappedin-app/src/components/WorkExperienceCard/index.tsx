@@ -1,4 +1,8 @@
-import { workExperienceContainer } from "./WorkExperienceCard.module.scss";
+import { 
+    workExperienceContainer 
+} from "./WorkExperienceCard.module.scss";
+
+import FeatherIcon from "feather-icons-react";
 
 export default function WorkExperienceCard({ workExperienceData: workExperienceData }) 
 {
@@ -7,9 +11,17 @@ export default function WorkExperienceCard({ workExperienceData: workExperienceD
             <div className="mb-3">
                 <div className={`${workExperienceContainer}`}>
                     <div className="mb-6">
-                        <label>
-                            {workExperienceData.workPositionName} @ {workExperienceData.workName}
-                        </label>
+                        <div className="flex justify-between">
+                            <label>
+                                {workExperienceData.workPositionName} @ {workExperienceData.workName}
+                            </label>
+                            <a href={ `/EditWorkExperience?id=${workExperienceData._id}` }>
+                                <div className="cursor-pointer">
+                                    <FeatherIcon icon="edit" stroke="#639FAB"></FeatherIcon>
+                                </div>
+                            </a>
+                            
+                        </div>
                         <p>
                             {workExperienceData.workAddress}, {workExperienceData.workState} {workExperienceData.workCity} {workExperienceData.workCountry} 
                         </p>
