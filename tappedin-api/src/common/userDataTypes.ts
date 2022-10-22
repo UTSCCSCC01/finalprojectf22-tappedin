@@ -37,6 +37,12 @@ export interface WorkInfo
     description?: string
 }
 
+export interface InterestInfo
+{
+    interestName: string,
+    description: string
+}
+
 export interface ABOUTME_INFO
 {
     aboutMeText: string
@@ -67,6 +73,7 @@ export enum UserFieldTypes
     EDUCATION_INFO = 0,
     WORK_INFO      = 1,
     LOCATION_INFO  = 2,
+    ABOUTME_INFO   = 3,
     SOCIAL_INFO    = 4,
-    ABOUTME_INFO   = 3
+    INTEREST_INFO  = 5
 }

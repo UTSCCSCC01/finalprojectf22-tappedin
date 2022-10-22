@@ -9,6 +9,7 @@ import CoverImage from "../../components/CoverImage";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import WorkExperience from "../../sections/Dashboard/WorkExperience";
+import Interests from "../../sections/Dashboard/Interests";
 import Location from "../../sections/Dashboard/Location";
 import FeatherIcon from "feather-icons-react";
 import Social from "../../sections/Dashboard/Social";
@@ -19,12 +20,14 @@ export default function DashboardPage()
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
     const [socialData, setSocialData] = useState();
     const [ aboutMeData, setAboutMeData ] = useState();
+    const [ interestsData, setInterestsData ] = useState();
     const [ educationExperiencesData, setEducationExperiencesData ] = useState();
     const [ locationData, setLocationData ] = useState();
 
     useEffect(() => 
     {
         fetchWorkExperiences();
+        fetchInterests();
         fetchAboutMe();
         fetchSocials();
         fetchEducationExperiences();
@@ -130,6 +133,31 @@ export default function DashboardPage()
             console.error(e);
         }
     }
+    async function fetchInterests(): Promise<void>
+    {
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=5&idtype=1&id=testUser",
+            headers: { }
+        };
+    
+        try
+        {
+            const t = await axios(config);
+            
+            // FIXME: Backend Fix and Remove
+            if (t.data == "Nothing was found for this query.")
+                setInterestsData(null);
+            else
+                setInterestsData(t.data);
+        }
+        catch (e)
+        {
+            console.error(e);
+        }
+    }
+
 
     async function fetchSocials(): Promise<void>
     {
@@ -216,6 +244,8 @@ export default function DashboardPage()
                             <EducationExperience educationExperiencesData={educationExperiencesData}
                             ></EducationExperience>
                             <Location locationData={locationData}></Location>
+                            <Interests interestsData={interestsData}
+                            ></Interests>
                         </div>
                         
                     </div>
