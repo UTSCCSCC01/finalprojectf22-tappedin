@@ -8,7 +8,7 @@ import WorkExperienceCard from "../../../components/WorkExperienceCard";
 export default function WorkExperience( { workExperiencesData: workExperiencesData } )
 {
     return (
-        <div>
+        <div className="mb-6">
             <div className="mb-4">
                 <div className="flex items-center">
                     <FeatherIcon icon="briefcase"></FeatherIcon>
