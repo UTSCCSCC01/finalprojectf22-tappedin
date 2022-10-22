@@ -11,7 +11,7 @@ export default function AboutMeCard({ aboutMeData: aboutMeData })
             <div className="mb-3">
                 <div className={`${aboutMeContainer}`}>
                     <div className="mb-6">
-                        <p className="pre">
+                        <p className="pre-wrap">
                             { aboutMeData.aboutMeText }
                         </p>
                     </div>
