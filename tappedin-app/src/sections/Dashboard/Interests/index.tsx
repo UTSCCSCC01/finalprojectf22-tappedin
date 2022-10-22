@@ -8,10 +8,11 @@ import InterestsBox from "../../../components/InterestsBox";
 export default function Interests( { interestsData: data } )
 {
     return (
-        <div>
-            <div className="flex justify-between">
-                <div className="mb-3">
-                    <label>Interests</label>
+        <div className="mb-6">            
+            <div className="mb-4">
+                <div className="flex items-center">
+                    <FeatherIcon icon="dribbble"></FeatherIcon>
+                    <h2 className="font-bold ml-2">Interests</h2>
                 </div>
             </div>
             { 
