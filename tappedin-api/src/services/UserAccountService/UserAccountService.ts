@@ -20,6 +20,7 @@ export class UserAccountService implements IUserAccountService
     private _userCollectionName: string = process.env.USER_COLLECTION_NAME ?? "testCol";
     private _eduCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testEduCol";
     private _workCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testWorkCol";
+    private _socialCollectionName: string = process.env.SOCIAL_COLLECTION_NAME ?? "testSocialCol";
     private _aboutMeCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testAboutmeCol";
     private _locationCollectionName: string = process.env.LOCATION_COLLECTION_NAME ?? "testLocationCol";
 
@@ -195,6 +196,10 @@ export class UserAccountService implements IUserAccountService
             result = await this._dbAccessService.getCollection(this._locationCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
             break;
+        case UserFieldTypes.SOCIAL_INFO:
+            result = await this._dbAccessService.getCollection(this._socialCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
         case UserFieldTypes.ABOUTME_INFO:
             result = await this._dbAccessService.getCollection(this._aboutMeCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
@@ -237,6 +242,9 @@ export class UserAccountService implements IUserAccountService
             break;
         case UserFieldTypes.WORK_INFO:
             result = await this._dbAccessService.createDocument(this._workCollectionName, toInsert);
+            break;      
+        case UserFieldTypes.SOCIAL_INFO:
+            result = await this._dbAccessService.createDocument(this._socialCollectionName, toInsert);
             break;
         case UserFieldTypes.ABOUTME_INFO:
             result = await this._dbAccessService.createDocument(this._aboutMeCollectionName, toInsert);
@@ -275,6 +283,9 @@ export class UserAccountService implements IUserAccountService
             break;
         case UserFieldTypes.LOCATION_INFO:
             result = await this._dbAccessService.updateDocument(this._locationCollectionName, objectID, data);
+            break;
+        case UserFieldTypes.SOCIAL_INFO:
+            result = await this._dbAccessService.updateDocument(this._socialCollectionName, objectID, data);
             break;
         case UserFieldTypes.ABOUTME_INFO:
             result = await this._dbAccessService.updateDocument(this._aboutMeCollectionName, objectID ?? "", data);
