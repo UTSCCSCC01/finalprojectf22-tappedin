@@ -198,17 +198,18 @@ export default function DashboardPage()
                     </div>
                     <div className="flex flex-col col-span-3">
                         <h1 className="mb-3 font-bold">Edit</h1>
-                        <div className={`${editContainer}`}>
-                            {/* TODO: Insert Content Here */}
+                        {/* <div className={`${editContainer}`}>
                             <Social socialData={socialData}
                             ></Social>
                             
-                        </div>
+                        </div> */}
                         <div className={`${editContainer}`}>
-                            {/* TODO: Insert Content Here */}
-                            <WorkExperience workExperiencesData={workExperiencesData}
-                            <AboutMe aboutMeData={aboutMeData}
+                            
+                            <AboutMe 
+                            aboutMeData={aboutMeData}
                             ></AboutMe>
+                            <Social socialData={socialData}
+                            ></Social>
                             <WorkExperience
                                 workExperiencesData={workExperiencesData}
                             ></WorkExperience>
