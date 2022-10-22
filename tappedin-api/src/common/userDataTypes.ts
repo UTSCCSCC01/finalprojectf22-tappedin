@@ -74,5 +74,6 @@ export enum UserFieldTypes
     WORK_INFO      = 1,
     LOCATION_INFO  = 2,
     ABOUTME_INFO   = 3,
+    SOCIAL_INFO    = 4,
     INTEREST_INFO  = 5
 }

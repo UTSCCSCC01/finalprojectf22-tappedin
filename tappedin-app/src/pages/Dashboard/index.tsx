@@ -12,12 +12,13 @@ import WorkExperience from "../../sections/Dashboard/WorkExperience";
 import Interests from "../../sections/Dashboard/Interests";
 import Location from "../../sections/Dashboard/Location";
 import FeatherIcon from "feather-icons-react";
+import Social from "../../sections/Dashboard/Social";
 import AboutMe from "../../sections/Dashboard/AboutMe";
 import EducationExperience from "../../sections/Dashboard/EducationExperience";
-
 export default function DashboardPage() 
 {
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
+    const [socialData, setSocialData] = useState();
     const [ aboutMeData, setAboutMeData ] = useState();
     const [ interestsData, setInterestsData ] = useState();
     const [ educationExperiencesData, setEducationExperiencesData ] = useState();
@@ -28,6 +29,7 @@ export default function DashboardPage()
         fetchWorkExperiences();
         fetchInterests();
         fetchAboutMe();
+        fetchSocials();
         fetchEducationExperiences();
         fetchLocationData();
     }, []);
@@ -156,6 +158,33 @@ export default function DashboardPage()
         }
     }
 
+
+    async function fetchSocials(): Promise<void>
+    {
+
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=4&idtype=1&id=testUser",
+            headers: { }
+        };
+    
+        try
+        {
+            const t = await axios(config);
+            
+            // FIXME: Backend Fix and Remove
+            if (t.data == "Nothing was found for this query.")
+                setSocialData(null);
+            else
+                setSocialData(t.data);
+        }
+        catch (e)
+        {
+            console.error(e);
+        }
+    }
+
     return (
         <div className={`${customBackground}`}>
             <CoverImage></CoverImage>
@@ -197,10 +226,18 @@ export default function DashboardPage()
                     </div>
                     <div className="flex flex-col col-span-3">
                         <h1 className="mb-3 font-bold">Edit</h1>
+                        {/* <div className={`${editContainer}`}>
+                            <Social socialData={socialData}
+                            ></Social>
+                            
+                        </div> */}
                         <div className={`${editContainer}`}>
-                            {/* TODO: Insert Content Here */}
-                            <AboutMe aboutMeData={aboutMeData}
+                            
+                            <AboutMe 
+                            aboutMeData={aboutMeData}
                             ></AboutMe>
+                            <Social socialData={socialData}
+                            ></Social>
                             <WorkExperience
                                 workExperiencesData={workExperiencesData}
                             ></WorkExperience>
@@ -210,6 +247,7 @@ export default function DashboardPage()
                             <Interests interestsData={interestsData}
                             ></Interests>
                         </div>
+                        
                     </div>
                 </div>
             </div>
