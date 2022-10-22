@@ -1,0 +1,43 @@
+$layout-breakpoint-small: 960px;
+
+.customBackground
+{
+    background-color: #fbfbfb;
+    min-height: 100vh;
+}
+
+.editContainer
+{
+    background-color: white;
+    border-radius: 20px;
+
+    padding: 3rem;
+}
+
+.customNavbar
+{
+    background-color: white;
+    border-radius: 20px;
+    
+    min-width: 100%;
+    height: fit-content;
+
+    padding: 3rem;
+
+    transform: none;
+    
+    @media (min-width: $layout-breakpoint-small) {
+        transform: translateY(-150px);
+    }
+}
+
+.profileImageContainer
+{
+    height: 10rem;
+    width: 10rem;
+
+    border-radius: 50%;
+
+    background: rgba(187, 205, 229, 0.2);
+    border: 2px solid #BBCDE5;
+}

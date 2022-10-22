@@ -1,15 +1,23 @@
-// import typeCheckJson from "./typeCheckConfig.json"
+import { UserIDType } from "./commonTypes";
+import { UserIdentifier } from "./userDataTypes";
 
-// export default function checkTypeMatch(obj: Object, type: string): boolean
-// {
-//     if (!typeCheckJson[type])
-//         throw new Error("Type from JSON does not exist");
-//     if (!(typeCheckJson[type] === Array))
-//         throw new Error("Type from JSON is not an array");
+export function createUserIdentifier(userID: string, userIDType: UserIDType): UserIdentifier
+{
+    let userIdentifier: UserIdentifier = {};
+    switch(userIDType)
+    {
+    case UserIDType.USER_ID:
+        userIdentifier.userID = userID;
+        break;
+    case UserIDType.USERNAME:
+        userIdentifier.username = userID;
+        break;
+    case UserIDType.EMAIL:
+        userIdentifier.email = userID;
+        break;
+    default:
+        throw new Error("User ID type is invalid.");
+    }
 
-    
-//     typeCheckJson[type].forEach(element => 
-//     {
-//         if (!obj[element])
-//     });
-// }
+    return userIdentifier;
+}

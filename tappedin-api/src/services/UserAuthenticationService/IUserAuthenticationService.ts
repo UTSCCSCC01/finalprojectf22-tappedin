@@ -1,8 +1,6 @@
-import { UserInfo, UserIdentifier, LoginInfo } from "../../common/userDataTypes";
-import { RequireAtLeastOne, Result } from "../../common/commonTypes";
+import { UserInfo, LoginInfo } from "../../common/userDataTypes";
 
 export interface IUserAuthenticationService
 {
     validateUser(loginInfo: LoginInfo): Promise<UserInfo | null>;
-    
 }

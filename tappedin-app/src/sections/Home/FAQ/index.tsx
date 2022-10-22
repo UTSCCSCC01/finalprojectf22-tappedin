@@ -1,4 +1,3 @@
-// faq.html
 import React from "react";
 import Accordion from "../../../components/Accordion";
 
@@ -20,13 +19,19 @@ const faqData = [
 export default function FAQ() 
 {
     return (
-        <div>
-            <h1>FAQ</h1>
-            <div className="accordion">
-                {faqData.map(({ question, answer }) => (
-                    <Accordion key={question} title={question} content={answer} />
-                ))}
+        <section className="section">
+            <div className="container mx-auto py-24 xl">
+                <div>
+                    <h1 className="font-bold pb-3">FAQ</h1>                    
+                    <div className="accordion">
+                        <h2>
+                            {faqData.map(({ question, answer }) => (
+                                <Accordion key={question} title={question} content={answer} />
+                            ))}
+                        </h2>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
     );
 }

@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import { IUserAccountService } from "../services/accountCreationService/IUserAccountService";
+import { IUserAccountService } from "../services/UserAccountService/IUserAccountService";
 import container from "../inversify.config";
 import TYPES from "../types";
 import { UserInfo } from "../common/userDataTypes";
@@ -10,7 +10,7 @@ const userAccountService: IUserAccountService = container.get<IUserAccountServic
 
 accountCreationRouter.post("/", async (req: Request, res: Response, next: NextFunction) =>
 {
-    console.log("Received POST req");
+    console.log("Received POST req for create user");
     try
     {
         let resultUser: UserInfo | null;
@@ -19,32 +19,22 @@ accountCreationRouter.post("/", async (req: Request, res: Response, next: NextFu
         let email: string = (req.body.UserInfo as UserInfo).email ?? "";
 
         if (username === "")
-        {
-            res.send("No username provided.").status(400);
-            return;
-        }
-        else if (email === "")
-        {
-            res.send("No email provided.").status(400);
-            return;
-        }
+            return res.send("No username provided.").status(400);
+            
+        if (email === "")
+            return res.send("No email provided.").status(400);
 
         resultUser = await userAccountService.getUserInfo({ username: username });
+
         if (resultUser)
-        {
-            res.send(`Username: ${username} already exists.`).status(400);
-            return;
-        }
+            return res.send(`Username: ${username} already exists.`).status(400);
         
         resultUser = await userAccountService.getUserInfo({ email: email });
         if (resultUser)
-        {
-            res.send(`Email: ${email} already exists.`).status(400);
-            return;
-        }
+            return res.send(`Email: ${email} already exists.`).status(400);
 
         result = await userAccountService.createNewUser(req.body.UserInfo as UserInfo);
-        res.send(result).status(200);
+        return res.send(result).status(200);
     }
     catch (err)
     {
