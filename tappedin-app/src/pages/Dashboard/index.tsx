@@ -11,17 +11,20 @@ import { useEffect, useState } from "react";
 import WorkExperience from "../../sections/Dashboard/WorkExperience";
 import Location from "../../sections/Dashboard/Location";
 import FeatherIcon from "feather-icons-react";
+import AboutMe from "../../sections/Dashboard/AboutMe";
 import EducationExperience from "../../sections/Dashboard/EducationExperience";
 
 export default function DashboardPage() 
 {
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
+    const [ aboutMeData, setAboutMeData ] = useState();
     const [ educationExperiencesData, setEducationExperiencesData ] = useState();
     const [ locationData, setLocationData ] = useState();
 
     useEffect(() => 
     {
         fetchWorkExperiences();
+        fetchAboutMe();
         fetchEducationExperiences();
         fetchLocationData();
     }, []);
@@ -101,7 +104,30 @@ export default function DashboardPage()
             console.error(e);
         }
     }
-
+    async function fetchAboutMe(): Promise<void>
+    {
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
+            headers: { }
+        };
+    
+        try
+        {
+            const t = await axios(config);
+            
+            // FIXME: Backend Fix and Remove
+            if (t.data == "Nothing was found for this query.")
+                setAboutMeData(null);
+            else
+                setAboutMeData(t.data);
+        }
+        catch (e)
+        {
+            console.error(e);
+        }
+    }
     return (
         <div className={`${customBackground}`}>
             <CoverImage></CoverImage>
@@ -145,6 +171,9 @@ export default function DashboardPage()
                         <h1 className="mb-3 font-bold">Edit</h1>
                         <div className={`${editContainer}`}>
                             {/* TODO: Insert Content Here */}
+                            <AboutMe aboutMeData={aboutMeData}
+                            ></AboutMe>
+                            <WorkExperience workExperiencesData={workExperiencesData}
                             <WorkExperience
                                 workExperiencesData={workExperiencesData}
                             ></WorkExperience>
