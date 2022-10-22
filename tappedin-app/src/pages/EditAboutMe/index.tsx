@@ -48,7 +48,7 @@ export default function EditAboutMePage()
 
         const config = {
             method: "post",
-            url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
+            url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -72,7 +72,7 @@ export default function EditAboutMePage()
 
         const config = {
             method: "put",
-            url: `http://localhost:3001/userFieldServices?field=2&objectid=${aboutMeId}`,
+            url: `http://localhost:3001/userFieldServices?field=3&objectid=${aboutMeId}`,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -95,7 +95,7 @@ export default function EditAboutMePage()
         const config = {
             method: "get",
             // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
+            url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
             headers: {},
         };
 

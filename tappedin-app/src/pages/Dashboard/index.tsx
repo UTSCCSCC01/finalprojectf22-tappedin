@@ -109,7 +109,7 @@ export default function DashboardPage()
         const config = {
             method: "get",
             // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
+            url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
             headers: { }
         };
     
