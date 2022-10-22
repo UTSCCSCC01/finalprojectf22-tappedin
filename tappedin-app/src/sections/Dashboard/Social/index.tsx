@@ -29,7 +29,7 @@ export default function Social( { socialData: socialData } )
         const config = {
             method: "get",
             // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
+            url: "http://localhost:3001/userFieldServices?field=4&idtype=1&id=testUser",
             headers: {
                 "Content-Type": "application/json",
             }

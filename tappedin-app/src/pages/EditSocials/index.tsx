@@ -45,7 +45,7 @@ export default function EditSocialPage(socialData)
 
         const config = {
             method: "post",
-            url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
+            url: "http://localhost:3001/userFieldServices?field=4&idtype=1&id=testUser",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -69,7 +69,7 @@ export default function EditSocialPage(socialData)
 
         const config = {
             method: "put",
-            url: `http://localhost:3001/userFieldServices?field=3&objectid=${socialId}`,
+            url: `http://localhost:3001/userFieldServices?field=4&objectid=${socialId}`,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -92,7 +92,7 @@ export default function EditSocialPage(socialData)
         const config = {
             method: "get",
             // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
+            url: "http://localhost:3001/userFieldServices?field=4&idtype=1&id=testUser",
             headers: {
                 "Content-Type": "application/json",
             }
