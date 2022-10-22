@@ -20,7 +20,11 @@ export class UserAccountService implements IUserAccountService
     private _userCollectionName: string = process.env.USER_COLLECTION_NAME ?? "testCol";
     private _eduCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testEduCol";
     private _workCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testWorkCol";
-    private _covImgCollectionName: string = process.env.COV_IMG_COLLECTION_NAME ?? "testCovImgCol";
+    private _socialCollectionName: string = process.env.SOCIAL_COLLECTION_NAME ?? "testSocialCol";
+    private _aboutMeCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testAboutmeCol";
+    private _interestCollectionName: string = process.env.INTEREST_COLLECTION_NAME ?? "testInterestCol";
+    private _locationCollectionName: string = process.env.LOCATION_COLLECTION_NAME ?? "testLocationCol";
+    private _coverImageCollectionName: string = process.env.COVERIMAGE_COLLECTION_NAME ?? "testCoverImageCol";
 
     /**
      * @constructor
@@ -185,14 +189,29 @@ export class UserAccountService implements IUserAccountService
         case UserFieldTypes.EDUCATION_INFO:
             result = await this._dbAccessService.getCollection(this._eduCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
-            
             break;
         case UserFieldTypes.WORK_INFO:
             result = await this._dbAccessService.getCollection(this._workCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
             break;
-        case UserFieldTypes.COVER_IMAGE:
-            result = await this._dbAccessService.getCollection(this._covImgCollectionName, 
+        case UserFieldTypes.LOCATION_INFO:
+            result = await this._dbAccessService.getCollection(this._locationCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
+        case UserFieldTypes.SOCIAL_INFO:
+            result = await this._dbAccessService.getCollection(this._socialCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
+        case UserFieldTypes.INTEREST_INFO:
+            result = await this._dbAccessService.getCollection(this._interestCollectionName,
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
+        case UserFieldTypes.ABOUTME_INFO:
+            result = await this._dbAccessService.getCollection(this._aboutMeCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
+        case UserFieldTypes.COVERIMAGE_INFO:
+            result = await this._dbAccessService.getCollection(this._coverImageCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
             break;
         default:
@@ -233,9 +252,21 @@ export class UserAccountService implements IUserAccountService
             break;
         case UserFieldTypes.WORK_INFO:
             result = await this._dbAccessService.createDocument(this._workCollectionName, toInsert);
+            break;      
+        case UserFieldTypes.SOCIAL_INFO:
+            result = await this._dbAccessService.createDocument(this._socialCollectionName, toInsert);
             break;
-        case UserFieldTypes.COVER_IMAGE:
-            result = await this._dbAccessService.createDocument(this._covImgCollectionName, toInsert);
+        case UserFieldTypes.ABOUTME_INFO:
+            result = await this._dbAccessService.createDocument(this._aboutMeCollectionName, toInsert);
+            break;
+        case UserFieldTypes.LOCATION_INFO:
+            result = await this._dbAccessService.createDocument(this._locationCollectionName, toInsert);
+            break;
+        case UserFieldTypes.INTEREST_INFO:
+            result = await this._dbAccessService.createDocument(this._interestCollectionName, toInsert);
+            break;
+        case UserFieldTypes.COVERIMAGE_INFO:
+            result = await this._dbAccessService.createDocument(this._coverImageCollectionName, toInsert);
             break;
         default:
             throw new Error("Invalid Field Passed.");
@@ -261,13 +292,25 @@ export class UserAccountService implements IUserAccountService
         switch (field)
         {
         case UserFieldTypes.EDUCATION_INFO:
-            result = await this._dbAccessService.updateDocument(this._eduCollectionName, objectID ?? "", data);
+            result = await this._dbAccessService.updateDocument(this._eduCollectionName, objectID, data);
             break;
         case UserFieldTypes.WORK_INFO:
-            result = await this._dbAccessService.updateDocument(this._workCollectionName, objectID ?? "", data);
+            result = await this._dbAccessService.updateDocument(this._workCollectionName, objectID, data);
             break;
-        case UserFieldTypes.COVER_IMAGE:
-            result = await this._dbAccessService.updateDocument(this._covImgCollectionName, objectID ?? "", data);
+        case UserFieldTypes.LOCATION_INFO:
+            result = await this._dbAccessService.updateDocument(this._locationCollectionName, objectID, data);
+            break;
+        case UserFieldTypes.SOCIAL_INFO:
+            result = await this._dbAccessService.updateDocument(this._socialCollectionName, objectID, data);
+            break;
+        case UserFieldTypes.ABOUTME_INFO:
+            result = await this._dbAccessService.updateDocument(this._aboutMeCollectionName, objectID ?? "", data);
+            break;
+        case UserFieldTypes.INTEREST_INFO:
+            result = await this._dbAccessService.updateDocument(this._interestCollectionName, objectID ?? "", data);
+            break;
+        case UserFieldTypes.COVERIMAGE_INFO:
+            result = await this._dbAccessService.updateDocument(this._coverImageCollectionName, objectID, data);
             break;
         default:
             throw new Error("Invalid Field Passed.");

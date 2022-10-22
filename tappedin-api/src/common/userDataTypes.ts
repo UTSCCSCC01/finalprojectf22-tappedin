@@ -18,6 +18,7 @@ export interface EducationInfo
     dateStarted: Date,
     dateEnded?: Date,
     expectedGrad: Date,
+    schoolAddress: string,
     currentlyAttending: boolean,
     description?: string
 }
@@ -36,6 +37,22 @@ export interface WorkInfo
     description?: string
 }
 
+export interface InterestInfo
+{
+    interestName: string,
+    description: string
+}
+
+export interface ABOUTME_INFO
+{
+    aboutMeText: string
+}
+
+export interface LocationInfo
+{
+    location: string;
+}
+
 export interface UserIdentifier
 {
     userID?: string;
@@ -49,11 +66,9 @@ export interface LoginInfo
     password?: string;
 }
 
-export interface CoverImageInfo
+export interface CoverImage
 {
-    imageType: string,
-    imageName: string,
-    imageDataURL: string
+    imageUrl?: string;
 }
 
 export type UserFields = EducationInfo;
@@ -62,5 +77,9 @@ export enum UserFieldTypes
 {
     EDUCATION_INFO = 0,
     WORK_INFO      = 1,
-    COVER_IMAGE    = 2
+    LOCATION_INFO  = 2,
+    ABOUTME_INFO   = 3,
+    SOCIAL_INFO    = 4,
+    INTEREST_INFO  = 5,
+    COVERIMAGE_INFO= 6
 }
