@@ -43,6 +43,11 @@ export interface InterestInfo
     description: string
 }
 
+export interface ABOUTME_INFO
+{
+    aboutMeText: string
+}
+
 export interface LocationInfo
 {
     location: string;
@@ -68,5 +73,6 @@ export enum UserFieldTypes
     EDUCATION_INFO = 0,
     WORK_INFO      = 1,
     LOCATION_INFO  = 2,
-    INTEREST_INFO  = 4
+    INTEREST_INFO  = 4,
+    ABOUTME_INFO   = 3
 }
