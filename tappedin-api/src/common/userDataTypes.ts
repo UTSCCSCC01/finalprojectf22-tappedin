@@ -18,6 +18,7 @@ export interface EducationInfo
     dateStarted: Date,
     dateEnded?: Date,
     expectedGrad: Date,
+    schoolAddress: string,
     currentlyAttending: boolean,
     description?: string
 }
@@ -41,6 +42,11 @@ export interface ABOUTME_INFO
     aboutMeText: string
 }
 
+export interface LocationInfo
+{
+    location: string;
+}
+
 export interface UserIdentifier
 {
     userID?: string;
@@ -60,5 +66,6 @@ export enum UserFieldTypes
 {
     EDUCATION_INFO = 0,
     WORK_INFO      = 1,
-    ABOUTME_INFO   = 2
+    LOCATION_INFO  = 2,
+    ABOUTME_INFO   = 3
 }

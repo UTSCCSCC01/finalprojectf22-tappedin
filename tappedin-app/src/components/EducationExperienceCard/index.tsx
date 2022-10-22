@@ -1,36 +1,34 @@
-import { 
-    workExperienceContainer 
-} from "./WorkExperienceCard.module.scss";
 
+import { educationExperienceContainer } from "./EducationExperienceCard.module.scss";
 import FeatherIcon from "feather-icons-react";
 
-export default function WorkExperienceCard({ workExperienceData: workExperienceData }) 
+export default function EducationExperienceCard({ educationExperienceData: educationExperienceData }) 
 {
     return (
         <div>
             <div className="mb-3">
-                <div className={`${workExperienceContainer}`}>
+                <div className={`${educationExperienceContainer}`}>
                     <div className="mb-6">
                         <div className="flex justify-between">
                             <label>
-                                {workExperienceData.workPositionName} @ {workExperienceData.workName}
+                            {educationExperienceData.programOfStudy} @ {educationExperienceData.schoolName}
                             </label>
-                            <a href={ `/EditWorkExperience?id=${workExperienceData._id}` }>
+                            <a href={ `/EditEducationExperience?id=${educationExperienceData._id}` }>
                                 <div className="cursor-pointer">
                                     <FeatherIcon icon="edit" stroke="#639FAB"></FeatherIcon>
                                 </div>
                             </a>
                         </div>
                         <p>
-                            {workExperienceData.workAddress}, {workExperienceData.workState} {workExperienceData.workCity} {workExperienceData.workCountry} 
+                            {educationExperienceData.schoolAddress}, {educationExperienceData.schoolState} {educationExperienceData.schoolCity} {educationExperienceData.schoolCountry} 
                         </p>
-                        <p>{ workExperienceData.dateStarted } - { workExperienceData.dateEnded }</p>
+                        <p>{ educationExperienceData.dateStarted } - { educationExperienceData.dateEnded }</p>
                     </div>
                     <div className="mb-3">
                         <label>Description</label>
                     </div>
                     <p>
-                        { workExperienceData.description }
+                        { educationExperienceData.description }
                     </p>
                 </div>
             </div>
