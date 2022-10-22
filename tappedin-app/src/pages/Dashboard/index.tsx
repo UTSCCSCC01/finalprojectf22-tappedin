@@ -173,7 +173,6 @@ export default function DashboardPage()
                             {/* TODO: Insert Content Here */}
                             <AboutMe aboutMeData={aboutMeData}
                             ></AboutMe>
-                            <WorkExperience workExperiencesData={workExperiencesData}
                             <WorkExperience
                                 workExperiencesData={workExperiencesData}
                             ></WorkExperience>
