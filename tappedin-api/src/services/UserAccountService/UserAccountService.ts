@@ -24,6 +24,7 @@ export class UserAccountService implements IUserAccountService
     private _aboutMeCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testAboutmeCol";
     private _interestCollectionName: string = process.env.INTEREST_COLLECTION_NAME ?? "testInterestCol";
     private _locationCollectionName: string = process.env.LOCATION_COLLECTION_NAME ?? "testLocationCol";
+    private _coverImageCollectionName: string = process.env.COVERIMAGE_COLLECTION_NAME ?? "testCoverImageCol";
 
     /**
      * @constructor
@@ -209,6 +210,10 @@ export class UserAccountService implements IUserAccountService
             result = await this._dbAccessService.getCollection(this._aboutMeCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
             break;
+        case UserFieldTypes.COVERIMAGE_INFO:
+            result = await this._dbAccessService.getCollection(this._coverImageCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
         default:
             throw new Error("Invalid Field Passed.");
         }
@@ -260,6 +265,9 @@ export class UserAccountService implements IUserAccountService
         case UserFieldTypes.INTEREST_INFO:
             result = await this._dbAccessService.createDocument(this._interestCollectionName, toInsert);
             break;
+        case UserFieldTypes.COVERIMAGE_INFO:
+            result = await this._dbAccessService.createDocument(this._coverImageCollectionName, toInsert);
+            break;
         default:
             throw new Error("Invalid Field Passed.");
         }
@@ -300,6 +308,9 @@ export class UserAccountService implements IUserAccountService
             break;
         case UserFieldTypes.INTEREST_INFO:
             result = await this._dbAccessService.updateDocument(this._interestCollectionName, objectID ?? "", data);
+            break;
+        case UserFieldTypes.COVERIMAGE_INFO:
+            result = await this._dbAccessService.updateDocument(this._coverImageCollectionName, objectID, data);
             break;
         default:
             throw new Error("Invalid Field Passed.");

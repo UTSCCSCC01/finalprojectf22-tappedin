@@ -158,7 +158,7 @@ export default function EditWorkExperiencePage()
 
     return (
         <div className={`${customBackground}`}>
-            <CoverImage></CoverImage>
+            <CoverImage imgData={null}></CoverImage>
             <div className="container mx-auto">
                 <div className={`${editContainer}`}>
                     <a href="/Dashboard">

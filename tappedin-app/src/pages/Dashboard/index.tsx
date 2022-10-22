@@ -15,14 +15,16 @@ import FeatherIcon from "feather-icons-react";
 import Social from "../../sections/Dashboard/Social";
 import AboutMe from "../../sections/Dashboard/AboutMe";
 import EducationExperience from "../../sections/Dashboard/EducationExperience";
+import CoverImageSection from "../../sections/Dashboard/CoverImage";
 export default function DashboardPage() 
 {
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
-    const [socialData, setSocialData] = useState();
+    const [ socialData, setSocialData ] = useState();
     const [ aboutMeData, setAboutMeData ] = useState();
     const [ interestsData, setInterestsData ] = useState();
     const [ educationExperiencesData, setEducationExperiencesData ] = useState();
     const [ locationData, setLocationData ] = useState();
+    const [ coverImageData, setCoverImageData ] = useState();
 
     useEffect(() => 
     {
@@ -32,6 +34,7 @@ export default function DashboardPage()
         fetchSocials();
         fetchEducationExperiences();
         fetchLocationData();
+        fetchCoverImage();
     }, []);
 
     async function fetchWorkExperiences(): Promise<void> 
@@ -82,104 +85,122 @@ export default function DashboardPage()
         }
     }
 
-    async function fetchEducationExperiences(): Promise<void>
+    async function fetchEducationExperiences(): Promise<void> 
     {
-
         const config = {
             method: "get",
             // FIXME: Change URL
             url: "http://localhost:3001/userFieldServices?field=0&idtype=1&id=testUser",
-            headers: { }
+            headers: {},
         };
-    
-        try
+
+        try 
         {
             const t = await axios(config);
 
             console.log(t.data);
-            
+
             // FIXME: Backend Fix and Remove
             if (t.data == "Nothing was found for this query.")
                 setEducationExperiencesData(null);
-            else
-                setEducationExperiencesData(t.data);
+            else setEducationExperiencesData(t.data);
         }
-        catch (e)
+        catch (e) 
         {
             console.error(e);
         }
     }
-    async function fetchAboutMe(): Promise<void>
+    async function fetchAboutMe(): Promise<void> 
     {
         const config = {
             method: "get",
             // FIXME: Change URL
             url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
-            headers: { }
+            headers: {},
         };
-    
-        try
+
+        try 
         {
             const t = await axios(config);
-            
+
             // FIXME: Backend Fix and Remove
             if (t.data == "Nothing was found for this query.")
                 setAboutMeData(null);
-            else
-                setAboutMeData(t.data);
+            else setAboutMeData(t.data);
         }
-        catch (e)
+        catch (e) 
         {
             console.error(e);
         }
     }
-    async function fetchInterests(): Promise<void>
+
+    async function fetchInterests(): Promise<void> 
     {
         const config = {
             method: "get",
             // FIXME: Change URL
             url: "http://localhost:3001/userFieldServices?field=5&idtype=1&id=testUser",
-            headers: { }
+            headers: {},
         };
-    
-        try
+
+        try 
         {
             const t = await axios(config);
-            
+
             // FIXME: Backend Fix and Remove
             if (t.data == "Nothing was found for this query.")
                 setInterestsData(null);
-            else
-                setInterestsData(t.data);
+            else setInterestsData(t.data);
         }
-        catch (e)
+        catch (e) 
         {
             console.error(e);
         }
     }
 
-
-    async function fetchSocials(): Promise<void>
+    async function fetchSocials(): Promise<void> 
     {
-
         const config = {
             method: "get",
             // FIXME: Change URL
             url: "http://localhost:3001/userFieldServices?field=4&idtype=1&id=testUser",
-            headers: { }
+            headers: {},
         };
-    
-        try
+
+        try 
         {
             const t = await axios(config);
-            
+
             // FIXME: Backend Fix and Remove
             if (t.data == "Nothing was found for this query.")
                 setSocialData(null);
-            else
-                setSocialData(t.data);
+            else setSocialData(t.data);
         }
-        catch (e)
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
+
+    async function fetchCoverImage(): Promise<void> 
+    {
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=6&idtype=1&id=testUser",
+            headers: {},
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            // FIXME: Backend Fix and Remove
+            if (t.data == "Nothing was found for this query.")
+                setCoverImageData(null);
+            else setCoverImageData(t.data[0]);
+        }
+        catch (e) 
         {
             console.error(e);
         }
@@ -187,7 +208,9 @@ export default function DashboardPage()
 
     return (
         <div className={`${customBackground}`}>
-            <CoverImage></CoverImage>
+            <CoverImage
+                imageURL={coverImageData ? coverImageData.imageUrl : null}
+            ></CoverImage>
             <div className="container mx-auto px-4 lg:px-0">
                 <div className="grid grid-cols-1 lg:gap-10 lg:grid-cols-4">
                     <div
@@ -232,22 +255,22 @@ export default function DashboardPage()
                             
                         </div> */}
                         <div className={`${editContainer}`}>
-                            
-                            <AboutMe 
-                            aboutMeData={aboutMeData}
-                            ></AboutMe>
-                            <Social socialData={socialData}
-                            ></Social>
+                            <CoverImageSection></CoverImageSection>
+                            <AboutMe aboutMeData={aboutMeData}></AboutMe>
+                            <Social socialData={socialData}></Social>
                             <WorkExperience
                                 workExperiencesData={workExperiencesData}
                             ></WorkExperience>
-                            <EducationExperience educationExperiencesData={educationExperiencesData}
+                            <EducationExperience
+                                educationExperiencesData={
+                                    educationExperiencesData
+                                }
                             ></EducationExperience>
                             <Location locationData={locationData}></Location>
-                            <Interests interestsData={interestsData}
+                            <Interests
+                                interestsData={interestsData}
                             ></Interests>
                         </div>
-                        
                     </div>
                 </div>
             </div>
