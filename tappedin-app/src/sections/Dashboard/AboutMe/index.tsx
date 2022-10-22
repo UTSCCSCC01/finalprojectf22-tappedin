@@ -4,7 +4,7 @@ import AboutMeCard from "../../../components/AboutMeCard";
 export default function AboutMe( { aboutMeData: aboutMeData } )
 {
     return (
-        <div>
+        <div className="mb-8">
             <div className="mb-4">
                 <div className="flex items-center">
                     <FeatherIcon icon="user"></FeatherIcon>

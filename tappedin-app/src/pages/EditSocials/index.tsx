@@ -149,7 +149,7 @@ export default function EditSocialPage(socialData)
 
     return (
         <div className={`${customBackground}`}>
-            <CoverImage></CoverImage>
+            <CoverImage imageURL={null}></CoverImage>
             <div className="container mx-auto">
                 <div className={`${editContainer}`}>
                     <a href="/Dashboard">
