@@ -73,6 +73,6 @@ export enum UserFieldTypes
     EDUCATION_INFO = 0,
     WORK_INFO      = 1,
     LOCATION_INFO  = 2,
-    INTEREST_INFO  = 4,
-    ABOUTME_INFO   = 3
+    ABOUTME_INFO   = 3,
+    INTEREST_INFO  = 5
 }

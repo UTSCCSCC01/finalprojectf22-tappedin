@@ -38,7 +38,7 @@ export default function EditInterestsPage()
         {
             var config = {
                 method: "post",
-                url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
+                url: "http://localhost:3001/userFieldServices?field=5&idtype=1&id=testUser",
                 headers: { 
                     "Content-Type": "application/json"
                 },
@@ -49,7 +49,7 @@ export default function EditInterestsPage()
         {
             var config = {
                 method: "put",
-                url: `http://localhost:3001/userFieldServices?field=2&objectid=${interestId}`,
+                url: `http://localhost:3001/userFieldServices?field=5&objectid=${interestId}`,
                 headers: { 
                     "Content-Type": "application/json"
                 },
@@ -76,7 +76,7 @@ export default function EditInterestsPage()
         {
             var config = {
                 method: "delete",
-                url: `http://localhost:3001/userFieldServices?field=2&objectid=${interestId}`,
+                url: `http://localhost:3001/userFieldServices?field=5&objectid=${interestId}`,
                 headers: { 
                     "Content-Type": "application/json"
                 },
@@ -98,7 +98,7 @@ export default function EditInterestsPage()
         const config = {
             method: "get",
             // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
+            url: "http://localhost:3001/userFieldServices?field=5&idtype=1&id=testUser",
             headers: {},
         };
 
