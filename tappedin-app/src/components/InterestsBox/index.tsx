@@ -15,7 +15,7 @@ export default function InterestsBox({ interestsData: data })
                             </div>
                         </a>
                     </div>
-                    <p>
+                    <p className="pre-wrap">
                         { data.description }
                     </p>
                 </div>

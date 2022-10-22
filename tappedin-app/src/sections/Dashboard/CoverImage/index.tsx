@@ -43,7 +43,7 @@ export default function CoverImageSection()
             <div className="mb-4">
                 <div className="flex items-center">
                     <FeatherIcon icon="image"></FeatherIcon>
-                    <h2 className="font-bold ml-2">Location</h2>
+                    <h2 className="font-bold ml-2">Cover Image</h2>
                 </div>
             </div>
 

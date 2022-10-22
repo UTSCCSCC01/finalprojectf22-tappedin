@@ -34,7 +34,7 @@ export default function Location({ locationData: locationData })
     }
 
     return (
-        <div className="mt-6">
+        <div className="mb-8">
             <div className="mb-4">
                 <div className="flex items-center">
                     <FeatherIcon icon="map-pin"></FeatherIcon>

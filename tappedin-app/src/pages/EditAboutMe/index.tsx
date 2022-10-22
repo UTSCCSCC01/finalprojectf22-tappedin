@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 export default function EditAboutMePage() 
 {
-    const [aboutMeText, setAboutMeText] = useState("");
+    const [ aboutMeText, setAboutMeText ] = useState("");
     const [ isEdit, setIsEdit ] = useState(false);
 
     useEffect(() => 
@@ -132,7 +132,7 @@ export default function EditAboutMePage()
 
     return (
         <div className={`${customBackground}`}>
-            <CoverImage></CoverImage>
+            <CoverImage imageURL={null}></CoverImage>
             <div className="container mx-auto">
                 <div className={`${editContainer}`}>
                     <a href="/Dashboard">

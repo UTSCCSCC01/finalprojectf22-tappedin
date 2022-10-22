@@ -10,17 +10,18 @@ import axios from "axios";
 export default function Social( { socialData: socialData } )
 {
     const [ hasFacebook, setHasFacebook ] = useState(false);
-    const [ facebookURL, setFacebookURL] = useState("");
+    const [ facebookURL, setFacebookURL ] = useState("");
 
     const [ hasInstagram, setHasInstagram ] = useState(false);
-    const [ instagramURL, setInstagramURL] = useState("");
+    const [ instagramURL, setInstagramURL ] = useState("");
 
     const [ hasTwitter, setHasTwitter ] = useState(false);
-    const [ twitterURL, setTwitterURL] = useState("");
+    const [ twitterURL, setTwitterURL ] = useState("");
 
     const [ hasGithub, setHasGithub ] = useState(false);
-    const [ githubURL, setGithubURL] = useState("");
-    useEffect(() => {
+    const [ githubURL, setGithubURL ] = useState("");
+    useEffect(() => 
+    {
         fetchSocial();
     }, []);
 
@@ -42,26 +43,26 @@ export default function Social( { socialData: socialData } )
             const res = await axios(config);
 
             if (res.data.length == 0)
-                return
+                return;
             else
             {
                 social = res.data[0];
                 
                 if (social.facebookURL)
                     setHasFacebook(true);
-                    setFacebookURL(social.facebookURL)
+                setFacebookURL(social.facebookURL);
                 
                 if (social.instagramURL)
                     setHasInstagram(true);
-                    setInstagramURL(social.instagramURL)
+                setInstagramURL(social.instagramURL);
 
                 if (social.twitterURL)
                     setHasTwitter(true);
-                    setTwitterURL(social.twitterURL)
+                setTwitterURL(social.twitterURL);
 
                 if (social.githubURL)
                     setHasGithub(true);
-                    setGithubURL(social.githubURL)
+                setGithubURL(social.githubURL);
             
             }
                 
@@ -75,7 +76,7 @@ export default function Social( { socialData: socialData } )
     }
 
     return (
-        <div>
+        <div className="mb-8">
             <div className="mb-4">
                 <div className="flex items-center">
                     <FeatherIcon icon="globe"></FeatherIcon>
