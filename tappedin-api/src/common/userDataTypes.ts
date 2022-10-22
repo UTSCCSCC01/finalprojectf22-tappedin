@@ -18,6 +18,7 @@ export interface EducationInfo
     dateStarted: Date,
     dateEnded?: Date,
     expectedGrad: Date,
+    schoolAddress: string,
     currentlyAttending: boolean,
     description?: string
 }
@@ -40,6 +41,11 @@ export interface InterestInfo
 {
     interestName: string,
     description: string
+}
+
+export interface LocationInfo
+{
+    location: string;
 }
 
 export interface UserIdentifier

@@ -20,7 +20,7 @@ $layout-breakpoint-small: 960px;
     border-radius: 20px;
     
     min-width: 100%;
-    height: 56.25rem;
+    height: fit-content;
 
     padding: 3rem;
 
@@ -29,4 +29,15 @@ $layout-breakpoint-small: 960px;
     @media (min-width: $layout-breakpoint-small) {
         transform: translateY(-150px);
     }
+}
+
+.profileImageContainer
+{
+    height: 10rem;
+    width: 10rem;
+
+    border-radius: 50%;
+
+    background: rgba(187, 205, 229, 0.2);
+    border: 2px solid #BBCDE5;
 }
