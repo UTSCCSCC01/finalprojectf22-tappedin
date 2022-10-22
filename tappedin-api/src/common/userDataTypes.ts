@@ -36,6 +36,12 @@ export interface WorkInfo
     description?: string
 }
 
+export interface InterestInfo
+{
+    interestName: string,
+    description: string
+}
+
 export interface UserIdentifier
 {
     userID?: string;
@@ -54,5 +60,7 @@ export type UserFields = EducationInfo;
 export enum UserFieldTypes
 {
     EDUCATION_INFO = 0,
-    WORK_INFO      = 1
+    WORK_INFO      = 1,
+    LOCATION_INFO  = 2,
+    INTEREST_INFO  = 4
 }

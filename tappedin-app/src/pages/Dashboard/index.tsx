@@ -12,14 +12,17 @@ import WorkExperienceCard from "../../components/WorkExperienceCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import WorkExperience from "../../sections/Dashboard/WorkExperience";
+import Interests from "../../sections/Dashboard/Interests";
 
 export default function DashboardPage() 
 {
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
+    const [ interestsData, setInterestsData ] = useState();
 
     useEffect(() => 
     {
         fetchWorkExperiences();
+        fetchInterests();
     }, []);
 
     async function fetchWorkExperiences(): Promise<void>
@@ -47,6 +50,31 @@ export default function DashboardPage()
         }
     }
 
+    async function fetchInterests(): Promise<void>
+    {
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
+            headers: { }
+        };
+    
+        try
+        {
+            const t = await axios(config);
+            
+            // FIXME: Backend Fix and Remove
+            if (t.data == "Nothing was found for this query.")
+                setInterestsData(null);
+            else
+                setInterestsData(t.data);
+        }
+        catch (e)
+        {
+            console.error(e);
+        }
+    }
+
     return (
         <div className={`${customBackground}`}>
             <CoverImage></CoverImage>
@@ -64,6 +92,8 @@ export default function DashboardPage()
                             {/* TODO: Insert Content Here */}
                             <WorkExperience workExperiencesData={workExperiencesData}
                             ></WorkExperience>
+                            <Interests interestsData={interestsData}
+                            ></Interests>
                         </div>
                     </div>
                 </div>
