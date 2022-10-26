@@ -14,7 +14,7 @@
     - 1 mark  = Meeting is documented, participants are not recorded or the majority has not participated, not enough analysis has been done
     - 0 marks = No meeting document submitted or the submitted document contains no relevant information
 
-    Your Mark: 0
+    Your Mark: _
 
   - Sprint Planning meeting (sprintN.md) (max 2 marks)
 
@@ -25,7 +25,7 @@
 
     Your Mark: _ 
 
-  Planning Meetings Total Mark: 2 / 4
+  Planning Meetings Total Mark: 4 / 4
 
 ---
 
@@ -278,7 +278,7 @@ Tracking on Trello Total Mark: 24 / 24
 
 ## Total Mark
 
-91 / 93
+93 / 93
 
 
 
