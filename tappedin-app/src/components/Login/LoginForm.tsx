@@ -112,6 +112,8 @@ export default function LoginForm ()
                 <div>
                     <button type="submit" className='p-1 rounded-md hover:ring bg-red-500 text-white text-center w-1/3' 
                         onClick={(e) => handleSubmit(e)}>Login</button>
+                    <a href="/api/auth/login">Login</a>
+                    <a href="/api/auth/logout">Logout</a>
                 </div>
             </div>
         </div>
