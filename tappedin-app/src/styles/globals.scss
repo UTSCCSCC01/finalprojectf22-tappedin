@@ -37,17 +37,17 @@ h2
 
 h3
 {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 p 
 {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 label 
 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
 }
 
@@ -111,11 +111,11 @@ li
     border-radius: 20px;
 
     padding: 1rem 1.5rem;
+    height: 4rem;
 
     &.large
     {
         width: 15rem;
-        height: 4rem;
         font-size: 24px;
     }
 
