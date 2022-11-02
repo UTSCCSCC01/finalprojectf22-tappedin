@@ -84,29 +84,6 @@ export default function DashboardPage()
         }
     }
 
-    async function fetchEducationExperiences(): Promise<void> 
-    {
-        const config = {
-            method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=0&idtype=1&id=testUser",
-            headers: {},
-        };
-
-        try 
-        {
-            const t = await axios(config);
-
-            // FIXME: Backend Fix and Remove
-            if (t.data == "Nothing was found for this query.")
-                setEducationExperiencesData(null);
-            else setEducationExperiencesData(t.data);
-        }
-        catch (e) 
-        {
-            console.error(e);
-        }
-    }
     async function fetchAboutMe(): Promise<void> 
     {
         const config = {
