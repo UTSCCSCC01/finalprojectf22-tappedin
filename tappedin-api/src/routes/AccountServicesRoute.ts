@@ -5,6 +5,7 @@ import TYPES from "../types";
 import { UserFieldTypes, UserIdentifier } from "../common/userDataTypes";
 import { UserIDType } from "../common/commonTypes";
 import { createUserIdentifier } from "../common/commonFunctions";
+import { UserNotFoundError } from "../common/errors";
 
 export const accountServicesRouter = express.Router();
 const userAccountService: IUserAccountService = container.get<IUserAccountService>(TYPES.IUserAccountService);
@@ -138,12 +139,14 @@ accountServicesRouter.get("/", async (req: Request, res: Response, next: NextFun
         if (result)
             return res.status(200).send(result);
         else
-            return res.status(400).send("Nothing was found for this query.");
+            return res.status(404).send("Nothing was found for this query.");
     }
     catch (err)
     {
-        
-        next(err);
+        if (err instanceof UserNotFoundError)
+            return res.status(404).send("Nothing was found for this query.");
+        else
+            next(err);
     }
 });
 

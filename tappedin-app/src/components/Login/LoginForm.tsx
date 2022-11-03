@@ -46,6 +46,9 @@ export default function LoginForm ()
             try
             {
                 await authService.signIn(username, password);
+
+                localStorage.setItem("isLoggedIn", "true");
+                window.open("/Dashboard", "_self");
             }
             catch (err)
             {
@@ -66,11 +69,14 @@ export default function LoginForm ()
                     });
                     setErrors(newErrors);
                 }
-            }
-            finally
-            {
-                localStorage.setItem("isLoggedIn", "true");
-                window.open("/Dashboard", "_self");
+                else if (err instanceof FirebaseError && err.code == "auth/invalid-email")
+                {
+                    newErrors.push({
+                        type: "register",
+                        msg: "Invalid email format.",
+                    });
+                    setErrors(newErrors);
+                }
             }
         }
     };

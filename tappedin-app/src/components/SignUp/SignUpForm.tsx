@@ -75,8 +75,6 @@ export default function SignUpForm()
         }
         else 
         {
-            console.log(type);
-
             try 
             {
                 await authService.signUp(
@@ -87,6 +85,9 @@ export default function SignUpForm()
                     lastName,
                     type == "business"
                 );
+
+                localStorage.setItem("isLoggedIn", "true");
+                window.open("/Dashboard", "_self");
             }
             catch (err) 
             {
@@ -129,10 +130,6 @@ export default function SignUpForm()
                         setErrors(newErrors);
                     }
                 }
-            }
-            finally
-            {
-                window.open("/Dashboard", "_self");
             }
         }
     };

@@ -135,8 +135,8 @@ export class FirebaseAuthenticationService
                         Accept: "application/json",
                     },
                     params: {
-                        fieldType: 7,
-                        objectID: userID
+                        field: 7,
+                        objectid: userID
                     }
                 },
             );
