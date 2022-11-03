@@ -29,7 +29,7 @@ export default function WorkExperienceCard({ workExperienceData: workExperienceD
                     <div className="mb-3">
                         <label>Description</label>
                     </div>
-                    <p>
+                    <p className="pre-wrap">
                         { workExperienceData.description }
                     </p>
                 </div>

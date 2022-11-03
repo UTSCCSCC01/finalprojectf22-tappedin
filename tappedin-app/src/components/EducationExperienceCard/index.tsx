@@ -11,7 +11,7 @@ export default function EducationExperienceCard({ educationExperienceData: educa
                     <div className="mb-6">
                         <div className="flex justify-between">
                             <label>
-                            {educationExperienceData.programOfStudy} @ {educationExperienceData.schoolName}
+                                {educationExperienceData.programOfStudy} @ {educationExperienceData.schoolName}
                             </label>
                             <a href={ `/EditEducationExperience?id=${educationExperienceData._id}` }>
                                 <div className="cursor-pointer">
@@ -27,7 +27,7 @@ export default function EducationExperienceCard({ educationExperienceData: educa
                     <div className="mb-3">
                         <label>Description</label>
                     </div>
-                    <p>
+                    <p className="pre-wrap">
                         { educationExperienceData.description }
                     </p>
                 </div>
