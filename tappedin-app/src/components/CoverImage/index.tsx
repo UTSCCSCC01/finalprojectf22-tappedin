@@ -5,9 +5,10 @@ import { customBanner,
 
 interface CoverImageProps {
     size?: string;
+    publicProfile: boolean;
 }
 
-export default function CoverImage({ size = "sm" }: CoverImageProps)
+export default function CoverImage({ size = "sm", publicProfile }: CoverImageProps)
 {
     const [ coverImageData, setCoverImageData ] = useState();
 
@@ -54,12 +55,17 @@ export default function CoverImage({ size = "sm" }: CoverImageProps)
                         }
                 }
             >
-                <h1 className="absolute bottom-3 right-4 font-bold text-white text-6xl">
-                    Tapped
-                    <span style={{ color: "#639FAB" }}>
-                        In.
-                    </span>
-                </h1>
+                {publicProfile ? 
+                    <h1 className="absolute bottom-4 right-4 font-bold text-white text-6xl">
+                        Tapped
+                        <span style={{ color: "#BBCDE5" }}>
+                            In.
+                        </span>
+                    </h1>
+                    :
+                    ""
+                }
+                
             </div>
         </div>
     );

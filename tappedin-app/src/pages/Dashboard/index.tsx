@@ -181,7 +181,7 @@ export default function DashboardPage()
 
     return (
         <div className={`${customBackground}`}>
-            <CoverImage
+            <CoverImage publicProfile={false}
             ></CoverImage>
             <div className="container mx-auto px-4 lg:px-0">
                 <div className="grid grid-cols-1 lg:gap-10 lg:grid-cols-4">
