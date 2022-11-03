@@ -1,11 +1,11 @@
-import { UserProvider } from "@auth0/nextjs-auth0";
+import { RouteGuard } from "../components/RouteGuard/RouteGuard";
 import "../styles/globals.scss";
 
-export default function MyApp({ Component, pageProps }) 
+export default function MyApp({ Component, pageProps, router }) 
 {
     return (
-        <UserProvider>
-            <Component {...pageProps} />;
-        </UserProvider>
+        <RouteGuard router={router}>
+            <Component {...pageProps} />
+        </RouteGuard>
     );
 }

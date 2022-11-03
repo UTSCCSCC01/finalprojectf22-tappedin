@@ -2,6 +2,10 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import FormError from "./FormError";
+import { FirebaseAuthenticationService } from "../../sdk/services/firebaseAuthenticationService";
+import { FirebaseError } from "firebase/app";
+
+const authService = new FirebaseAuthenticationService();
 
 export default function LoginForm () 
 {
@@ -39,49 +43,35 @@ export default function LoginForm ()
         }
         else 
         {
-            const usr = {
-                LoginInfo: {
-                    username: username,
-                    password: password
+            try
+            {
+                await authService.signIn(username, password);
+            }
+            catch (err)
+            {
+                console.log(err);
+                if (err instanceof FirebaseError && err.code == "auth/wrong-password") 
+                {
+                    newErrors.push({
+                        type: "register",
+                        msg: "Password is incorrect.",
+                    });
+                    setErrors(newErrors);
                 }
-            };
-            console.log(usr);
-            axios.post("http://localhost:3001/login", usr)
-                .then((res) => 
+                else if (err instanceof FirebaseError && err.code == "auth/user-not-found")
                 {
-                    console.log(res.data);
-                    //redirect
-                    console.log(`Login ${username}.`);
-                    return ;
-                })
-                .catch((err) => 
-                {
-                    if (err.response) 
-                    {
-                        console.log(err.response.data);
-                        newErrors.push({
-                            type: "login",
-                            msg: err.response.data
-                        });
-                        setErrors(newErrors);
-                        return ;
-                    }
-                    else if (err.request) 
-                    {
-                        console.log(err.request);
-                        newErrors.push({
-                            type: "login",
-                            msg: "No response."
-                        });
-                        setErrors(newErrors);
-                        return ;
-                    }
-                    else 
-                    {
-                        console.log(err);
-                        return ;
-                    }
-                });
+                    newErrors.push({
+                        type: "register",
+                        msg: "Email does not exist.",
+                    });
+                    setErrors(newErrors);
+                }
+            }
+            finally
+            {
+                localStorage.setItem("isLoggedIn", "true");
+                window.open("/Dashboard", "_self");
+            }
         }
     };
 
@@ -94,8 +84,8 @@ export default function LoginForm ()
                 <div className='grid grid-cols-2 justify-center my-2 w-full'>
                 </div>
                 <div>
-                    <label htmlFor="username" className='block mb-1'>Username</label>
-                    <input type="text" name="username" id="username" placeholder='Username' value={username} className='border-2 border-blue-200 rounded-lg p-1 w-full hover:ring'
+                    <label htmlFor="username" className='block mb-1'>Email</label>
+                    <input type="text" name="username" id="username" placeholder='example@email.com' value={username} className='border-2 border-blue-200 rounded-lg p-1 w-full hover:ring'
                         onChange={(e) => setUsername(e.target.value)}/>
                 </div>
                 <div>
@@ -112,8 +102,6 @@ export default function LoginForm ()
                 <div>
                     <button type="submit" className='p-1 rounded-md hover:ring bg-red-500 text-white text-center w-1/3' 
                         onClick={(e) => handleSubmit(e)}>Login</button>
-                    <a href="/api/auth/login">Login</a>
-                    <a href="/api/auth/logout">Logout</a>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ import { IUserAccountService } from "../services/UserAccountService/IUserAccount
 import container from "../inversify.config";
 import TYPES from "../types";
 import { UserInfo } from "../common/userDataTypes";
+import { UserNotFoundError } from "../common/errors";
 
 export const accountCreationRouter = express.Router();
 const userAccountService: IUserAccountService = container.get<IUserAccountService>(TYPES.IUserAccountService);
@@ -15,26 +16,32 @@ accountCreationRouter.post("/", async (req: Request, res: Response, next: NextFu
     {
         let resultUser: UserInfo | null;
         let result: string;
-        let username: string = (req.body.UserInfo as UserInfo).username ?? "";
-        let email: string = (req.body.UserInfo as UserInfo).email ?? "";
+        let username: string = req.body.username ?? "";
+        let email: string = req.body.email ?? "";
 
         if (username === "")
-            return res.send("No username provided.").status(400);
+            return res.status(400).send("No username provided.");
             
         if (email === "")
-            return res.send("No email provided.").status(400);
+            return res.status(400).send("No email provided.");
+        try
+        {
+            resultUser = await userAccountService.getUserInfo({ username: username });
+            if (resultUser)
+                return res.status(400).send(`Username: ${username} already exists.`);
+        }
+        catch {}
 
-        resultUser = await userAccountService.getUserInfo({ username: username });
+        try
+        {
+            resultUser = await userAccountService.getUserInfo({ email: email });
+            if (resultUser)
+                return res.status(400).send(`Email: ${email} already exists.`);
+        }
+        catch {}
 
-        if (resultUser)
-            return res.send(`Username: ${username} already exists.`).status(400);
-        
-        resultUser = await userAccountService.getUserInfo({ email: email });
-        if (resultUser)
-            return res.send(`Email: ${email} already exists.`).status(400);
-
-        result = await userAccountService.createNewUser(req.body.UserInfo as UserInfo);
-        return res.send(result).status(200);
+        result = await userAccountService.createNewUser(req.body as UserInfo);
+        return res.status(200).send(result);
     }
     catch (err)
     {

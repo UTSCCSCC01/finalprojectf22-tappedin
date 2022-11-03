@@ -16,6 +16,9 @@ import Social from "../../sections/Dashboard/Social";
 import AboutMe from "../../sections/Dashboard/AboutMe";
 import EducationExperience from "../../sections/Dashboard/EducationExperience";
 import CoverImageSection from "../../sections/Dashboard/CoverImage";
+import { FirebaseAuthenticationService } from "../../sdk/services/firebaseAuthenticationService";
+
+const authService = new FirebaseAuthenticationService();
 export default function DashboardPage() 
 {
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
@@ -206,6 +209,15 @@ export default function DashboardPage()
         }
     }
 
+    async function signOut() 
+    {
+        console.log(authService.getCurrentUserId());
+        authService.signOut();
+        console.log(authService.getCurrentUserId());
+        localStorage.setItem("isLoggedIn", "false");
+        window.open("/", "_self");
+    }
+
     return (
         <div className={`${customBackground}`}>
             <CoverImage
@@ -234,17 +246,17 @@ export default function DashboardPage()
                         </div>
 
                         <div className="mt-16 w-full">
-                            <a href="/">
-                                <div className="flex items-center cursor-pointer">
-                                    <FeatherIcon
-                                        icon="log-out"
-                                        stroke="#BBCDE5"
-                                    ></FeatherIcon>
-                                    <label className="ml-3 cursor-pointer">
+                            
+                            <div className="flex items-center cursor-pointer" onClick={() => signOut()}>
+                                <FeatherIcon
+                                    icon="log-out"
+                                    stroke="#BBCDE5"
+                                ></FeatherIcon>
+                                <label className="ml-3 cursor-pointer">
                                         Sign Out
-                                    </label>
-                                </div>
-                            </a>
+                                </label>
+                            </div>
+                            
                         </div>
                     </div>
                     <div className="flex flex-col col-span-3">

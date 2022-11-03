@@ -4,7 +4,7 @@ import cors from "cors";
 import express from "express";
 import cookieParser from "cookie-parser";
 import { accountCreationRouter } from "./routes/AccoundCreationRoute";
-import { loginAccountRouter } from "./routes/LoginAccountRoute";
+// import { loginAccountRouter } from "./routes/LoginAccountRoute";
 import { accountServicesRouter } from "./routes/AccountServicesRoute";
 
 const app = express();
@@ -18,6 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/createUser", accountCreationRouter);
 app.use("/userFieldServices", accountServicesRouter);
-app.use("/login", loginAccountRouter);
+// app.use("/login", loginAccountRouter);
 
 export default app;
