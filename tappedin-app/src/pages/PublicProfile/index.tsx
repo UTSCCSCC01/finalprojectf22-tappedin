@@ -1,9 +1,8 @@
-import {
-    profileImageContainer,
-    lineBreak
-} from "./PublicProfile.module.scss";
+import { profileImageContainer, lineBreak } from "./PublicProfile.module.scss";
 
 import CoverImage from "../../components/CoverImage";
+import AboutMe from "../../sections/PublicProfile/AboutMe";
+import FeatherIcon from "feather-icons-react";
 
 export default function PublicProfile()
 {
@@ -37,6 +36,7 @@ export default function PublicProfile()
                 <div>
                     <h1 className="font-bold text-4xl mb-6">Info</h1>
                     {/* TODO: Insert Other Content Here */}
+                    <AboutMe></AboutMe>
                 </div>
             </div>
         </div>
