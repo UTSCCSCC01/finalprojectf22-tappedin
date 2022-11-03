@@ -33,6 +33,7 @@ export default function CoverImage({ size = "sm" }: CoverImageProps)
             if (t.data == "Nothing was found for this query.")
                 setCoverImageData(null);
             else setCoverImageData(t.data[0]);
+            // setCoverImageData(null);
         }
         catch (e) 
         {
@@ -43,7 +44,7 @@ export default function CoverImage({ size = "sm" }: CoverImageProps)
     return (
         <div>
             <div
-                className={`${customBanner} mb-10 ${size == "lg" ? isLarge : "" }`}
+                className={`${customBanner} mb-10 ${size == "lg" ? isLarge : "" } relative`}
                 style={
                     coverImageData && coverImageData.imageUrl != ""
                         ? { backgroundImage: `url(${coverImageData.imageUrl})` }
@@ -52,7 +53,14 @@ export default function CoverImage({ size = "sm" }: CoverImageProps)
                                   "linear-gradient(271.61deg, #639FAB -16.87%, rgba(99, 159, 171, 0.34) 109.57%);",
                         }
                 }
-            ></div>
+            >
+                <h1 className="absolute bottom-3 right-4 font-bold text-white text-6xl">
+                    Tapped
+                    <span style={{ color: "#639FAB" }}>
+                        In.
+                    </span>
+                </h1>
+            </div>
         </div>
     );
 }
