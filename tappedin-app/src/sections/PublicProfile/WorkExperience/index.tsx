@@ -8,15 +8,22 @@ export default function WorkExperience()
 
     useEffect(() => 
     {
-        fetchWorkExperiences();
+        const userID: string = new URLSearchParams(
+            window.location.search
+        ).get("id");
+
+        fetchWorkExperiences(userID);
     }, []);
 
-    async function fetchWorkExperiences(): Promise<void> 
+    async function fetchWorkExperiences(userID: string): Promise<void> 
     {
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=1&idtype=3&id=" + userID;
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+            url: url,
             headers: {},
         };
 

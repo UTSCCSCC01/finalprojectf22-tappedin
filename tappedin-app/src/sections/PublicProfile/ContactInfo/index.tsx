@@ -8,15 +8,22 @@ export default function ContactInfo()
 
     useEffect(() => 
     {
-        fetchContactInfo();
+        const userID: string = new URLSearchParams(
+            window.location.search
+        ).get("id");
+
+        fetchContactInfo(userID);
     }, []);
 
-    async function fetchContactInfo(): Promise<void> 
+    async function fetchContactInfo(userID: string): Promise<void> 
     {
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=8&idtype=3&id=" + userID;
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=8&idtype=1&id=testUser",
+            url: url,
             headers: {},
         };
 
