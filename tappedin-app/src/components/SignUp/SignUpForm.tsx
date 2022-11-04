@@ -87,6 +87,7 @@ export default function SignUpForm()
                 );
 
                 localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("userID", authService.getCurrentUserId());
                 window.open("/Dashboard", "_self");
             }
             catch (err) 

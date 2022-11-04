@@ -48,6 +48,7 @@ export default function LoginForm ()
                 await authService.signIn(username, password);
 
                 localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("userID", authService.getCurrentUserId());
                 window.open("/Dashboard", "_self");
             }
             catch (err)
