@@ -1,16 +1,6 @@
+# Product Backlog
+
 As Beth, I should be able to edit my social media information on the dashboard.
-
-As Beth, I should be able to edit my work experience on the dashboard.
-
-As Beth, I should be able to edit my cover image on the dashboard.
-
-As Beth, I should be able to edit my education information on the dashboard.
-
-As Beth, I should be able to edit my ‘about me’ section on the dashboard.
-
-As Milo, I should be able to edit my location on my profile.
-
-As Beth, I should be able to edit my ‘interests’ section on the dashboard.
 
 As Milo, I should be able to tap on the NFC tag, and view the other user’s profile.
 
@@ -38,3 +28,20 @@ As Milo, I should be able to see how many "Comments" I have on a post.
 
 As Beth, I should be able to see meaningful information on the website.
 
+Users should be able to see "Location" section on their public profile.
+
+Users should be able to see "About Me" section on their public profile.
+
+Users should be able to see "Interest" section on their public profile.
+
+Users should be able to create accounts and have their own information.
+
+Users should have authentication on their account.
+
+Users should be able to see "Work Experience" section on their public profile.
+
+Users should be able to see "Education Experience" section on their public profile.
+
+Users should be able to see "Socials" section on their public profile.
+
+Users should be able to see "Cover Image" section on their public profile.

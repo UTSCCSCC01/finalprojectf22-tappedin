@@ -68,7 +68,9 @@ tappedin-app (frontend) will display all of the necessary information to the use
 
 tappedin-api (backend) will perform operations required by tappedin-app by either performing operations on the server (ex. retrieving and parsing third-party API calls) or by performing CRUD operations on the DB.
 
-The database chosen for this project is MongoDB, it will store all of the information needed for the application such as user info, application content, etc. 
+The database chosen for this project is MongoDB, it will store all of the information needed for the application such as user info, application content, etc.
+
+tappedin-app will authenticate users using the Firebase Authentication provided by Google. This will allow the app to control what information each user can see. This will also block users who are not signed in from accessing certain pages.
 
 ---
 
