@@ -6,15 +6,23 @@ import { customBanner,
 interface CoverImageProps {
     size?: string;
     publicProfile: boolean;
+    existingImage?: any;
 }
 
-export default function CoverImage({ size = "sm", publicProfile }: CoverImageProps)
+export default function CoverImage({ size = "sm", publicProfile, existingImage=null }: CoverImageProps)
 {
     const [ coverImageData, setCoverImageData ] = useState();
 
     useEffect(() => 
     {
-        fetchCoverImage();
+        if(existingImage)
+        {
+            setCoverImageData(existingImage);
+        }
+        else
+        {
+            fetchCoverImage();
+        }
     }, []);
 
     async function fetchCoverImage(): Promise<void> 
