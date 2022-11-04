@@ -5,23 +5,37 @@ import { customBanner,
 
 interface CoverImageProps {
     size?: string;
+    publicProfile: boolean;
+    existingImage?: any;
 }
 
-export default function CoverImage({ size = "sm" }: CoverImageProps)
+export default function CoverImage({ size = "sm", publicProfile, existingImage=null }: CoverImageProps)
 {
     const [ coverImageData, setCoverImageData ] = useState();
 
     useEffect(() => 
     {
-        fetchCoverImage();
+        if(existingImage)
+        {
+            setCoverImageData(existingImage);
+        }
+        else
+        {
+            fetchCoverImage();
+        }
     }, []);
 
     async function fetchCoverImage(): Promise<void> 
     {
+        
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+        
+        if (!userID)
+            return;
+
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=6&idtype=1&id=testUser",
+            url: process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=6&idtype=3&id="+userID,
             headers: {},
         };
 
@@ -29,10 +43,10 @@ export default function CoverImage({ size = "sm" }: CoverImageProps)
         {
             const t = await axios(config);
 
-            // FIXME: Backend Fix and Remove
-            if (t.data == "Nothing was found for this query.")
+            if (t.status == 400 || t.status == 404)
                 setCoverImageData(null);
             else setCoverImageData(t.data[0]);
+
         }
         catch (e) 
         {
@@ -43,7 +57,7 @@ export default function CoverImage({ size = "sm" }: CoverImageProps)
     return (
         <div>
             <div
-                className={`${customBanner} mb-10 ${size == "lg" ? isLarge : "" }`}
+                className={`${customBanner} mb-10 ${size == "lg" ? isLarge : "" } relative`}
                 style={
                     coverImageData && coverImageData.imageUrl != ""
                         ? { backgroundImage: `url(${coverImageData.imageUrl})` }
@@ -52,7 +66,19 @@ export default function CoverImage({ size = "sm" }: CoverImageProps)
                                   "linear-gradient(271.61deg, #639FAB -16.87%, rgba(99, 159, 171, 0.34) 109.57%)",
                         }
                 }
-            ></div>
+            >
+                {publicProfile ? 
+                    <h1 className="absolute bottom-[10%] right-[5%] font-bold text-white text-2xl md:text-6xl">
+                        Tapped
+                        <span className="is-lightblue">
+                            In.
+                        </span>
+                    </h1>
+                    :
+                    ""
+                }
+                
+            </div>
         </div>
     );
 }

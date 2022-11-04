@@ -13,7 +13,7 @@ export default function PublicProfile()
 {
     return (
         <div>
-            <CoverImage size="lg"></CoverImage>
+            <CoverImage size="lg" publicProfile={true}></CoverImage>
             <div className="container mx-auto px-5 md:px-0">
                 <div className="grid grid-cols-5 mb-8">
                     <div className="col-span-2">

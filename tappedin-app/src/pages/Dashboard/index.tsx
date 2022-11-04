@@ -29,6 +29,8 @@ export default function DashboardPage()
     const [ interestsData, setInterestsData ] = useState();
     const [ educationExperiencesData, setEducationExperiencesData ] = useState();
     const [ locationData, setLocationData ] = useState();
+    const [ coverImageData, setCoverImageData ] = useState();
+
     const [ contactInfoData, setContactInfoData ] = useState();
     const [ fullName, setFullName ] = useState("");
 
@@ -45,6 +47,7 @@ export default function DashboardPage()
         fetchLocationData();
         fetchContactInfo();
         fetchFullName();
+        fetchCoverImage();
     }, []);
 
     async function fetchFullName(): Promise<void> 
@@ -235,6 +238,31 @@ export default function DashboardPage()
         }
     }
 
+    async function fetchCoverImage(): Promise<void> 
+    {
+
+        const config = {
+            method: "get",
+            url: process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=6&idtype=3&id="+userID,
+            headers: {},
+            validateStatus: (status) => { return status < 500; }
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            if (t.status == 400 || t.status == 404)
+                setCoverImageData(null);
+            else setCoverImageData(t.data[0]);
+
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
+    
     async function signOut() 
     {
         authService.signOut();
@@ -245,7 +273,7 @@ export default function DashboardPage()
 
     return (
         <div className={`${customBackground}`}>
-            <CoverImage
+            <CoverImage publicProfile={false} existingImage={coverImageData}
             ></CoverImage>
             <div className="container mx-auto px-4 lg:px-0">
                 <div className="grid grid-cols-1 lg:gap-10 lg:grid-cols-4">
@@ -300,7 +328,7 @@ export default function DashboardPage()
                                 </div>
                             </a>
                             
-                            <CoverImageSection></CoverImageSection>
+                            <CoverImageSection coverImageData={coverImageData}></CoverImageSection>
                             <AboutMe aboutMeData={aboutMeData}></AboutMe>
                             <ContactInfo contactInfoData={contactInfoData}></ContactInfo>
                             <Social socialData={socialData}></Social>
