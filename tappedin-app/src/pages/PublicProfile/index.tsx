@@ -7,6 +7,7 @@ import WorkExperience from "../../sections/PublicProfile/WorkExperience";
 import EducationExperience from "../../sections/PublicProfile/EducationExperience";
 import ContactInfo from "../../sections/PublicProfile/ContactInfo";
 import Interests from "../../sections/PublicProfile/Interests";
+import Socials from "../../sections/PublicProfile/Socials";
 
 export default function PublicProfile() 
 {
@@ -37,6 +38,7 @@ export default function PublicProfile()
 
                 <div className="mb-12">
                     {/* TODO: Insert Social Content Here */}
+                    <Socials></Socials>
                 </div>
 
                 <div className={`${lineBreak} mb-12`}></div>

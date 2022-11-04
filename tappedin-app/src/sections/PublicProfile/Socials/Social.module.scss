@@ -1,0 +1,23 @@
+.addSocialContainer
+{
+    border: 2px solid #BBCDE5;
+    border-radius: 20px;
+    background: rgba(187, 205, 229, 0.2);
+    width: 60%;
+    height: 10.75rem;
+
+    &.disabled
+    {
+        border: 2px solid #95989b;
+        background: rgba(219, 216, 216, 0.579);
+    }
+}
+
+.editSocialContainer
+{   
+    border: 2px dashed #BBCDE5;
+    border-radius: 20px;
+    // background: rgba(187, 205, 229, 0.2);
+    width: 90%;
+    height: 10.75rem;
+}
