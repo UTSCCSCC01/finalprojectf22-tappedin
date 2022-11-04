@@ -1,6 +1,7 @@
 import { profileImageContainer, lineBreak } from "./PublicProfile.module.scss";
 
 import CoverImage from "../../components/CoverImage";
+import Location from "../../sections/PublicProfile/Location";
 import AboutMe from "../../sections/PublicProfile/AboutMe";
 import WorkExperience from "../../sections/PublicProfile/WorkExperience";
 import EducationExperience from "../../sections/PublicProfile/EducationExperience";
@@ -44,6 +45,7 @@ export default function PublicProfile()
                     <AboutMe></AboutMe>
                     <WorkExperience></WorkExperience>
                     <EducationExperience></EducationExperience>
+                    <Location></Location>
                     <div className="py-3"></div>
                 </div>
             </div>
