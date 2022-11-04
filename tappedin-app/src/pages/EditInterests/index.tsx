@@ -33,12 +33,18 @@ export default function EditInterestsPage()
             "interestName": interestName,
             "description": description,
         });
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=5&idtype=3&id=" + userID;
         var interestId = new URLSearchParams(window.location.search).get("id");
         if (interestId === null)
         {
             var config = {
                 method: "post",
-                url: "http://localhost:3001/userFieldServices?field=5&idtype=1&id=testUser",
+                url: url,
                 headers: { 
                     "Content-Type": "application/json"
                 },
@@ -94,11 +100,17 @@ export default function EditInterestsPage()
     }
 
     async function fetchInterests(interestId): Promise<any>
-    {        
+    {   
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=5&idtype=3&id=" + userID;
         const config = {
             method: "get",
             // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=5&idtype=1&id=testUser",
+            url: url,
             headers: {},
         };
 
