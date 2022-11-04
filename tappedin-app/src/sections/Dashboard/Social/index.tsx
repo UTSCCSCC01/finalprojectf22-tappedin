@@ -10,26 +10,32 @@ import axios from "axios";
 export default function Social( { socialData: socialData } )
 {
     const [ hasFacebook, setHasFacebook ] = useState(false);
-    const [ facebookURL, setFacebookURL] = useState("");
+    const [ facebookURL, setFacebookURL ] = useState("");
 
     const [ hasInstagram, setHasInstagram ] = useState(false);
-    const [ instagramURL, setInstagramURL] = useState("");
+    const [ instagramURL, setInstagramURL ] = useState("");
 
     const [ hasTwitter, setHasTwitter ] = useState(false);
-    const [ twitterURL, setTwitterURL] = useState("");
+    const [ twitterURL, setTwitterURL ] = useState("");
 
     const [ hasGithub, setHasGithub ] = useState(false);
-    const [ githubURL, setGithubURL] = useState("");
-    useEffect(() => {
+    const [ githubURL, setGithubURL ] = useState("");
+    useEffect(() => 
+    {
         fetchSocial();
     }, []);
 
     async function fetchSocial(): Promise<any> 
     {
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=4&idtype=3&id=" + userID;
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=4&idtype=1&id=testUser",
+            url: url,
             headers: {
                 "Content-Type": "application/json",
             }
@@ -42,26 +48,26 @@ export default function Social( { socialData: socialData } )
             const res = await axios(config);
 
             if (res.data.length == 0)
-                return
+                return;
             else
             {
                 social = res.data[0];
                 
                 if (social.facebookURL)
                     setHasFacebook(true);
-                    setFacebookURL(social.facebookURL)
+                setFacebookURL(social.facebookURL);
                 
                 if (social.instagramURL)
                     setHasInstagram(true);
-                    setInstagramURL(social.instagramURL)
+                setInstagramURL(social.instagramURL);
 
                 if (social.twitterURL)
                     setHasTwitter(true);
-                    setTwitterURL(social.twitterURL)
+                setTwitterURL(social.twitterURL);
 
                 if (social.githubURL)
                     setHasGithub(true);
-                    setGithubURL(social.githubURL)
+                setGithubURL(social.githubURL);
             
             }
                 
@@ -75,7 +81,7 @@ export default function Social( { socialData: socialData } )
     }
 
     return (
-        <div>
+        <div className="mb-8">
             <div className="mb-4">
                 <div className="flex items-center">
                     <FeatherIcon icon="globe"></FeatherIcon>

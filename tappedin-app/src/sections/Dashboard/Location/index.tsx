@@ -15,12 +15,19 @@ export default function Location({ locationData: locationData })
             location: location,
         });
 
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=2&idtype=3&id=" + userID;
+
         const config = {
             method: `${locationData ? "put" : "post"}`,
             url: `${
                 locationData
                     ? `http://localhost:3001/userFieldServices?field=2&objectid=${locationData._id}`
-                    : "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser"
+                    : url
             }`,
             headers: {
                 "Content-Type": "application/json",
@@ -34,7 +41,7 @@ export default function Location({ locationData: locationData })
     }
 
     return (
-        <div className="mt-6">
+        <div className="mb-8">
             <div className="mb-4">
                 <div className="flex items-center">
                     <FeatherIcon icon="map-pin"></FeatherIcon>

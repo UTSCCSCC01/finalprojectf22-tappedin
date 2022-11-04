@@ -8,7 +8,7 @@ import InterestsBox from "../../../components/InterestsBox";
 export default function Interests( { interestsData: data } )
 {
     return (
-        <div className="mb-6">            
+        <div className="mb-8">            
             <div className="mb-4">
                 <div className="flex items-center">
                     <FeatherIcon icon="dribbble"></FeatherIcon>
@@ -25,7 +25,7 @@ export default function Interests( { interestsData: data } )
             }
             <div
                 className={`${addInterestContainer} 
-                                flex items-center justify-center`}
+                                flex items-center justify-center mt-4`}
             >
                 <a href="/EditInterests">
                     <div className="cursor-pointer">

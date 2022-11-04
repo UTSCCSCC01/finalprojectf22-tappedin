@@ -8,7 +8,7 @@ import EducationExperienceCard from "../../../components/EducationExperienceCard
 export default function EducationExperience( { educationExperiencesData: educationExperiencesData } )
 {
     return (
-        <div>
+        <div className="mb-8">
             <div className="mb-4">
                 <div className="flex items-center">
                     <FeatherIcon icon="book-open"></FeatherIcon>
