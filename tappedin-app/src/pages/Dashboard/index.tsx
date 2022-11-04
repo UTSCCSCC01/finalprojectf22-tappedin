@@ -11,6 +11,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import WorkExperience from "../../sections/Dashboard/WorkExperience";
 import Interests from "../../sections/Dashboard/Interests";
+import ContactInfo from "../../sections/Dashboard/ContactInfo";
 import Location from "../../sections/Dashboard/Location";
 import FeatherIcon from "feather-icons-react";
 import Social from "../../sections/Dashboard/Social";
@@ -28,6 +29,7 @@ export default function DashboardPage()
     const [ interestsData, setInterestsData ] = useState();
     const [ educationExperiencesData, setEducationExperiencesData ] = useState();
     const [ locationData, setLocationData ] = useState();
+    const [ contactInfoData, setContactInfoData ] = useState();
     const [ fullName, setFullName ] = useState("");
 
     const userID = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : "testUser";
@@ -41,6 +43,7 @@ export default function DashboardPage()
         fetchSocials();
         fetchEducationExperiences();
         fetchLocationData();
+        fetchContactInfo();
         fetchFullName();
     }, []);
 
@@ -186,6 +189,29 @@ export default function DashboardPage()
         }
     }
 
+    async function fetchContactInfo(): Promise<void> 
+    {
+        const config = {
+            method: "get",
+            url: baseURL + "field=8&idtype=3&id=" + userID,
+            headers: {},
+            validateStatus: (status) => { return status < 500; }
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            if (t.status == 404 || t.status == 400)
+                setContactInfoData(null);
+            else setContactInfoData(t.data[0]); // only one entry per user
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
+
     async function fetchSocials(): Promise<void> 
     {
         const config = {
@@ -276,19 +302,12 @@ export default function DashboardPage()
                             
                             <CoverImageSection></CoverImageSection>
                             <AboutMe aboutMeData={aboutMeData}></AboutMe>
+                            <ContactInfo contactInfoData={contactInfoData}></ContactInfo>
                             <Social socialData={socialData}></Social>
-                            <WorkExperience
-                                workExperiencesData={workExperiencesData}
-                            ></WorkExperience>
-                            <EducationExperience
-                                educationExperiencesData={
-                                    educationExperiencesData
-                                }
-                            ></EducationExperience>
+                            <WorkExperience workExperiencesData={workExperiencesData}></WorkExperience>
+                            <EducationExperience educationExperiencesData={educationExperiencesData}></EducationExperience>
                             <Location locationData={locationData}></Location>
-                            <Interests
-                                interestsData={interestsData}
-                            ></Interests>
+                            <Interests interestsData={interestsData}></Interests>
                         </div>
                     </div>
                 </div>

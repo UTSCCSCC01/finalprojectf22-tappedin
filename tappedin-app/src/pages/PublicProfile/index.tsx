@@ -5,6 +5,7 @@ import Location from "../../sections/PublicProfile/Location";
 import AboutMe from "../../sections/PublicProfile/AboutMe";
 import WorkExperience from "../../sections/PublicProfile/WorkExperience";
 import EducationExperience from "../../sections/PublicProfile/EducationExperience";
+import ContactInfo from "../../sections/PublicProfile/ContactInfo";
 import Interests from "../../sections/PublicProfile/Interests";
 
 export default function PublicProfile() 
@@ -44,6 +45,7 @@ export default function PublicProfile()
                     <h1 className="font-bold text-4xl mb-8">Info</h1>
                     {/* TODO: Insert Other Content Here */}
                     <AboutMe></AboutMe>
+                    <ContactInfo></ContactInfo>
                     <WorkExperience></WorkExperience>
                     <EducationExperience></EducationExperience>
                     <Location></Location>

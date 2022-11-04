@@ -84,5 +84,6 @@ export enum UserFieldTypes
     SOCIAL_INFO      = 4,
     INTEREST_INFO    = 5,
     COVER_IMAGE_INFO = 6,
-    USER_INFO        = 7
+    USER_INFO        = 7,
+    CONTACT_INFO     = 8
 }

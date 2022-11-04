@@ -25,6 +25,7 @@ export class UserAccountService implements IUserAccountService
     private _interestCollectionName: string = process.env.INTEREST_COLLECTION_NAME ?? "testInterestCol";
     private _locationCollectionName: string = process.env.LOCATION_COLLECTION_NAME ?? "testLocationCol";
     private _coverImageCollectionName: string = process.env.COVER_IMAGE_COLLECTION_NAME ?? "testCoverImageCol";
+    private _contactInfoCollectionName: string = process.env.CONTACTINFO_COLLECTION_NAME ?? "testContactInfoCol";
 
     /**
      * @constructor
@@ -224,6 +225,10 @@ export class UserAccountService implements IUserAccountService
             result = await this._dbAccessService.getCollection(this._coverImageCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
             break;
+        case UserFieldTypes.CONTACT_INFO:
+            result = await this._dbAccessService.getCollection(this._contactInfoCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
         case UserFieldTypes.USER_INFO:
             result = [ await this.getUserInfo(userIdentifier) ];
             break;
@@ -281,6 +286,9 @@ export class UserAccountService implements IUserAccountService
         case UserFieldTypes.COVER_IMAGE_INFO:
             result = await this._dbAccessService.createDocument(this._coverImageCollectionName, toInsert);
             break;
+        case UserFieldTypes.CONTACT_INFO:
+            result = await this._dbAccessService.createDocument(this._contactInfoCollectionName, toInsert);
+            break;
         default:
             throw new Error("Invalid Field Passed.");
         }
@@ -324,6 +332,9 @@ export class UserAccountService implements IUserAccountService
             break;
         case UserFieldTypes.COVER_IMAGE_INFO:
             result = await this._dbAccessService.updateDocument(this._coverImageCollectionName, objectID, data);
+            break;
+        case UserFieldTypes.CONTACT_INFO:
+            result = await this._dbAccessService.updateDocument(this._contactInfoCollectionName, objectID, data);
             break;
         case UserFieldTypes.USER_INFO:
             result = await this.updateUserInfo({ userID: objectID }, data);
