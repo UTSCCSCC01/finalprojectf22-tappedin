@@ -80,10 +80,10 @@ export enum UserFieldTypes
     EDUCATION_INFO = 0,
     WORK_INFO      = 1,
     LOCATION_INFO  = 2,
-    ABOUTME_INFO   = 3,
+    ABOUT_ME_INFO   = 3,
     SOCIAL_INFO    = 4,
     INTEREST_INFO  = 5,
-    COVERIMAGE_INFO= 6,
+    COVER_IMAGE_INFO= 6,
     USER_INFO      = 7,
     CONTACT_INFO   = 8
 }
