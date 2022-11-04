@@ -3,6 +3,7 @@ import {
     editContainer,
     customNavbar,
     profileImageContainer,
+    viewDashboardContainer
 } from "./Dashboard.module.scss";
 
 import CoverImage from "../../components/CoverImage";
@@ -27,7 +28,6 @@ export default function DashboardPage()
     const [ interestsData, setInterestsData ] = useState();
     const [ educationExperiencesData, setEducationExperiencesData ] = useState();
     const [ locationData, setLocationData ] = useState();
-    const [ coverImageData, setCoverImageData ] = useState();
     const [ fullName, setFullName ] = useState("");
 
     const userID = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : "testUser";
@@ -42,7 +42,6 @@ export default function DashboardPage()
         fetchSocials();
         fetchEducationExperiences();
         fetchLocationData();
-        fetchCoverImage();
         fetchFullName();
     }, []);
 
@@ -141,6 +140,7 @@ export default function DashboardPage()
             console.error(e);
         }
     }
+    
     async function fetchAboutMe(): Promise<void> 
     {
         const config = {
@@ -210,30 +210,6 @@ export default function DashboardPage()
         }
     }
 
-    async function fetchCoverImage(): Promise<void> 
-    {
-        const config = {
-            method: "get",
-            url: baseURL + "field=6&idtype=3&id=" + userID,
-            headers: {},
-            validateStatus: (status) => { return status < 500; }
-        };
-
-        try 
-        {
-            const t = await axios(config);
-
-            // FIXME: Backend Fix and Remove
-            if (t.status == 404 || t.status == 400)
-                setCoverImageData(null);
-            else setCoverImageData(t.data[0]);
-        }
-        catch (e) 
-        {
-            console.error(e);
-        }
-    }
-
     async function signOut() 
     {
         console.log(authService.getCurrentUserId());
@@ -247,7 +223,6 @@ export default function DashboardPage()
     return (
         <div className={`${customBackground}`}>
             <CoverImage
-                imageURL={coverImageData ? coverImageData.imageUrl : null}
             ></CoverImage>
             <div className="container mx-auto px-4 lg:px-0">
                 <div className="grid grid-cols-1 lg:gap-10 lg:grid-cols-4">
@@ -287,12 +262,21 @@ export default function DashboardPage()
                     </div>
                     <div className="flex flex-col col-span-3">
                         <h1 className="mb-3 font-bold">Edit</h1>
-                        {/* <div className={`${editContainer}`}>
-                            <Social socialData={socialData}
-                            ></Social>
+                        <div className={`${editContainer} mb-12`}>
+                            <a href="/PublicProfile">
+                                <div className="flex justify-end">
+                                    <div className={`flex justify-center items-center ${viewDashboardContainer} cursor-pointer`}>
+                                        <FeatherIcon
+                                            icon="eye"
+                                            stroke="#639FAB"
+                                            width="30"
+                                            height="30"
+                                            strokeWidth="1.5"
+                                        ></FeatherIcon>
+                                    </div>
+                                </div>
+                            </a>
                             
-                        </div> */}
-                        <div className={`${editContainer}`}>
                             <CoverImageSection></CoverImageSection>
                             <AboutMe aboutMeData={aboutMeData}></AboutMe>
                             <Social socialData={socialData}></Social>
