@@ -1,5 +1,5 @@
 import { 
-    addSocialContainer, editSocialContainer, disabled
+    addSocialContainer, disabled
 } from "./Social.module.scss";
 
 import FeatherIcon from "feather-icons-react";
@@ -89,7 +89,7 @@ export default function Social( { socialData: socialData } )
                 </div>
                 
             </div>
-            <div className=" grid grid-cols-4 gap-2 content-start">
+            <div className=" grid grid-cols-4 w-fit gap-4">
 
             
                 <div
@@ -102,7 +102,7 @@ export default function Social( { socialData: socialData } )
                         <div className={!hasFacebook ? "cursor-not-allowed" : "cursor-pointer"}>
                             <FeatherIcon
                                 icon="facebook"
-                                size="54"
+                                size="32"
                                 strokeWidth="1"
                                 color={!hasFacebook ? "#95989b" : "#BBCDE5"}
                             />
@@ -120,7 +120,7 @@ export default function Social( { socialData: socialData } )
                         <div className={!hasInstagram ? "cursor-not-allowed" : "cursor-pointer"}>
                             <FeatherIcon
                                 icon="instagram"
-                                size="54"
+                                size="32"
                                 strokeWidth="1"
                                 color={!hasInstagram ? "#95989b" : "#BBCDE5"}
                             />
@@ -137,7 +137,7 @@ export default function Social( { socialData: socialData } )
                         <div className={!hasInstagram ? "cursor-not-allowed" : "cursor-pointer"}>
                             <FeatherIcon
                                 icon="twitter"
-                                size="54"
+                                size="32"
                                 strokeWidth="1"
                                 color={!hasTwitter ? "#95989b" : "#BBCDE5"}
                             />
@@ -154,7 +154,7 @@ export default function Social( { socialData: socialData } )
                         <div className={!hasGithub ? "cursor-not-allowed" : "cursor-pointer"}>
                             <FeatherIcon
                                 icon="github"
-                                size="54"
+                                size="32"
                                 strokeWidth="1"
                                 color={!hasGithub ? "#95989b" : "#BBCDE5"}
                             />
