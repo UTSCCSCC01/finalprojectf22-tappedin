@@ -8,15 +8,22 @@ export default function Location()
 
     useEffect(() => 
     {
-        fetchLocation();
+        const userID: string = new URLSearchParams(
+            window.location.search
+        ).get("id");
+    
+        fetchLocation(userID);
     }, []);
 
-    async function fetchLocation(): Promise<void> 
+    async function fetchLocation(userID: string): Promise<void> 
     {
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=2&idtype=3&id=" + userID;
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
+            url: url,
             headers: {},
         };
 
@@ -26,7 +33,7 @@ export default function Location()
 
             // FIXME: Backend Fix and Remove
             if (t.data == "Nothing was found for this query.")
-            setLocationData(null);
+                setLocationData(null);
             else setLocationData(t.data);
         }
         catch (e) 
@@ -45,7 +52,7 @@ export default function Location()
                 locationData.map((locationData, key) => 
                 {
                     return (
-                        <div className="mb-4">
+                        <div className="mb-4" key={key}>
                             <p>
                                 {locationData.location}
                             </p>

@@ -8,9 +8,51 @@ import EducationExperience from "../../sections/PublicProfile/EducationExperienc
 import ContactInfo from "../../sections/PublicProfile/ContactInfo";
 import Interests from "../../sections/PublicProfile/Interests";
 import Socials from "../../sections/PublicProfile/Socials";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function PublicProfile() 
 {
+    const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
+    
+    const [ fullName, setFullName ] = useState("");
+
+    useEffect(() => 
+    {
+        const userID: string = new URLSearchParams(
+            window.location.search
+        ).get("id");
+
+        fetchFullName(userID);
+    }, []);
+
+    async function fetchFullName(userID: string): Promise<void> 
+    {
+        const config = {
+            method: "get",
+            url: baseURL + "field=7&idtype=3&id=" + userID,
+            headers: {},
+            validateStatus: (status) => { return status < 500; }
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            if (t.status == 400 || t.status == 404)
+                setFullName("");
+            else
+            {
+                setFullName(`${t.data[0].firstName} ${t.data[0].lastName}`);
+            } 
+            
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
+
     return (
         <div>
             <CoverImage size="lg" publicProfile={true}></CoverImage>
@@ -27,7 +69,7 @@ export default function PublicProfile()
 
                 <div className="grid grid-cols-3 mb-12">
                     <div className="col-span-3 md:col-span-2">
-                        <h1 className="title">Ben Saobuppha</h1>
+                        <h1 className="title">{fullName}</h1>
                         <h3>
                             “Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit, sed do eiusmod tempor incididunt ut labore et

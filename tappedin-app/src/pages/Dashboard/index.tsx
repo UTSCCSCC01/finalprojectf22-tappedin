@@ -33,24 +33,26 @@ export default function DashboardPage()
 
     const [ contactInfoData, setContactInfoData ] = useState();
     const [ fullName, setFullName ] = useState("");
+    const [ userID, setUserID ] = useState("");
 
-    const userID = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : "testUser";
+    
     const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
 
     useEffect(() => 
     {
-        fetchWorkExperiences();
-        fetchInterests();
-        fetchAboutMe();
-        fetchSocials();
-        fetchEducationExperiences();
-        fetchLocationData();
-        fetchContactInfo();
-        fetchFullName();
-        fetchCoverImage();
+        const userID = localStorage.getItem("userID");
+        setUserID(userID);
+        fetchWorkExperiences(userID);
+        fetchInterests(userID);
+        fetchAboutMe(userID);
+        fetchSocials(userID);
+        fetchEducationExperiences(userID);
+        fetchLocationData(userID);
+        fetchContactInfo(userID);
+        fetchFullName(userID);
     }, []);
 
-    async function fetchFullName(): Promise<void> 
+    async function fetchFullName(userID: string): Promise<void> 
     {
         const config = {
             method: "get",
@@ -77,7 +79,7 @@ export default function DashboardPage()
         }
     }
 
-    async function fetchWorkExperiences(): Promise<void> 
+    async function fetchWorkExperiences(userID: string): Promise<void> 
     {
         const config = {
             method: "get",
@@ -100,7 +102,7 @@ export default function DashboardPage()
         }
     }
 
-    async function fetchLocationData() 
+    async function fetchLocationData(userID: string) 
     {
         const config = {
             method: "get",
@@ -123,7 +125,7 @@ export default function DashboardPage()
         }
     }
 
-    async function fetchEducationExperiences(): Promise<void> 
+    async function fetchEducationExperiences(userID: string): Promise<void> 
     {
         const config = {
             method: "get",
@@ -146,7 +148,7 @@ export default function DashboardPage()
         }
     }
     
-    async function fetchAboutMe(): Promise<void> 
+    async function fetchAboutMe(userID: string): Promise<void> 
     {
         const config = {
             method: "get",
@@ -169,7 +171,7 @@ export default function DashboardPage()
         }
     }
 
-    async function fetchInterests(): Promise<void> 
+    async function fetchInterests(userID: string): Promise<void> 
     {
         const config = {
             method: "get",
@@ -192,7 +194,7 @@ export default function DashboardPage()
         }
     }
 
-    async function fetchContactInfo(): Promise<void> 
+    async function fetchContactInfo(userID: string): Promise<void> 
     {
         const config = {
             method: "get",
@@ -215,7 +217,7 @@ export default function DashboardPage()
         }
     }
 
-    async function fetchSocials(): Promise<void> 
+    async function fetchSocials(userID: string): Promise<void> 
     {
         const config = {
             method: "get",
@@ -231,31 +233,6 @@ export default function DashboardPage()
             if (t.status == 404 || t.status == 400)
                 setSocialData(null);
             else setSocialData(t.data);
-        }
-        catch (e) 
-        {
-            console.error(e);
-        }
-    }
-
-    async function fetchCoverImage(): Promise<void> 
-    {
-
-        const config = {
-            method: "get",
-            url: process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=6&idtype=3&id="+userID,
-            headers: {},
-            validateStatus: (status) => { return status < 500; }
-        };
-
-        try 
-        {
-            const t = await axios(config);
-
-            if (t.status == 400 || t.status == 404)
-                setCoverImageData(null);
-            else setCoverImageData(t.data[0]);
-
         }
         catch (e) 
         {
@@ -314,7 +291,7 @@ export default function DashboardPage()
                     <div className="flex flex-col col-span-3">
                         <h1 className="mb-3 font-bold">Edit</h1>
                         <div className={`${editContainer} mb-12`}>
-                            <a href="/PublicProfile">
+                            <a href={`/PublicProfile?id=${userID}`}>
                                 <div className="flex justify-end">
                                     <div className={`flex justify-center items-center ${viewDashboardContainer} cursor-pointer`}>
                                         <FeatherIcon

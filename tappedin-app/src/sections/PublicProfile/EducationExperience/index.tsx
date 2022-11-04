@@ -8,15 +8,22 @@ export default function EducationExperience()
 
     useEffect(() => 
     {
-        fetchEducationExperiences();
+        const userID: string = new URLSearchParams(
+            window.location.search
+        ).get("id");
+
+        fetchEducationExperiences(userID);
     }, []);
 
-    async function fetchEducationExperiences(): Promise<void> 
+    async function fetchEducationExperiences(userID: string): Promise<void> 
     {
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=0&idtype=3&id=" + userID;
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=0&idtype=1&id=testUser",
+            url: url,
             headers: {},
         };
 
@@ -45,7 +52,7 @@ export default function EducationExperience()
                 educationExperiencesData.map((educationExperienceData, key) => 
                 {
                     return (
-                        <div className="mb-6">
+                        <div className="mb-6" key={key}>
                             <div className="mb-4">
                                 <p className="font-bold">
                                     {educationExperienceData.programOfStudy} @

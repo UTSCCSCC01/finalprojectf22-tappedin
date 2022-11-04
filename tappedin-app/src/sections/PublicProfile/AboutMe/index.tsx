@@ -8,15 +8,22 @@ export default function AboutMe()
 
     useEffect(() => 
     {
-        fetchAboutMe();
+        const userID = new URLSearchParams(
+            window.location.search
+        ).get("id");
+
+        fetchAboutMe(userID);
     }, []);
 
-    async function fetchAboutMe(): Promise<void> 
+    async function fetchAboutMe(userID: string): Promise<void> 
     {
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=3&idtype=3&id=" + userID;
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
+            url: url,
             headers: {},
         };
 
@@ -45,7 +52,7 @@ export default function AboutMe()
                 aboutMeData.map((aboutMeData, key) => 
                 {
                     return (
-                        <div className="mb-4 pre-wrap">
+                        <div className="mb-4 pre-wrap" key={key}>
                             <p>
                                 {aboutMeData.aboutMeText}
                             </p>

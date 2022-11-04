@@ -15,20 +15,32 @@ export default function CoverImage({ size = "sm", publicProfile, existingImage=n
 
     useEffect(() => 
     {
+        
         if(existingImage)
         {
             setCoverImageData(existingImage);
         }
         else
-        {
-            fetchCoverImage();
+        {  
+            let userID: string | null;
+            const currentURL: string | null = (typeof window !== "undefined") ? window.location.href : "";
+            if (currentURL.includes("PublicProfile"))
+            {
+                userID = new URLSearchParams(
+                    window.location.search
+                ).get("id");
+            }
+            else
+            {
+                userID = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+            }
+            fetchCoverImage(userID);
         }
     }, []);
 
-    async function fetchCoverImage(): Promise<void> 
+    async function fetchCoverImage(userID: string): Promise<void> 
     {
         
-        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
         
         if (!userID)
             return;
