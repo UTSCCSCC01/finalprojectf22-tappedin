@@ -39,7 +39,7 @@ export default function ContactInfo({ contactInfoData: contactData })
         <div className="mb-8">
             <div className="mb-4">
                 <div className="flex items-center">
-                    <FeatherIcon icon="phone"></FeatherIcon>
+                    <FeatherIcon icon="info"></FeatherIcon>
                     <h2 className="font-bold ml-2">Contact Info</h2>
                 </div>
             </div>
@@ -91,14 +91,26 @@ export default function ContactInfo({ contactInfoData: contactData })
                 <div>
                     <div className="flex justify-between items-center">
                         { contactData.phone !== "" ? (
-                            <h3>{"Contact Phone: " + contactData.phone}</h3>
+                            <div className="flex item-center">
+                                <FeatherIcon icon="phone"></FeatherIcon>
+                                <h3 className="ml-4">{contactData.phone}</h3>
+                            </div>
                         ) : (
-                            <h3>{"Contact Phone: N/A"}</h3>
+                            <div className="flex item-center">
+                                <FeatherIcon icon="phone"></FeatherIcon>
+                                <h3 className="ml-4">N/A</h3>
+                            </div>
                         )}
                         { contactData.email !== "" ? (
-                            <h3>{"Contact Email: " + contactData.email}</h3>
+                            <div className="flex item-center">
+                                <FeatherIcon icon="mail"></FeatherIcon>
+                                <h3 className="ml-4">{contactData.email}</h3>
+                            </div>
                         ) : (
-                            <h3>{"Contact Email: N/A"}</h3>
+                            <div className="flex item-center">
+                                <FeatherIcon icon="mail"></FeatherIcon>
+                                <h3 className="ml-4">N/A</h3>
+                            </div>
                         )}
                         <div
                             className="cursor-pointer"

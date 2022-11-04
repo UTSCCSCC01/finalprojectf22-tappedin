@@ -38,7 +38,7 @@ export default function ContactInfo()
     return (
         <div className="mb-10">
             <div className="flex items-center mb-6">
-                <FeatherIcon icon="phone"></FeatherIcon>
+                <FeatherIcon icon="info"></FeatherIcon>
                 <h2 className="font-bold ml-2">Contact Info</h2>
             </div>
             {!contactData ? (
@@ -49,14 +49,26 @@ export default function ContactInfo()
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     { contactData.phone !== "" ? (
-                        <h3>{"Contact Phone: " + contactData.phone}</h3>
+                        <div className="flex item-center">
+                            <FeatherIcon icon="phone"></FeatherIcon>
+                            <h3 className="ml-4">{contactData.phone}</h3>
+                        </div>
                     ) : (
-                        <h3>{"Contact Phone: N/A"}</h3>
+                        <div className="flex item-center">
+                            <FeatherIcon icon="phone"></FeatherIcon>
+                            <h3 className="ml-4">N/A</h3>
+                        </div>
                     )}
                     { contactData.email !== "" ? (
-                        <h3>{"Contact Email: " + contactData.email}</h3>
+                        <div className="flex item-center">
+                            <FeatherIcon icon="mail"></FeatherIcon>
+                            <h3 className="ml-4">{contactData.email}</h3>
+                        </div>
                     ) : (
-                        <h3>{"Contact Email: N/A"}</h3>
+                        <div className="flex item-center">
+                            <FeatherIcon icon="mail"></FeatherIcon>
+                            <h3 className="ml-4">N/A</h3>
+                        </div>
                     )}
                 </div>
             )}
