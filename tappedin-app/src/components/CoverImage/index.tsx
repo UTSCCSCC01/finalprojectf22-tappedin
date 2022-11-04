@@ -19,10 +19,15 @@ export default function CoverImage({ size = "sm", publicProfile }: CoverImagePro
 
     async function fetchCoverImage(): Promise<void> 
     {
+        
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+        
+        if (!userID)
+            return;
+
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=6&idtype=1&id=testUser",
+            url: process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=6&idtype=3&id="+userID,
             headers: {},
         };
 
@@ -30,11 +35,10 @@ export default function CoverImage({ size = "sm", publicProfile }: CoverImagePro
         {
             const t = await axios(config);
 
-            // FIXME: Backend Fix and Remove
-            if (t.data == "Nothing was found for this query.")
+            if (t.status == 400 || t.status == 404)
                 setCoverImageData(null);
             else setCoverImageData(t.data[0]);
-            // setCoverImageData(null);
+
         }
         catch (e) 
         {
@@ -56,9 +60,9 @@ export default function CoverImage({ size = "sm", publicProfile }: CoverImagePro
                 }
             >
                 {publicProfile ? 
-                    <h1 className="absolute bottom-4 right-4 font-bold text-white text-6xl">
+                    <h1 className="absolute bottom-[10%] right-[5%] font-bold text-white text-2xl md:text-6xl">
                         Tapped
-                        <span style={{ color: "#BBCDE5" }}>
+                        <span className="is-lightblue">
                             In.
                         </span>
                     </h1>
