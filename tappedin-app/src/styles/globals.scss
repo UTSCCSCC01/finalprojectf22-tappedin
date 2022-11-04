@@ -8,6 +8,8 @@
 // Variables
 $light-blue: #BBCDE5;
 $black: #252525;
+$red: #EF626C;
+$blue: #007AFF;
 
 // GENERAL
 html 
@@ -37,17 +39,17 @@ h2
 
 h3
 {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 p 
 {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 label 
 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
 }
 
@@ -99,6 +101,13 @@ li
     font-size: 24px;
 }
 
+.is-text-gradient-1
+{
+    background: linear-gradient(180deg, #007AFF 0%, #EF626C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 // Button
 .button
 {
@@ -107,15 +116,15 @@ li
     width: 100%;
 
     color: white;
-    background-color: #EF626C;
+    background-color: $red;
     border-radius: 20px;
 
     padding: 1rem 1.5rem;
+    height: 4rem;
 
     &.large
     {
         width: 15rem;
-        height: 4rem;
         font-size: 24px;
     }
 
@@ -153,4 +162,14 @@ FeatherIcon
 .is-lightblue
 {
     color: $light-blue;
+}
+
+.is-red
+{
+    color: $red; 
+}
+
+.is-blue
+{
+    color: $blue;
 }
