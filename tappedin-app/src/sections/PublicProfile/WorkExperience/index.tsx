@@ -53,7 +53,7 @@ export default function WorkExperience()
                     workExperiencesData.map((workExperienceData, key) => 
                     {
                         return (
-                            <div>
+                            <div key={key}>
                                 <div className="mb-4">
                                     <p className="font-bold">
                                         {workExperienceData.workPositionName} @

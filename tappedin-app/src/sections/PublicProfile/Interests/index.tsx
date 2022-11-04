@@ -52,7 +52,7 @@ export default function Interests()
                 interestsData.map((interestsData, key) => 
                 {
                     return (
-                        <div className="mb-6">
+                        <div className="mb-6" key={key}>
                             <div className="mb-4">
                                 <p className="font-bold">
                                     {interestsData.interestName}

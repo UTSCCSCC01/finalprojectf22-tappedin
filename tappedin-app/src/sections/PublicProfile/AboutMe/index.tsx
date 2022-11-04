@@ -52,7 +52,7 @@ export default function AboutMe()
                 aboutMeData.map((aboutMeData, key) => 
                 {
                     return (
-                        <div className="mb-4 pre-wrap">
+                        <div className="mb-4 pre-wrap" key={key}>
                             <p>
                                 {aboutMeData.aboutMeText}
                             </p>

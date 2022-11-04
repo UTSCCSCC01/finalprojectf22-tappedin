@@ -5,7 +5,7 @@ import {
 } from "./CoverImage.module.scss";
 import axios from "axios";
 
-export default function CoverImageSection()
+export default function CoverImageSection( { coverImageData : coverImageData } )
 {
     const [ isEdit, setIsEdit ] = useState(false);
     const [ imageUrl, setImageUrl ] = useState("");
@@ -15,14 +15,25 @@ export default function CoverImageSection()
         const data = JSON.stringify({
             "imageUrl": imageUrl
         });
+
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=6&idtype=3&id=" + userID;
           
         const config = {
-            method: "put",
-            url: "http://localhost:3001/userFieldServices?field=6&objectid=635355b103752563a1fb404c",
-            headers: { 
-                "Content-Type": "application/json"
+            method: `${coverImageData ? "put" : "post"}`,
+            url: `${
+                coverImageData
+                    ? `http://localhost:3001/userFieldServices?field=6&objectid=${coverImageData._id}`
+                    : url
+            }`,
+            headers: {
+                "Content-Type": "application/json",
             },
-            data : data
+            data: data,
         };
         
         try

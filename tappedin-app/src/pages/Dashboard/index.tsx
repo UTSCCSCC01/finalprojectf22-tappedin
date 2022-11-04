@@ -29,6 +29,8 @@ export default function DashboardPage()
     const [ interestsData, setInterestsData ] = useState();
     const [ educationExperiencesData, setEducationExperiencesData ] = useState();
     const [ locationData, setLocationData ] = useState();
+    const [ coverImageData, setCoverImageData ] = useState();
+
     const [ contactInfoData, setContactInfoData ] = useState();
     const [ fullName, setFullName ] = useState("");
     const [ userID, setUserID ] = useState("");
@@ -237,7 +239,7 @@ export default function DashboardPage()
             console.error(e);
         }
     }
-
+    
     async function signOut() 
     {
         authService.signOut();
@@ -248,7 +250,7 @@ export default function DashboardPage()
 
     return (
         <div className={`${customBackground}`}>
-            <CoverImage
+            <CoverImage publicProfile={false} existingImage={coverImageData}
             ></CoverImage>
             <div className="container mx-auto px-4 lg:px-0">
                 <div className="grid grid-cols-1 lg:gap-10 lg:grid-cols-4">
@@ -303,7 +305,7 @@ export default function DashboardPage()
                                 </div>
                             </a>
                             
-                            <CoverImageSection></CoverImageSection>
+                            <CoverImageSection coverImageData={coverImageData}></CoverImageSection>
                             <AboutMe aboutMeData={aboutMeData}></AboutMe>
                             <ContactInfo contactInfoData={contactInfoData}></ContactInfo>
                             <Social socialData={socialData}></Social>

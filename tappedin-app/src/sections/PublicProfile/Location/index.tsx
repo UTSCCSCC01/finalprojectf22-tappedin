@@ -52,7 +52,7 @@ export default function Location()
                 locationData.map((locationData, key) => 
                 {
                     return (
-                        <div className="mb-4">
+                        <div className="mb-4" key={key}>
                             <p>
                                 {locationData.location}
                             </p>
