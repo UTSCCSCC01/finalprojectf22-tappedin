@@ -50,6 +50,7 @@ export default function DashboardPage()
         fetchLocationData(userID);
         fetchContactInfo(userID);
         fetchFullName(userID);
+        fetchCoverImage(userID);
     }, []);
 
     async function fetchFullName(userID: string): Promise<void> 
@@ -164,6 +165,31 @@ export default function DashboardPage()
             if (t.status == 404 || t.status == 400)
                 setAboutMeData(null);
             else setAboutMeData(t.data);
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
+
+    async function fetchCoverImage(userID: string): Promise<void> 
+    {
+
+        const config = {
+            method: "get",
+            url: process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=6&idtype=3&id=" + userID,
+            headers: {},
+            validateStatus: (status) => { return status < 500; }
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            if (t.status == 400 || t.status == 404)
+                setCoverImageData(null);
+            else setCoverImageData(t.data[0]);
+
         }
         catch (e) 
         {
