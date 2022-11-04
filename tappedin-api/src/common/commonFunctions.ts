@@ -15,6 +15,9 @@ export function createUserIdentifier(userID: string, userIDType: UserIDType): Us
     case UserIDType.EMAIL:
         userIdentifier.email = userID;
         break;
+    case UserIDType.AUTH_ID:
+        userIdentifier.authID = userID;
+        break;
     default:
         throw new Error("User ID type is invalid.");
     }

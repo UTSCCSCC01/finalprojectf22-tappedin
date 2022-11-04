@@ -16,5 +16,6 @@ export enum UserIDType
 {   
     USER_ID = 0,
     USERNAME = 1,
-    EMAIL = 2
+    EMAIL = 2,
+    AUTH_ID = 3
 }
