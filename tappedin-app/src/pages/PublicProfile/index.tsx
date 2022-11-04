@@ -4,6 +4,7 @@ import CoverImage from "../../components/CoverImage";
 import WorkExperience from "../../sections/PublicProfile/WorkExperience";
 import FeatherIcon from "feather-icons-react";
 import EducationExperience from "../../sections/PublicProfile/EducationExperience";
+import Interests from "../../sections/PublicProfile/Interests";
 
 export default function PublicProfile() 
 {
@@ -43,6 +44,7 @@ export default function PublicProfile()
                     {/* TODO: Insert Other Content Here */}
                     <WorkExperience></WorkExperience>
                     <EducationExperience></EducationExperience>
+                    <Interests></Interests>
                     <div className="py-3"></div>
                 </div>
             </div>
