@@ -10,6 +10,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import WorkExperience from "../../sections/Dashboard/WorkExperience";
 import Interests from "../../sections/Dashboard/Interests";
+import ContactInfo from "../../sections/Dashboard/ContactInfo";
 import Location from "../../sections/Dashboard/Location";
 import FeatherIcon from "feather-icons-react";
 import Social from "../../sections/Dashboard/Social";
@@ -25,6 +26,7 @@ export default function DashboardPage()
     const [ educationExperiencesData, setEducationExperiencesData ] = useState();
     const [ locationData, setLocationData ] = useState();
     const [ coverImageData, setCoverImageData ] = useState();
+    const [ contactInfoData, setContactInfoData ] = useState();
 
     useEffect(() => 
     {
@@ -35,6 +37,7 @@ export default function DashboardPage()
         fetchEducationExperiences();
         fetchLocationData();
         fetchCoverImage();
+        fetchContactInfo();
     }, []);
 
     async function fetchWorkExperiences(): Promise<void> 
@@ -98,8 +101,6 @@ export default function DashboardPage()
         {
             const t = await axios(config);
 
-            console.log(t.data);
-
             // FIXME: Backend Fix and Remove
             if (t.data == "Nothing was found for this query.")
                 setEducationExperiencesData(null);
@@ -151,6 +152,30 @@ export default function DashboardPage()
             if (t.data == "Nothing was found for this query.")
                 setInterestsData(null);
             else setInterestsData(t.data);
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
+
+    async function fetchContactInfo(): Promise<void>
+    {
+        const config = {
+            method: "get",
+            // FIXME: Change URL
+            url: "http://localhost:3001/userFieldServices?field=7&idtype=1&id=testUser",
+            headers: {},
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            // FIXME: Backend Fix and Remove
+            if (t.data == "Nothing was found for this query.")
+                setContactInfoData(null);
+            else setContactInfoData(t.data[0]); // only one contact info entry per user
         }
         catch (e) 
         {
@@ -257,19 +282,12 @@ export default function DashboardPage()
                         <div className={`${editContainer}`}>
                             <CoverImageSection></CoverImageSection>
                             <AboutMe aboutMeData={aboutMeData}></AboutMe>
+                            <ContactInfo contactInfoData={contactInfoData}></ContactInfo>
                             <Social socialData={socialData}></Social>
-                            <WorkExperience
-                                workExperiencesData={workExperiencesData}
-                            ></WorkExperience>
-                            <EducationExperience
-                                educationExperiencesData={
-                                    educationExperiencesData
-                                }
-                            ></EducationExperience>
+                            <WorkExperience workExperiencesData={workExperiencesData}></WorkExperience>
+                            <EducationExperience educationExperiencesData={educationExperiencesData}></EducationExperience>
                             <Location locationData={locationData}></Location>
-                            <Interests
-                                interestsData={interestsData}
-                            ></Interests>
+                            <Interests interestsData={interestsData}></Interests>
                         </div>
                     </div>
                 </div>

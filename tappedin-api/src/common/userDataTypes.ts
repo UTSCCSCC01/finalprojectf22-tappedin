@@ -81,5 +81,6 @@ export enum UserFieldTypes
     ABOUTME_INFO   = 3,
     SOCIAL_INFO    = 4,
     INTEREST_INFO  = 5,
-    COVERIMAGE_INFO= 6
+    COVERIMAGE_INFO= 6,
+    CONTACT_INFO   = 7
 }
