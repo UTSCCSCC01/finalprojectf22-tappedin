@@ -1,8 +1,9 @@
 import { profileImageContainer, lineBreak } from "./PublicProfile.module.scss";
 
 import CoverImage from "../../components/CoverImage";
+import Location from "../../sections/PublicProfile/Location";
+import AboutMe from "../../sections/PublicProfile/AboutMe";
 import WorkExperience from "../../sections/PublicProfile/WorkExperience";
-import FeatherIcon from "feather-icons-react";
 import EducationExperience from "../../sections/PublicProfile/EducationExperience";
 import Interests from "../../sections/PublicProfile/Interests";
 
@@ -42,8 +43,10 @@ export default function PublicProfile()
                 <div>
                     <h1 className="font-bold text-4xl mb-8">Info</h1>
                     {/* TODO: Insert Other Content Here */}
+                    <AboutMe></AboutMe>
                     <WorkExperience></WorkExperience>
                     <EducationExperience></EducationExperience>
+                    <Location></Location>
                     <Interests></Interests>
                     <div className="py-3"></div>
                 </div>
