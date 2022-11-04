@@ -17,12 +17,13 @@ export default function ContactInfo({ contactInfoData: contactData })
             "email": email,
             "phone": phone,
         });
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
 
         var config = {
             method: `${contactData ? "put" : "post"}`,
-            url: `${ // TODO non-hardcoded test user here
-                contactData ? `http://localhost:3001/userFieldServices?field=7&objectid=${contactData._id}`
-                    : "http://localhost:3001/userFieldServices?field=7&idtype=1&id=testUser"
+            url: `${
+                contactData ? process.env.NEXT_PUBLIC_SERVER_ADDRESS +  `/userFieldServices?field=8&objectid=${contactData._id}`
+                    : process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=8&idtype=3&id=" + userID                  
             }`,
             headers: {
                 "Content-Type": "application/json",
