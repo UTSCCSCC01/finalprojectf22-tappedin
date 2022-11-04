@@ -41,3 +41,17 @@ $layout-breakpoint-small: 960px;
     background: rgba(187, 205, 229, 0.2);
     border: 2px solid #BBCDE5;
 }
+
+.viewDashboardContainer
+{
+    padding: 2rem;
+    width: fit-content;
+
+    border-radius: 50%;
+    
+    position: absolute;
+    transform: translateY(-110px) translateX(30px);
+
+    background: rgba(187, 205, 229, 0.2);
+    border: 2px solid #BBCDE5;
+}
