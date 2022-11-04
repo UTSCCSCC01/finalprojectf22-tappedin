@@ -18,13 +18,13 @@ export class UserAccountService implements IUserAccountService
 {
     private _dbAccessService: IDBAccessService;
     private _userCollectionName: string = process.env.USER_COLLECTION_NAME ?? "testCol";
-    private _eduCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testEduCol";
-    private _workCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testWorkCol";
+    private _eduCollectionName: string = process.env.EDUCATION_COLLECTION_NAME ?? "testEduCol";
+    private _workCollectionName: string = process.env.WORK_COLLECTION_NAME ?? "testWorkCol";
     private _socialCollectionName: string = process.env.SOCIAL_COLLECTION_NAME ?? "testSocialCol";
-    private _aboutMeCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testAboutmeCol";
+    private _aboutMeCollectionName: string = process.env.ABOUT_ME_COLLECTION_NAME ?? "testAboutmeCol";
     private _interestCollectionName: string = process.env.INTEREST_COLLECTION_NAME ?? "testInterestCol";
     private _locationCollectionName: string = process.env.LOCATION_COLLECTION_NAME ?? "testLocationCol";
-    private _coverImageCollectionName: string = process.env.COVERIMAGE_COLLECTION_NAME ?? "testCoverImageCol";
+    private _coverImageCollectionName: string = process.env.COVER_IMAGE_COLLECTION_NAME ?? "testCoverImageCol";
 
     /**
      * @constructor
@@ -62,6 +62,11 @@ export class UserAccountService implements IUserAccountService
         {
             result = await this._dbAccessService.getCollection(this._userCollectionName,
                 { email: { $eq: userIdentifier.email } });
+        }
+        else if (userIdentifier.authID)
+        {
+            result = await this._dbAccessService.getCollection(this._userCollectionName,
+                { authID: { $eq: userIdentifier.authID } });
         }
         else
             throw new Error("User Identifier does not have any of the user identifiers.");
@@ -138,6 +143,11 @@ export class UserAccountService implements IUserAccountService
             result = await this._dbAccessService.readDocument(this._userCollectionName, userIdentifier.userID);
             return Promise.resolve((result as UserInfo));
         }
+        else if (userIdentifier.authID)
+        {
+            result = await this._dbAccessService.getCollection(this._userCollectionName, 
+                { authID: { $eq: userIdentifier.authID } });
+        }
         else if (userIdentifier.username)
         {
             result = await this._dbAccessService.getCollection(this._userCollectionName, 
@@ -206,13 +216,16 @@ export class UserAccountService implements IUserAccountService
             result = await this._dbAccessService.getCollection(this._interestCollectionName,
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
             break;
-        case UserFieldTypes.ABOUTME_INFO:
+        case UserFieldTypes.ABOUT_ME_INFO:
             result = await this._dbAccessService.getCollection(this._aboutMeCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
             break;
-        case UserFieldTypes.COVERIMAGE_INFO:
+        case UserFieldTypes.COVER_IMAGE_INFO:
             result = await this._dbAccessService.getCollection(this._coverImageCollectionName, 
                 { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
+        case UserFieldTypes.USER_INFO:
+            result = [ await this.getUserInfo(userIdentifier) ];
             break;
         default:
             throw new Error("Invalid Field Passed.");
@@ -256,7 +269,7 @@ export class UserAccountService implements IUserAccountService
         case UserFieldTypes.SOCIAL_INFO:
             result = await this._dbAccessService.createDocument(this._socialCollectionName, toInsert);
             break;
-        case UserFieldTypes.ABOUTME_INFO:
+        case UserFieldTypes.ABOUT_ME_INFO:
             result = await this._dbAccessService.createDocument(this._aboutMeCollectionName, toInsert);
             break;
         case UserFieldTypes.LOCATION_INFO:
@@ -265,7 +278,7 @@ export class UserAccountService implements IUserAccountService
         case UserFieldTypes.INTEREST_INFO:
             result = await this._dbAccessService.createDocument(this._interestCollectionName, toInsert);
             break;
-        case UserFieldTypes.COVERIMAGE_INFO:
+        case UserFieldTypes.COVER_IMAGE_INFO:
             result = await this._dbAccessService.createDocument(this._coverImageCollectionName, toInsert);
             break;
         default:
@@ -303,14 +316,17 @@ export class UserAccountService implements IUserAccountService
         case UserFieldTypes.SOCIAL_INFO:
             result = await this._dbAccessService.updateDocument(this._socialCollectionName, objectID, data);
             break;
-        case UserFieldTypes.ABOUTME_INFO:
+        case UserFieldTypes.ABOUT_ME_INFO:
             result = await this._dbAccessService.updateDocument(this._aboutMeCollectionName, objectID ?? "", data);
             break;
         case UserFieldTypes.INTEREST_INFO:
             result = await this._dbAccessService.updateDocument(this._interestCollectionName, objectID ?? "", data);
             break;
-        case UserFieldTypes.COVERIMAGE_INFO:
+        case UserFieldTypes.COVER_IMAGE_INFO:
             result = await this._dbAccessService.updateDocument(this._coverImageCollectionName, objectID, data);
+            break;
+        case UserFieldTypes.USER_INFO:
+            result = await this.updateUserInfo({ userID: objectID }, data);
             break;
         default:
             throw new Error("Invalid Field Passed.");

@@ -54,10 +54,16 @@ export default function EditWorkExperiencePage()
     function createWorkExperience(): void 
     {
         const data = getWorkExperienceJSON();
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=1&idtype=3&id=" + userID;
 
         const config = {
             method: "post",
-            url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+            url: url,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -101,10 +107,15 @@ export default function EditWorkExperiencePage()
 
     async function fetchWorkExperience(workExperienceId): Promise<any> 
     {
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=1&idtype=3&id=" + userID;
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+            url: url,
             headers: {},
         };
 

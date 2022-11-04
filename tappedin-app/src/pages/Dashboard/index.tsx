@@ -17,6 +17,9 @@ import Social from "../../sections/Dashboard/Social";
 import AboutMe from "../../sections/Dashboard/AboutMe";
 import EducationExperience from "../../sections/Dashboard/EducationExperience";
 import CoverImageSection from "../../sections/Dashboard/CoverImage";
+import { FirebaseAuthenticationService } from "../../sdk/services/firebaseAuthenticationService";
+
+const authService = new FirebaseAuthenticationService();
 export default function DashboardPage() 
 {
     const [ workExperiencesData, setWorkExperiencesData ] = useState();
@@ -25,6 +28,10 @@ export default function DashboardPage()
     const [ interestsData, setInterestsData ] = useState();
     const [ educationExperiencesData, setEducationExperiencesData ] = useState();
     const [ locationData, setLocationData ] = useState();
+    const [ fullName, setFullName ] = useState("");
+
+    const userID = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : "testUser";
+    const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
 
     useEffect(() => 
     {
@@ -34,23 +41,50 @@ export default function DashboardPage()
         fetchSocials();
         fetchEducationExperiences();
         fetchLocationData();
+        fetchFullName();
     }, []);
 
-    async function fetchWorkExperiences(): Promise<void> 
+    async function fetchFullName(): Promise<void> 
     {
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=1&idtype=1&id=testUser",
+            url: baseURL + "field=7&idtype=3&id=" + userID,
             headers: {},
+            validateStatus: (status) => { return status < 500; }
         };
 
         try 
         {
             const t = await axios(config);
 
-            // FIXME: Backend Fix and Remove
-            if (t.data == "Nothing was found for this query.")
+            if (t.status == 400 || t.status == 404)
+                setFullName("");
+            else
+            {
+                setFullName(`${t.data[0].firstName} ${t.data[0].lastName}`);
+            } 
+            
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
+
+    async function fetchWorkExperiences(): Promise<void> 
+    {
+        const config = {
+            method: "get",
+            url: baseURL + "field=1&idtype=3&id=" + userID,
+            headers: {},
+            validateStatus: (status) => { return status < 500; }
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            if (t.status == 400 || t.status == 404)
                 setWorkExperiencesData(null);
             else setWorkExperiencesData(t.data);
         }
@@ -64,17 +98,16 @@ export default function DashboardPage()
     {
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=2&idtype=1&id=testUser",
+            url: baseURL + "field=2&idtype=3&id=" + userID,
             headers: {},
+            validateStatus: (status) => { return status < 500; }
         };
 
         try 
         {
             const t = await axios(config);
 
-            // FIXME: Backend Fix and Remove
-            if (t.data == "Nothing was found for this query.")
+            if (t.status == 400 || t.status == 404)
                 setLocationData(null);
             else setLocationData(t.data[0]); // Since we can only have 1 location
         }
@@ -88,17 +121,16 @@ export default function DashboardPage()
     {
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=0&idtype=1&id=testUser",
+            url: baseURL + "field=0&idtype=3&id=" + userID,
             headers: {},
+            validateStatus: (status) => { return status < 500; }
         };
 
         try 
         {
             const t = await axios(config);
 
-            // FIXME: Backend Fix and Remove
-            if (t.data == "Nothing was found for this query.")
+            if (t.status == 400 || t.status == 404)
                 setEducationExperiencesData(null);
             else setEducationExperiencesData(t.data);
         }
@@ -112,17 +144,16 @@ export default function DashboardPage()
     {
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
+            url: baseURL + "field=3&idtype=3&id=" + userID,
             headers: {},
+            validateStatus: (status) => { return status < 500; }
         };
 
         try 
         {
             const t = await axios(config);
 
-            // FIXME: Backend Fix and Remove
-            if (t.data == "Nothing was found for this query.")
+            if (t.status == 404 || t.status == 400)
                 setAboutMeData(null);
             else setAboutMeData(t.data);
         }
@@ -136,17 +167,16 @@ export default function DashboardPage()
     {
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=5&idtype=1&id=testUser",
+            url: baseURL + "field=5&idtype=3&id=" + userID,
             headers: {},
+            validateStatus: (status) => { return status < 500; }
         };
 
         try 
         {
             const t = await axios(config);
 
-            // FIXME: Backend Fix and Remove
-            if (t.data == "Nothing was found for this query.")
+            if (t.status == 404 || t.status == 400)
                 setInterestsData(null);
             else setInterestsData(t.data);
         }
@@ -160,17 +190,16 @@ export default function DashboardPage()
     {
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=4&idtype=1&id=testUser",
+            url: baseURL + "field=4&idtype=3&id=" + userID,
             headers: {},
+            validateStatus: (status) => { return status < 500; }
         };
 
         try 
         {
             const t = await axios(config);
 
-            // FIXME: Backend Fix and Remove
-            if (t.data == "Nothing was found for this query.")
+            if (t.status == 404 || t.status == 400)
                 setSocialData(null);
             else setSocialData(t.data);
         }
@@ -178,6 +207,14 @@ export default function DashboardPage()
         {
             console.error(e);
         }
+    }
+
+    async function signOut() 
+    {
+        authService.signOut();
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("userID");
+        window.open("/", "_self");
     }
 
     return (
@@ -195,7 +232,7 @@ export default function DashboardPage()
                         </h1>
                         <div className={`${profileImageContainer} mb-10`}></div>
                         <p>Welcome back</p>
-                        <h2 className="text-center font-bold">Ben Saobuppha</h2>
+                        <h2 className="text-center font-bold">{fullName}</h2>
 
                         <div className="mt-16 w-full">
                             <button className="button is-blue is-dashed">
@@ -207,17 +244,17 @@ export default function DashboardPage()
                         </div>
 
                         <div className="mt-16 w-full">
-                            <a href="/">
-                                <div className="flex items-center cursor-pointer">
-                                    <FeatherIcon
-                                        icon="log-out"
-                                        stroke="#BBCDE5"
-                                    ></FeatherIcon>
-                                    <label className="ml-3 cursor-pointer">
+                            
+                            <div className="flex items-center cursor-pointer" onClick={() => signOut()}>
+                                <FeatherIcon
+                                    icon="log-out"
+                                    stroke="#BBCDE5"
+                                ></FeatherIcon>
+                                <label className="ml-3 cursor-pointer">
                                         Sign Out
-                                    </label>
-                                </div>
-                            </a>
+                                </label>
+                            </div>
+                            
                         </div>
                     </div>
                     <div className="flex flex-col col-span-3">
