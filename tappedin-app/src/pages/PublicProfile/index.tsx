@@ -5,6 +5,7 @@ import Location from "../../sections/PublicProfile/Location";
 import AboutMe from "../../sections/PublicProfile/AboutMe";
 import WorkExperience from "../../sections/PublicProfile/WorkExperience";
 import EducationExperience from "../../sections/PublicProfile/EducationExperience";
+import Interests from "../../sections/PublicProfile/Interests";
 
 export default function PublicProfile() 
 {
@@ -46,6 +47,7 @@ export default function PublicProfile()
                     <WorkExperience></WorkExperience>
                     <EducationExperience></EducationExperience>
                     <Location></Location>
+                    <Interests></Interests>
                     <div className="py-3"></div>
                 </div>
             </div>
