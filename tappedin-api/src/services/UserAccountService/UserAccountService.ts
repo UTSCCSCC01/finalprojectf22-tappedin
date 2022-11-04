@@ -18,10 +18,10 @@ export class UserAccountService implements IUserAccountService
 {
     private _dbAccessService: IDBAccessService;
     private _userCollectionName: string = process.env.USER_COLLECTION_NAME ?? "testCol";
-    private _eduCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testEduCol";
-    private _workCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testWorkCol";
+    private _eduCollectionName: string = process.env.EDUCATION_COLLECTION_NAME ?? "testEduCol";
+    private _workCollectionName: string = process.env.WORK_COLLECTION_NAME ?? "testWorkCol";
     private _socialCollectionName: string = process.env.SOCIAL_COLLECTION_NAME ?? "testSocialCol";
-    private _aboutMeCollectionName: string = process.env.EDU_COLLECTION_NAME ?? "testAboutmeCol";
+    private _aboutMeCollectionName: string = process.env.ABOUT_ME_COLLECTION_NAME ?? "testAboutmeCol";
     private _interestCollectionName: string = process.env.INTEREST_COLLECTION_NAME ?? "testInterestCol";
     private _locationCollectionName: string = process.env.LOCATION_COLLECTION_NAME ?? "testLocationCol";
     private _coverImageCollectionName: string = process.env.COVER_IMAGE_COLLECTION_NAME ?? "testCoverImageCol";

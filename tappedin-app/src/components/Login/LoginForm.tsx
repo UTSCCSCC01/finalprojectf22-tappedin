@@ -48,11 +48,11 @@ export default function LoginForm ()
                 await authService.signIn(username, password);
 
                 localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("userID", authService.getCurrentUserId());
                 window.open("/Dashboard", "_self");
             }
             catch (err)
             {
-                console.log(err);
                 if (err instanceof FirebaseError && err.code == "auth/wrong-password") 
                 {
                     newErrors.push({
@@ -77,6 +77,8 @@ export default function LoginForm ()
                     });
                     setErrors(newErrors);
                 }
+                else
+                    console.error(err);
             }
         }
     };

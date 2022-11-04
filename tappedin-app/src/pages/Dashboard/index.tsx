@@ -31,7 +31,6 @@ export default function DashboardPage()
     const [ fullName, setFullName ] = useState("");
 
     const userID = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : "testUser";
-    console.log(userID);
     const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
 
     useEffect(() => 
@@ -212,9 +211,7 @@ export default function DashboardPage()
 
     async function signOut() 
     {
-        console.log(authService.getCurrentUserId());
         authService.signOut();
-        console.log(authService.getCurrentUserId());
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("userID");
         window.open("/", "_self");
