@@ -21,13 +21,13 @@ export default function CoverImageSection( { coverImageData : coverImageData } )
         if (!userID)
             return;
         
-        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=2&idtype=3&id=" + userID;
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=6&idtype=3&id=" + userID;
           
         const config = {
             method: `${coverImageData ? "put" : "post"}`,
             url: `${
                 coverImageData
-                    ? `http://localhost:3001/userFieldServices?field=2&objectid=${coverImageData._id}`
+                    ? `http://localhost:3001/userFieldServices?field=6&objectid=${coverImageData._id}`
                     : url
             }`,
             headers: {
