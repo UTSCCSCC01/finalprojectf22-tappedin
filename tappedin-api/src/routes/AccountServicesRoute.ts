@@ -5,6 +5,7 @@ import TYPES from "../types";
 import { UserFieldTypes, UserIdentifier } from "../common/userDataTypes";
 import { UserIDType } from "../common/commonTypes";
 import { createUserIdentifier } from "../common/commonFunctions";
+import { UserNotFoundError } from "../common/errors";
 
 export const accountServicesRouter = express.Router();
 const userAccountService: IUserAccountService = container.get<IUserAccountService>(TYPES.IUserAccountService);
@@ -79,20 +80,20 @@ accountServicesRouter.put("/", async (req: Request, res: Response, next: NextFun
         let objectID: string;
 
         if (!req.query.field)
-            return res.send("Field type not specified.").status(400);
+            return res.status(400).send("Field type not specified.");
         
         fieldType = parseInt(req.query.field.toString());
     
         if (!Number.isInteger(fieldType))
-            return res.send("Field type is of invalid form.").status(400);
+            return res.status(400).send("Field type is of invalid form.");
         
         if (!req.query.objectid)
-            return res.send("Object ID not specified.").status(400);
+            return res.status(400).send("Object ID not specified.");
         else
             objectID = req.query.objectid.toString();
 
         result = await userAccountService.updateUserField(objectID, fieldType, requestBody);
-        return res.send(result).status(200);
+        return res.status(200).send(result);
     }
     catch (err)
     {
@@ -114,13 +115,13 @@ accountServicesRouter.get("/", async (req: Request, res: Response, next: NextFun
         let userIDType: UserIDType;
 
         if (!req.query.field)
-            return res.send("Field type not specified.").status(400);
+            return res.status(400).send("Field type not specified.");
 
         if (!req.query.idtype)
-            return res.send("User ID type not specified.").status(400);
+            return res.status(400).send("User ID type not specified.");
         
         if (!req.query.id)
-            return res.send("User ID not specified.").status(400);
+            return res.status(400).send("User ID not specified.");
         else
             userID = req.query.id.toString();
 
@@ -128,22 +129,24 @@ accountServicesRouter.get("/", async (req: Request, res: Response, next: NextFun
         userIDType = parseInt(req.query.idtype.toString());
 
         if (!Number.isInteger(fieldType))
-            return res.send("Field type is of invalid form.").status(400);
+            return res.status(400).send("Field type is of invalid form.");
         
         if (!Number.isInteger(userIDType))
-            return res.send("User ID type is of invalid form.").status(400);
+            return res.status(400).send("User ID type is of invalid form.");
 
         requestUserIdentifier = createUserIdentifier(userID, userIDType);
         result = await userAccountService.getUserField(requestUserIdentifier, fieldType);
         if (result)
-            return res.send(result).status(200);
+            return res.status(200).send(result);
         else
-            return res.send("Nothing was found for this query.").status(400);
+            return res.status(404).send("Nothing was found for this query.");
     }
     catch (err)
     {
-        
-        next(err);
+        if (err instanceof UserNotFoundError)
+            return res.status(404).send("Nothing was found for this query.");
+        else
+            next(err);
     }
 });
 

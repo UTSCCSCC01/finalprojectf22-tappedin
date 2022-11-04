@@ -42,10 +42,16 @@ export default function EditSocialPage(socialData)
     function createSocial(): void 
     {
         const data = getSocialJSON();
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=4&idtype=3&id=" + userID;
 
         const config = {
             method: "post",
-            url: "http://localhost:3001/userFieldServices?field=4&idtype=1&id=testUser",
+            url: url,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -89,10 +95,15 @@ export default function EditSocialPage(socialData)
 
     async function fetchSocial(): Promise<any> 
     {
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=4&idtype=3&id=" + userID;
         const config = {
             method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=4&idtype=1&id=testUser",
+            url: url,
             headers: {
                 "Content-Type": "application/json",
             }

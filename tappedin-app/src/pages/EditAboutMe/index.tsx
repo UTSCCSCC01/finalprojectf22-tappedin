@@ -7,6 +7,7 @@ import CoverImage from "../../components/CoverImage";
 import FeatherIcon from "feather-icons-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FirebaseAuthenticationService } from "../../sdk/services/firebaseAuthenticationService";
 
 export default function EditAboutMePage() 
 {
@@ -45,10 +46,16 @@ export default function EditAboutMePage()
     function createAboutMe(): void 
     {
         const data = getAboutMeJSON();
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+
+        if (!userID)
+            return;
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=3&idtype=3&id=" + userID;
 
         const config = {
             method: "post",
-            url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
+            url: url,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -92,10 +99,17 @@ export default function EditAboutMePage()
 
     async function fetchAboutMe(aboutMeId): Promise<any> 
     {
+        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+        console.log(userID);
+        if (!userID)
+            return { aboutMeText: "" };
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=3&idtype=3&id=" + userID;
+        console.log(url);
         const config = {
             method: "get",
             // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=3&idtype=1&id=testUser",
+            url: url,
             headers: {},
         };
 
@@ -112,7 +126,9 @@ export default function EditAboutMePage()
         {
             console.error(e);
         }
-
+        
+        if (!aboutMe)
+            aboutMe = {};
         return aboutMe;
     }
 
