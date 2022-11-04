@@ -3,7 +3,6 @@ import { IUserAccountService } from "../services/UserAccountService/IUserAccount
 import container from "../inversify.config";
 import TYPES from "../types";
 import { UserInfo } from "../common/userDataTypes";
-import { UserNotFoundError } from "../common/errors";
 
 export const accountCreationRouter = express.Router();
 const userAccountService: IUserAccountService = container.get<IUserAccountService>(TYPES.IUserAccountService);
@@ -16,13 +15,13 @@ accountCreationRouter.post("/", async (req: Request, res: Response, next: NextFu
     {
         let resultUser: UserInfo | null;
         let result: string;
-        let username: string = req.body.username ?? "";
-        let email: string = req.body.email ?? "";
+        let username: string | undefined = req.body.username;
+        let email: string | undefined = req.body.email;
 
-        if (username === "")
+        if (!username)
             return res.status(400).send("No username provided.");
             
-        if (email === "")
+        if (!email)
             return res.status(400).send("No email provided.");
         try
         {

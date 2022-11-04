@@ -47,7 +47,7 @@ export default function SignUpForm()
             });
         }
         // check password == confirm password
-        if (password !== confirmPassword) 
+        if (password !== confirmPassword)
         {
             console.log("Passwords don't match.");
             foundErrors.push({
@@ -66,7 +66,6 @@ export default function SignUpForm()
         // clear previous errors
         setErrors([]);
         const newErrors = verifyForm();
-        console.log(newErrors);
         // if no errors then send new user to back end
         if (newErrors.length > 0) 
         {

@@ -5,9 +5,10 @@ function RouteGuard({ router, children }): void
 {
     //Identify authenticated user
     const isAuthenticated: boolean = localStorageExists() ? (localStorage.getItem("isLoggedIn") == "true") : false;
-    let unprotectedRoutes: Array<String> = [
+    const unprotectedRoutes: ReadonlyArray<String> = [
         "/Login",
         "/Register",
+        "/PublicProfile",
         "/"
     ];
     let pathIsProtected: boolean = unprotectedRoutes.indexOf(router.pathname) === -1;

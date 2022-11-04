@@ -53,7 +53,6 @@ export default function LoginForm ()
             }
             catch (err)
             {
-                console.log(err);
                 if (err instanceof FirebaseError && err.code == "auth/wrong-password") 
                 {
                     newErrors.push({
@@ -78,6 +77,8 @@ export default function LoginForm ()
                     });
                     setErrors(newErrors);
                 }
+                else
+                    console.error(err);
             }
         }
     };

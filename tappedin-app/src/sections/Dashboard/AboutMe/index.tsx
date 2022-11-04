@@ -14,8 +14,14 @@ export default function AboutMe( { aboutMeData: aboutMeData } )
                     <h2 className="font-bold ml-2">About Me</h2>
                 </div>
             </div>
-            {console.log(aboutMeData)}
-            { (!aboutMeData || aboutMeData.length == 0) ? 
+            { (aboutMeData && aboutMeData.length != 0) ? 
+                (
+                    aboutMeData.map((aboutMeData, key) => 
+                    {
+                        return <AboutMeCard aboutMeData={aboutMeData} 
+                            key={key}></AboutMeCard>;
+                    })
+                ) :
                 (<div
                     className={`${addAboutMeContainer}
                                     flex items-center justify-center`}
@@ -30,14 +36,7 @@ export default function AboutMe( { aboutMeData: aboutMeData } )
                             />
                         </div>
                     </a>
-                </div>) :
-                (
-                    aboutMeData.map((aboutMeData, key) => 
-                    {
-                        return <AboutMeCard aboutMeData={aboutMeData} 
-                            key={key}></AboutMeCard>;
-                    })
-                )}
+                </div>)}
         </div>
     );
 }
