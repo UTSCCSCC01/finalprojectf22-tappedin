@@ -159,30 +159,6 @@ export default function DashboardPage()
         }
     }
 
-    async function fetchSocials(): Promise<void> 
-    {
-        const config = {
-            method: "get",
-            // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=4&idtype=1&id=testUser",
-            headers: {},
-        };
-
-        try 
-        {
-            const t = await axios(config);
-
-            // FIXME: Backend Fix and Remove
-            if (t.data == "Nothing was found for this query.")
-                setSocialData(null);
-            else setSocialData(t.data);
-        }
-        catch (e) 
-        {
-            console.error(e);
-        }
-    }
-
     async function fetchContactInfo(): Promise<void> 
     {
         const config = {
@@ -207,12 +183,12 @@ export default function DashboardPage()
         }
     }
 
-    async function fetchCoverImage(): Promise<void> 
+    async function fetchSocials(): Promise<void> 
     {
         const config = {
             method: "get",
             // FIXME: Change URL
-            url: "http://localhost:3001/userFieldServices?field=6&idtype=1&id=testUser",
+            url: "http://localhost:3001/userFieldServices?field=4&idtype=1&id=testUser",
             headers: {},
         };
 
@@ -222,8 +198,8 @@ export default function DashboardPage()
 
             // FIXME: Backend Fix and Remove
             if (t.data == "Nothing was found for this query.")
-                setCoverImageData(null);
-            else setCoverImageData(t.data[0]);
+                setSocialData(null);
+            else setSocialData(t.data);
         }
         catch (e) 
         {
