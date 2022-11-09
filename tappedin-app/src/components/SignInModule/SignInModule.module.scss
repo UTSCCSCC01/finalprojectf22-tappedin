@@ -1,0 +1,27 @@
+.signInContainer
+{
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    position: fixed;
+
+    border-radius: 1.25rem;
+
+    bottom: 0;
+    right: 0;
+    margin: 35px 25px;
+
+    width: fit-content;
+
+    padding: 1.5rem;
+}
+
+.profileImageContainerSmall
+{
+    height: 3.75rem;
+    width: 3.75rem;
+    
+    border-radius: 50%;
+
+    background: rgba(187, 205, 229, 0.2);
+    border: 2px solid #BBCDE5;
+}

@@ -1,4 +1,7 @@
-import { profileImageContainer, lineBreak } from "./PublicProfile.module.scss";
+import {
+    profileImageContainer,
+    lineBreak,
+} from "./PublicProfile.module.scss";
 
 import CoverImage from "../../components/CoverImage";
 import Location from "../../sections/PublicProfile/Location";
@@ -10,18 +13,20 @@ import Interests from "../../sections/PublicProfile/Interests";
 import Socials from "../../sections/PublicProfile/Socials";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import SignInModule from "../../components/SignInModule";
 
 export default function PublicProfile() 
 {
-    const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
-    
+    const baseURL =
+        process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
+
     const [ fullName, setFullName ] = useState("");
 
     useEffect(() => 
     {
-        const userID: string = new URLSearchParams(
-            window.location.search
-        ).get("id");
+        const userID: string = new URLSearchParams(window.location.search).get(
+            "id"
+        );
 
         fetchFullName(userID);
     }, []);
@@ -32,20 +37,21 @@ export default function PublicProfile()
             method: "get",
             url: baseURL + "field=7&idtype=3&id=" + userID,
             headers: {},
-            validateStatus: (status) => { return status < 500; }
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
         };
 
         try 
         {
             const t = await axios(config);
 
-            if (t.status == 400 || t.status == 404)
-                setFullName("");
-            else
+            if (t.status == 400 || t.status == 404) setFullName("");
+            else 
             {
                 setFullName(`${t.data[0].firstName} ${t.data[0].lastName}`);
-            } 
-            
+            }
         }
         catch (e) 
         {
@@ -96,6 +102,8 @@ export default function PublicProfile()
                     <Interests></Interests>
                     <div className="py-3"></div>
                 </div>
+
+                <SignInModule></SignInModule>
             </div>
         </div>
     );

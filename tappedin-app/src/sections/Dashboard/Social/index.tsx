@@ -89,7 +89,7 @@ export default function Social( { socialData: socialData } )
                 </div>
                 
             </div>
-            <div className=" grid grid-cols-4 gap-5 content-start">
+            <div className=" grid md:grid-cols-4 gap-5 content-start">
 
             
                 <div
