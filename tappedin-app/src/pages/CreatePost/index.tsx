@@ -19,6 +19,14 @@ export default function CreatePost()
 
     const [ signedInUserFullName, setSignedInFullUserName ] = useState("");
 
+    const baseURL =
+            process.env.NEXT_PUBLIC_SERVER_ADDRESS;
+
+    const userId =
+            typeof localStorage !== "undefined"
+                ? localStorage.getItem("userID")
+                : null;
+
     useEffect(() => 
     {
         fetchSignedInUserFullName();
@@ -26,19 +34,11 @@ export default function CreatePost()
 
     async function fetchSignedInUserFullName(): Promise<void> 
     {
-        const baseURL =
-            process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
-
-        const userId =
-            typeof localStorage !== "undefined"
-                ? localStorage.getItem("userID")
-                : null;
-
         if (!userId) return;
 
         const config = {
             method: "get",
-            url: `${baseURL}field=7&idtype=3&id=${userId}`,
+            url: `${baseURL}/userFieldServices?field=7&idtype=3&id=${userId}`,
         };
 
         try 
@@ -52,6 +52,40 @@ export default function CreatePost()
                     `${t.data[0].firstName} ${t.data[0].lastName}`
                 );
             }
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
+
+    async function handleSubmit(): Promise<void>
+    {
+        const data = {
+            userID: userId,
+            imageURL: imageUrl,
+            commentIDs: [],
+            likeIDs: [],
+            title: title,
+            content: description,
+            dateCreated: new Date().toLocaleDateString(),
+            timestamp: Date.now()
+        };
+
+        const config = {
+            method: "post",
+            url: `${baseURL}/postService/addPost`,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            data: data,
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            console.log(t.data);
         }
         catch (e) 
         {
@@ -144,7 +178,7 @@ export default function CreatePost()
                     </div>
 
                     <div className="grid md:grid-cols-4">
-                        <button className="button">Create Post</button>
+                        <button className="button" onClick={() => handleSubmit()}>Create Post</button>
                     </div>
                 </div>
                 <div className="p-4"></div>
