@@ -65,13 +65,16 @@ accountServicesRouter.post("/", async (req: Request, res: Response, next: NextFu
     }
     catch (err)
     {
-        next(err);
+        if (err instanceof UserNotFoundError)
+            return res.status(404).send("User was not found.");
+        else
+            next(err);
     }
 });
 
 accountServicesRouter.put("/", async (req: Request, res: Response, next: NextFunction) =>
 {
-    console.log("Received POST req for user Field");
+    console.log("Received PUT req for user Field");
     try
     {
         let result;
@@ -89,15 +92,18 @@ accountServicesRouter.put("/", async (req: Request, res: Response, next: NextFun
         
         if (!req.query.objectid)
             return res.status(400).send("Object ID not specified.");
-        else
-            objectID = req.query.objectid.toString();
+        
+        objectID = req.query.objectid.toString();
 
         result = await userAccountService.updateUserField(objectID, fieldType, requestBody);
         return res.status(200).send(result);
     }
     catch (err)
     {
-        next(err);
+        if (err instanceof UserNotFoundError)
+            return res.status(404).send("User was not found.");
+        else
+            next(err);
     }
 });
 
@@ -144,7 +150,7 @@ accountServicesRouter.get("/", async (req: Request, res: Response, next: NextFun
     catch (err)
     {
         if (err instanceof UserNotFoundError)
-            return res.status(404).send("Nothing was found for this query.");
+            return res.status(404).send("User was not found.");
         else
             next(err);
     }
