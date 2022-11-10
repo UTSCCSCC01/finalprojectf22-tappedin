@@ -7,31 +7,32 @@ import * as dotenv from "dotenv";
 import { ObjectId, WithId } from "mongodb";
 import { WithUserID } from "../../common/commonTypes";
 import { UserNotFoundError } from "../../common/errors";
+import { IUserIdentificationService } from "../UserIdentificationService/IUserIdentificationService";
 dotenv.config();
 
-// TODO: FIX ADD (ADDS ONLY1)
-// TODO: FIX UPDATE (UPDATE BY ID)
-// TODO: FIX GET (GET ALL)
-// TODO: BETTER ERRORS (PROBABLY CUSTOM ERROR HANDLER)
+
 @injectable()
 export class UserAccountService implements IUserAccountService
 {
     private _dbAccessService: IDBAccessService;
-    private _userCollectionName: string = process.env.USER_COLLECTION_NAME ?? "testCol";
-    private _eduCollectionName: string = process.env.EDUCATION_COLLECTION_NAME ?? "testEduCol";
-    private _workCollectionName: string = process.env.WORK_COLLECTION_NAME ?? "testWorkCol";
-    private _socialCollectionName: string = process.env.SOCIAL_COLLECTION_NAME ?? "testSocialCol";
-    private _aboutMeCollectionName: string = process.env.ABOUT_ME_COLLECTION_NAME ?? "testAboutmeCol";
-    private _interestCollectionName: string = process.env.INTEREST_COLLECTION_NAME ?? "testInterestCol";
-    private _locationCollectionName: string = process.env.LOCATION_COLLECTION_NAME ?? "testLocationCol";
-    private _coverImageCollectionName: string = process.env.COVER_IMAGE_COLLECTION_NAME ?? "testCoverImageCol";
-    private _contactInfoCollectionName: string = process.env.CONTACTINFO_COLLECTION_NAME ?? "testContactInfoCol";
+    private _userIdentificationService : IUserIdentificationService;
+
+    private readonly _userCollectionName: string = process.env.USER_COLLECTION_NAME ?? "testCol";
+    private readonly _eduCollectionName: string = process.env.EDUCATION_COLLECTION_NAME ?? "testEduCol";
+    private readonly _workCollectionName: string = process.env.WORK_COLLECTION_NAME ?? "testWorkCol";
+    private readonly _socialCollectionName: string = process.env.SOCIAL_COLLECTION_NAME ?? "testSocialCol";
+    private readonly _aboutMeCollectionName: string = process.env.ABOUT_ME_COLLECTION_NAME ?? "testAboutmeCol";
+    private readonly _interestCollectionName: string = process.env.INTEREST_COLLECTION_NAME ?? "testInterestCol";
+    private readonly _locationCollectionName: string = process.env.LOCATION_COLLECTION_NAME ?? "testLocationCol";
+    private readonly _coverImageCollectionName: string = process.env.COVER_IMAGE_COLLECTION_NAME ?? "testCoverImageCol";
+    private readonly _contactInfoCollectionName: string = process.env.CONTACTINFO_COLLECTION_NAME ?? "testContactInfoCol";
 
     /**
      * @constructor
      * @param {IDBAccessService} dbAccessService - The service used to interact with the DB. 
      */
-    public constructor(@inject(TYPES.IDBAccessService) dbAccessService: IDBAccessService)
+    public constructor(@inject(TYPES.IDBAccessService) dbAccessService: IDBAccessService, 
+                       @inject(TYPES.IUserIdentificationService) userIdentificationService: IUserIdentificationService)
     {
         if (this._userCollectionName == "testCol")
             console.warn("Using test user collection, check .env file if this is unexpected.");
@@ -40,48 +41,7 @@ export class UserAccountService implements IUserAccountService
             console.warn("Using test education info collection, check .env file if this is unexpected.");
 
         this._dbAccessService = dbAccessService;
-    }
-
-    /** 
-    * Return the ObjectID from MongoDB corresponding to the username/email of the user in {userIdentifier}. 
-    * 
-    * @param {UserIdentifier} userIdentifier - The username or email of the user to find
-    * 
-    * @returns {Promise<string | null>} The hexstring of the user's DB entry if found, null otherwise. 
-    */
-    private async getUserId(userIdentifier: UserIdentifier): Promise<string>
-    {
-        let result;
-        let id: ObjectId;
-
-        if (userIdentifier.username)
-        {
-            result = await this._dbAccessService.getCollection(this._userCollectionName,
-                { username: { $eq: userIdentifier.username } });
-        }
-        else if (userIdentifier.email)
-        {
-            result = await this._dbAccessService.getCollection(this._userCollectionName,
-                { email: { $eq: userIdentifier.email } });
-        }
-        else if (userIdentifier.authID)
-        {
-            result = await this._dbAccessService.getCollection(this._userCollectionName,
-                { authID: { $eq: userIdentifier.authID } });
-        }
-        else
-            throw new Error("User Identifier does not have any of the user identifiers.");
-
-        if (result.length > 1)
-            console.warn("There are multiple users for a single user identifier.");
-        
-        if (result.length == 0)
-            throw new UserNotFoundError(userIdentifier);
-
-        if (id = (result[0] as WithId<Document>)._id)
-            return Promise.resolve(id.toHexString());
-        else
-            throw new UserNotFoundError(userIdentifier);
+        this._userIdentificationService = userIdentificationService;
     }
 
     /** 
@@ -112,16 +72,10 @@ export class UserAccountService implements IUserAccountService
     */
     public async updateUserInfo(userIdentifier: UserIdentifier, userInfo: Object): Promise<string> 
     {
-        let id: string | null;
+        let id: string;
         let result: string | null;
 
-        if (userIdentifier.userID)
-            id = userIdentifier.userID;
-        else
-            id = await this.getUserId(userIdentifier);
-
-        if (id == null)
-            throw new UserNotFoundError(userIdentifier);
+        id = await this._userIdentificationService.getUserId(userIdentifier);
 
         result = await this._dbAccessService.updateDocument(this._userCollectionName, id, userInfo);
         return Promise.resolve(result);
@@ -179,21 +133,13 @@ export class UserAccountService implements IUserAccountService
     * @param {UserFieldTypes} field - The information type requested.
     * 
     * @returns {Promise<UserFields | null>} The UserField requested corresponding to that user if found, null otherwise. 
-    * ITS ARRAY ANY?!?!? FIX IT>!!>!>!>!
     */
     public async getUserField(userIdentifier: UserIdentifier, field: UserFieldTypes): Promise<Array<any>>
     {
         let result;
-        let objectID: string | null;
+        let objectID: string;
 
-        if (userIdentifier.userID)
-            objectID = userIdentifier.userID;
-        else
-            objectID = await this.getUserId(userIdentifier);
-
-        if (objectID == null)
-            throw new UserNotFoundError(userIdentifier);
-            //return Promise.resolve(null);
+        objectID = await this._userIdentificationService.getUserId(userIdentifier);
 
         switch (field)
         {
@@ -250,16 +196,10 @@ export class UserAccountService implements IUserAccountService
     public async addUserField(userIdentifier: UserIdentifier, field: UserFieldTypes, data: Object): Promise<string>
     {
         let result: string;
-        let objectID: string | null;
+        let objectID: string;
         let toInsert: WithUserID;
  
-        if (userIdentifier.userID)
-            objectID = userIdentifier.userID;
-        else
-            objectID = await this.getUserId(userIdentifier);
- 
-        if (objectID == null)
-            throw new UserNotFoundError(userIdentifier);
+        objectID = await this._userIdentificationService.getUserId(userIdentifier);
         
         toInsert = { userID: ObjectId.createFromHexString(objectID), ...data };
         

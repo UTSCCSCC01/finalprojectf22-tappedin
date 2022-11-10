@@ -5,6 +5,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import { accountCreationRouter } from "./routes/AccoundCreationRoute";
 import { accountServicesRouter } from "./routes/AccountServicesRoute";
+import { postServiceRouter } from "./routes/PostServiceRoute";
 
 const app = express();
 app.use(logger("dev"));
@@ -17,5 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/createUser", accountCreationRouter);
 app.use("/userFieldServices", accountServicesRouter);
+app.use("/postService", postServiceRouter);
 
 export default app;
