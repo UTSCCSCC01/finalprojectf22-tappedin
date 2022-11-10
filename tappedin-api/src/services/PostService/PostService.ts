@@ -163,6 +163,25 @@ export class PostService implements IPostService
      */
     public async addLike(userIdentifier: UserIdentifier, postID: string): Promise<boolean> 
     {
+        // let userID: string;
+        // let postData: any;
+
+        // userID = await this._userIdentificationService.getUserId(userIdentifier);
+        // postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
+
+        // Append to current list
+        // postData.likeIDs = [...postData.likeIDs, userID];
+
+        // try 
+        // {
+        //     this._dbAccessService.updateDocument(this._postCollectionName, postID, postData);
+        // }
+        // catch (err)
+        // {
+        //     console.log(err);
+        //     return Promise.resolve(false);
+        // }
+
         return Promise.resolve(true);
     }
 
