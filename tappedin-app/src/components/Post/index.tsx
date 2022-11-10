@@ -18,6 +18,7 @@ export default function Post({ post })
                 }
             ></div>
             <div className={`${postContent}`}>
+                <p className='text-sm'>{post.likeIDs.length} Likes</p>
                 <h3 className="is-text-gradient-1 font-bold">{post.title}</h3>
                 <p className="text-sm mb-4 font-semibold">{post.name}</p>
                 <p className="pre-wrap mb-4">{post.content}</p>
