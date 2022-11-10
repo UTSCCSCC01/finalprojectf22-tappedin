@@ -19,13 +19,12 @@ export default function CreatePost()
 
     const [ signedInUserFullName, setSignedInFullUserName ] = useState("");
 
-    const baseURL =
-            process.env.NEXT_PUBLIC_SERVER_ADDRESS;
+    const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
 
     const userId =
-            typeof localStorage !== "undefined"
-                ? localStorage.getItem("userID")
-                : null;
+        typeof localStorage !== "undefined"
+            ? localStorage.getItem("userID")
+            : null;
 
     useEffect(() => 
     {
@@ -59,7 +58,7 @@ export default function CreatePost()
         }
     }
 
-    async function handleSubmit(): Promise<void>
+    async function handleSubmit(): Promise<void> 
     {
         const data = {
             userID: userId,
@@ -69,7 +68,7 @@ export default function CreatePost()
             title: title,
             content: description,
             dateCreated: new Date().toLocaleDateString(),
-            timestamp: Date.now()
+            timestamp: Date.now(),
         };
 
         const config = {
@@ -84,6 +83,8 @@ export default function CreatePost()
         try 
         {
             await axios(config);
+
+            window.open("/Dashboard", "_self");
         }
         catch (e) 
         {
@@ -165,10 +166,16 @@ export default function CreatePost()
                                     <h3 className="is-text-gradient-1 font-bold">
                                         {title}
                                     </h3>
-                                    <p className="text-sm mb-4 font-semibold">{signedInUserFullName}</p>
-                                    <p className="pre-wrap mb-4">{description}</p>
+                                    <p className="text-sm mb-4 font-semibold">
+                                        {signedInUserFullName}
+                                    </p>
+                                    <p className="pre-wrap mb-4">
+                                        {description}
+                                    </p>
                                     <div className="">
-                                        <p className="text-sm">{new Date().toLocaleDateString()}</p>
+                                        <p className="text-sm">
+                                            {new Date().toLocaleDateString()}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +183,12 @@ export default function CreatePost()
                     </div>
 
                     <div className="grid md:grid-cols-4">
-                        <button className="button" onClick={() => handleSubmit()}>Create Post</button>
+                        <button
+                            className="button"
+                            onClick={() => handleSubmit()}
+                        >
+                            Create Post
+                        </button>
                     </div>
                 </div>
                 <div className="p-4"></div>

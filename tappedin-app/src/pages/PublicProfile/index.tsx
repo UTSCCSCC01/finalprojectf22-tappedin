@@ -1,7 +1,4 @@
-import {
-    profileImageContainer,
-    lineBreak,
-} from "./PublicProfile.module.scss";
+import { profileImageContainer, lineBreak } from "./PublicProfile.module.scss";
 
 import CoverImage from "../../components/CoverImage";
 import Location from "../../sections/PublicProfile/Location";
@@ -14,6 +11,7 @@ import Socials from "../../sections/PublicProfile/Socials";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SignInModule from "../../components/SignInModule";
+import Posts from "../../sections/PublicProfile/Posts";
 
 export default function PublicProfile() 
 {
@@ -21,21 +19,22 @@ export default function PublicProfile()
         process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
 
     const [ fullName, setFullName ] = useState("");
+    const [ userId, setUserId ] = useState("");
 
     useEffect(() => 
     {
-        const userID: string = new URLSearchParams(window.location.search).get(
-            "id"
-        );
+        setUserId(new URLSearchParams(window.location.search).get("id"));
 
-        fetchFullName(userID);
+        fetchFullName();
     }, []);
 
-    async function fetchFullName(userID: string): Promise<void> 
+    async function fetchFullName(): Promise<void> 
     {
+        const userId = new URLSearchParams(window.location.search).get("id");
+
         const config = {
             method: "get",
-            url: baseURL + "field=7&idtype=3&id=" + userID,
+            url: baseURL + "field=7&idtype=3&id=" + userId,
             headers: {},
             validateStatus: (status) => 
             {
@@ -100,6 +99,7 @@ export default function PublicProfile()
                     <EducationExperience></EducationExperience>
                     <Location></Location>
                     <Interests></Interests>
+                    {userId && <Posts userId={userId}></Posts>}
                     <div className="py-3"></div>
                 </div>
 
