@@ -83,9 +83,7 @@ export default function CreatePost()
 
         try 
         {
-            const t = await axios(config);
-
-            console.log(t.data);
+            await axios(config);
         }
         catch (e) 
         {
