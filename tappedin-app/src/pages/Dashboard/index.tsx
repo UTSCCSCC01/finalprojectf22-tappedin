@@ -1,6 +1,6 @@
 import {
     customBackground,
-    editContainer,
+    dashboardContentContainer,
     customNavbar,
     profileImageContainer,
     viewDashboardContainer
@@ -274,6 +274,8 @@ export default function DashboardPage()
         window.open("/", "_self");
     }
 
+    const [ dashboardMode, setDashboardMode ] = useState("Feed");
+
     return (
         <div className={`${customBackground}`}>
             <CoverImage publicProfile={false} existingImage={coverImageData}
@@ -292,10 +294,10 @@ export default function DashboardPage()
                         <h2 className="text-center font-bold">{fullName}</h2>
 
                         <div className="mt-16 w-full">
-                            <button className="button is-blue is-dashed">
+                            <button className={`button is-blue ${dashboardMode == "Feed" ? "" : "is-dashed"}`} onClick={() => setDashboardMode("Feed")}>
                                 Feed
                             </button>
-                            <button className="button is-blue mt-3">
+                            <button className={`button is-blue ${dashboardMode == "Edit" ? "" : "is-dashed"} mt-3`} onClick={() => setDashboardMode("Edit")}>
                                 Edit
                             </button>
                         </div>
@@ -315,30 +317,42 @@ export default function DashboardPage()
                         </div>
                     </div>
                     <div className="flex flex-col col-span-3">
-                        <h1 className="mb-3 font-bold">Edit</h1>
-                        <div className={`${editContainer} mb-12`}>
-                            <a href={`/PublicProfile?id=${userID}`}>
-                                <div className="flex justify-end">
-                                    <div className={`flex justify-center items-center ${viewDashboardContainer} cursor-pointer`}>
-                                        <FeatherIcon
-                                            icon="eye"
-                                            stroke="#639FAB"
-                                            width="30"
-                                            height="30"
-                                            strokeWidth="1.5"
-                                        ></FeatherIcon>
-                                    </div>
-                                </div>
-                            </a>
+                        <h1 className="mb-3 font-bold">{dashboardMode}</h1>
+                        <div className={`${dashboardContentContainer} mb-12`}>
+                            {
+                                dashboardMode == "Edit" && (
+                                    <div>
+                                        <a href={`/PublicProfile?id=${userID}`}>
+                                            <div className="flex justify-end">
+                                                <div className={`flex justify-center items-center ${viewDashboardContainer} cursor-pointer`}>
+                                                    <FeatherIcon
+                                                        icon="eye"
+                                                        stroke="#639FAB"
+                                                        width="30"
+                                                        height="30"
+                                                        strokeWidth="1.5"
+                                                    ></FeatherIcon>
+                                                </div>
+                                            </div>
+                                        </a>
                             
-                            <CoverImageSection coverImageData={coverImageData}></CoverImageSection>
-                            <AboutMe aboutMeData={aboutMeData}></AboutMe>
-                            <ContactInfo contactInfoData={contactInfoData}></ContactInfo>
-                            <Social socialData={socialData}></Social>
-                            <WorkExperience workExperiencesData={workExperiencesData}></WorkExperience>
-                            <EducationExperience educationExperiencesData={educationExperiencesData}></EducationExperience>
-                            <Location locationData={locationData}></Location>
-                            <Interests interestsData={interestsData}></Interests>
+                                        <CoverImageSection coverImageData={coverImageData}></CoverImageSection>
+                                        <AboutMe aboutMeData={aboutMeData}></AboutMe>
+                                        <ContactInfo contactInfoData={contactInfoData}></ContactInfo>
+                                        <Social socialData={socialData}></Social>
+                                        <WorkExperience workExperiencesData={workExperiencesData}></WorkExperience>
+                                        <EducationExperience educationExperiencesData={educationExperiencesData}></EducationExperience>
+                                        <Location locationData={locationData}></Location>
+                                        <Interests interestsData={interestsData}></Interests>
+                                    </div>
+                                )
+                                ||
+                                dashboardMode == "Feed" && (
+                                    <div>
+                                        {/* TODO: Add Feed Content Here */}
+                                    </div>
+                                )
+                            }
                         </div>
                     </div>
                 </div>
