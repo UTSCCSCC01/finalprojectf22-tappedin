@@ -3,7 +3,7 @@ import {
     dashboardContentContainer,
     customNavbar,
     profileImageContainer,
-    viewDashboardContainer
+    dashboardActionButton
 } from "./Dashboard.module.scss";
 
 import CoverImage from "../../components/CoverImage";
@@ -324,7 +324,7 @@ export default function DashboardPage()
                                     <div>
                                         <a href={`/PublicProfile?id=${userID}`}>
                                             <div className="flex justify-end">
-                                                <div className={`flex justify-center items-center ${viewDashboardContainer} cursor-pointer`}>
+                                                <div className={`flex justify-center items-center ${dashboardActionButton} cursor-pointer`}>
                                                     <FeatherIcon
                                                         icon="eye"
                                                         stroke="#639FAB"
@@ -349,7 +349,20 @@ export default function DashboardPage()
                                 ||
                                 dashboardMode == "Feed" && (
                                     <div>
-                                        {/* TODO: Add Feed Content Here */}
+                                        <a href="/CreatePost">
+                                            <div className="flex justify-end">
+                                                <div className={`flex justify-center items-center ${dashboardActionButton} cursor-pointer`}>
+                                                    <FeatherIcon
+                                                        icon="plus"
+                                                        stroke="#639FAB"
+                                                        width="30"
+                                                        height="30"
+                                                        strokeWidth="1.5"
+                                                    ></FeatherIcon>
+                                                </div>
+                                            </div>
+                                        </a>
+
                                     </div>
                                 )
                             }
