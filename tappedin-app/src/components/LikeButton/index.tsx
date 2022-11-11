@@ -12,49 +12,38 @@ export default function LikeButton ({ id, likeIDs }) {
 
     async function handleLike() 
     {
-        if (!liked) 
-        {
-            console.log("Added like");
-            likeIDs.push(userId);
-            setLiked(true);
-        } 
-        else 
-        {
-            console.log("Removed like");
-            likeIDs.splice(likeIDs.indexOf(userId), 1);
-            setLiked(false);
-        }
+        let updateMethod: string = liked ? "remove" : "add";
+        setLiked(!liked);
+
         // Update post info with new likeIDs
 
         const data = {
-            likeIDs: likeIDs
+            userID: userId,
+            updateMethod: updateMethod
         };
 
-        // Hit updatePost route for now
         const config = {
             method: "put",
-            url: `${baseURL}/postService/updatePost?objectid=${id}`,
+            url: `${baseURL}/postService/updateLike?objectid=${id}`,
             headers: {
                 "Content-Type": "application/json",
             },
             data: data,
         };
 
-        console.log(config);
-
-        // axios(config)
-        //     .then(function (response){
-        //         console.log(response.data);
-        //     })
-        //     .catch(function (e) {
-        //         console.log(e);
-        //     })
+        axios(config)
+            .then(function (response){
+                console.log(response.data);
+            })
+            .catch(function (e) {
+                console.log(e);
+            })
 
     };
 
     return (
         <button onClick={() => handleLike()}>
-            <FeatherIcon icon="heart" fill={liked ? "#db1a24" : "none"} stroke-width="none"></FeatherIcon>
+            <FeatherIcon icon="heart" fill={liked ? "#db1a24" : "none"} strokeWidth="none"></FeatherIcon>
         </button>
     );
 }

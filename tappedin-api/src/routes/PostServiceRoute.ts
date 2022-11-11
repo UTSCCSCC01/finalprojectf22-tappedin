@@ -4,6 +4,9 @@ import TYPES from "../types";
 import { UserNotFoundError } from "../common/errors";
 import { IPostService } from "../services/PostService/IPostService";
 import { PartialPostInfo, PostInfo } from "../common/postDataTypes";
+import { UserIDType } from "../common/commonTypes";
+import { UserIdentifier } from "../common/userDataTypes";
+import { createUserIdentifier } from "../common/commonFunctions";
 
 export const postServiceRouter = express.Router();
 const postService: IPostService = container.get<IPostService>(TYPES.IPostService);
@@ -77,6 +80,50 @@ postServiceRouter.get("/getPost", async (req: Request, res: Response, next: Next
         authID = req.query.id.toString();
 
         result = await postService.getPosts({ authID: authID });
+        return res.status(200).send(result);
+    }
+    catch (err)
+    {
+        if (err instanceof UserNotFoundError)
+            return res.status(404).send("User was not found.");
+        else
+            next(err);
+    }
+});
+
+postServiceRouter.put("/updateLike", async (req: Request, res: Response, next: NextFunction) =>
+{
+    console.log("Received PUT req for post");
+    try
+    {
+        let result: boolean;
+        let requestBody = req.body;
+        let objectID: string;
+        let userID: string;
+        let method: string;
+        
+        if (!req.query.objectid)
+            return res.status(400).send("Object ID not specified.");
+        
+        objectID = req.query.objectid.toString();
+
+        if (!requestBody.userID)
+            return res.status(400).send("User ID not specified.");
+        
+        userID = requestBody.userID.toString();
+
+        if (!requestBody.updateMethod)
+            return res.status(400).send("Update method not specified.");
+        
+        method = requestBody.updateMethod.toString();
+
+        result = false;
+
+        if (method === "add")
+            result = await postService.addLike(userID, objectID);
+        else if (method === "remove")
+            result = await postService.removeLike(userID, objectID);
+
         return res.status(200).send(result);
     }
     catch (err)

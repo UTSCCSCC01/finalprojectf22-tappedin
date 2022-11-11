@@ -151,68 +151,51 @@ export class PostService implements IPostService
     }
 
     /**
-     * TODO: Implement this function as needed, write documentation here.
+     * Add a userID to the likeIDs array of a post
      * 
-     * Return a flag indicating that the add was successful
-     * (can just be void if you think the flag is not needed, just change the interface too)
+     * @param userIdentifier The userID to add
+     * @param postID The post to add the like to
      * 
-     * @param userIdentifier 
-     * @param postID 
-     * 
-     * @returns
+     * @returns A flag indicating a successful or unsuccessful add
      */
-    public async addLike(userIdentifier: UserIdentifier, postID: string): Promise<boolean> 
+    public async addLike(userIdentifier: string, postID: string): Promise<boolean> 
     {
-        // let userID: string;
-        // let postData: any;
+        let postData: any;
 
-        // userID = await this._userIdentificationService.getUserId(userIdentifier);
-        // postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
+        postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
 
-        // console.log(postData);
+        //Append to current list
+        postData.likeIDs.push(userIdentifier);
 
-        // //Append to current list
-        // postData.likeIDs.push(userID);
-
-        // console.log(postData.likeIDs);
-
-        // try 
-        // {
-        //     this._dbAccessService.updateDocument(this._postCollectionName, postID, postData);
-        // }
-        // catch (err)
-        // {
-        //     console.log(err);
-        //     return Promise.resolve(false);
-        // }
+        try 
+        {
+            this._dbAccessService.updateDocument(this._postCollectionName, postID, postData);
+        }
+        catch (err)
+        {
+            console.log(err);
+            return Promise.resolve(false);
+        }
 
         return Promise.resolve(true);
     }
 
     /**
-     * TODO: Implement this function as needed, write documentation here.
+     * Remove a userID from the likeIDs array of a post
      *
-     * Return a flag indicating the removal was successful
-     * (can just be void if you think the flag is not needed, just change the interface too)
+     * @param userIdentifier The userID to remove
+     * @param postID The post to remove from
      * 
-     * @param userIdentifier 
-     * @param postID 
-     * 
-     * @returns
+     * @returns A flag indicating a successful or unsuccessful removal
      */
-    public async removeLike(userIdentifier: UserIdentifier, postID: string): Promise<boolean> 
+    public async removeLike(userIdentifier: string, postID: string): Promise<boolean> 
     {
-
-        let userID: string;
         let postData: any;
 
-        userID = await this._userIdentificationService.getUserId(userIdentifier);
         postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
 
-        console.log(postData);
-
         //Remove userID from like list
-        let userIdx = postData.likeIDs.indexOf(userID);
+        let userIdx = postData.likeIDs.indexOf(userIdentifier);
         if (userIdx === -1)
         {
             // userID not in like list
@@ -220,17 +203,15 @@ export class PostService implements IPostService
         }
         postData.likeIDs.splice(userIdx, 1);
 
-        console.log(postData.likeIDs);
-
-        // try 
-        // {
-        //     this._dbAccessService.updateDocument(this._postCollectionName, postID, postData);
-        // }
-        // catch (err)
-        // {
-        //     console.log(err);
-        //     return Promise.resolve(false);
-        // }
+        try 
+        {
+            this._dbAccessService.updateDocument(this._postCollectionName, postID, postData);
+        }
+        catch (err)
+        {
+            console.log(err);
+            return Promise.resolve(false);
+        }
 
         return Promise.resolve(true);
     }
