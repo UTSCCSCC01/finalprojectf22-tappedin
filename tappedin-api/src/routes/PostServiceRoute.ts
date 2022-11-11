@@ -3,7 +3,7 @@ import container from "../inversify.config";
 import TYPES from "../types";
 import { UserNotFoundError } from "../common/errors";
 import { IPostService } from "../services/PostService/IPostService";
-import { PostInfo } from "../common/postDataTypes";
+import { PartialPostInfo, PostInfo } from "../common/postDataTypes";
 
 export const postServiceRouter = express.Router();
 const postService: IPostService = container.get<IPostService>(TYPES.IPostService);
@@ -50,7 +50,7 @@ postServiceRouter.put("/updatePost", async (req: Request, res: Response, next: N
         
         objectID = req.query.objectid.toString();
 
-        result = await postService.updatePost(objectID, requestBody);
+        result = await postService.updatePost(objectID, requestBody as PartialPostInfo);
 
         return res.status(200).send(result);
     }

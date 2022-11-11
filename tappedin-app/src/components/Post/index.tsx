@@ -29,19 +29,21 @@ export default function Post({ post })
         }
         // Update post info with new likeIDs
 
-        const data = post;
+        const data = {
+            likeIDs: post.likeIDs
+        };
 
         // Hit updatePost route for now
         const config = {
             method: "put",
             url: `${baseURL}/postService/updatePost?objectid=${post._id}`,
             headers: {
-                "Content-type": "application/json",
+                "Content-Type": "application/json",
             },
-            data: data
+            data: data,
         };
 
-        console.log(post);
+        console.log(config);
 
         axios(config)
             .then(function (response){

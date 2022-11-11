@@ -169,8 +169,12 @@ export class PostService implements IPostService
         // userID = await this._userIdentificationService.getUserId(userIdentifier);
         // postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
 
-        // Append to current list
-        // postData.likeIDs = [...postData.likeIDs, userID];
+        // console.log(postData);
+
+        // //Append to current list
+        // postData.likeIDs.push(userID);
+
+        // console.log(postData.likeIDs);
 
         // try 
         // {
@@ -198,6 +202,36 @@ export class PostService implements IPostService
      */
     public async removeLike(userIdentifier: UserIdentifier, postID: string): Promise<boolean> 
     {
+
+        let userID: string;
+        let postData: any;
+
+        userID = await this._userIdentificationService.getUserId(userIdentifier);
+        postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
+
+        console.log(postData);
+
+        //Remove userID from like list
+        let userIdx = postData.likeIDs.indexOf(userID);
+        if (userIdx === -1)
+        {
+            // userID not in like list
+            return Promise.resolve(false);
+        }
+        postData.likeIDs.splice(userIdx, 1);
+
+        console.log(postData.likeIDs);
+
+        // try 
+        // {
+        //     this._dbAccessService.updateDocument(this._postCollectionName, postID, postData);
+        // }
+        // catch (err)
+        // {
+        //     console.log(err);
+        //     return Promise.resolve(false);
+        // }
+
         return Promise.resolve(true);
     }
 }
