@@ -16,6 +16,7 @@ export class PostService implements IPostService
 
     private readonly _postCollectionName: string = process.env.POST_COLLECTION_NAME ?? "testPostCol";
     private readonly _commentCollectionName: string = process.env.COMMENT_COLLECTION_NAME ?? "testCommentCol";
+    private readonly _userCollectionName: string = process.env.USER_COLLECTION_NAME ?? "testCol";
 
     public constructor(@inject(TYPES.IDBAccessService) dbAccessService: IDBAccessService,
                        @inject(TYPES.IUserIdentificationService) userIdentificationService: IUserIdentificationService)
@@ -159,7 +160,24 @@ export class PostService implements IPostService
      */
     public async getComment(commentID: string): Promise<CommentInfo> 
     {
-        return Promise.resolve({ content: "", userID: "" , dateCreated: "", timestamp: new Date() });
+        
+        let commentData: any;
+        let content: string;
+        let userID: string;
+        let dataCreated: string;
+        let timestamp: Date;
+        let userData: any;
+        let username: string;
+
+        commentData = await this._dbAccessService.readDocument(this._commentCollectionName, commentID);
+        content = commentData.content;
+        userID = commentData.userID.toString();
+        dataCreated = commentData.dateCreated;
+        timestamp = commentData.timestamp;
+
+        userData = await this._dbAccessService.readDocument(this._userCollectionName, userID);
+        username = userData.username;
+        return Promise.resolve({ content: content, userID: userID , dateCreated: dataCreated, timestamp: timestamp, username: username });
     }
 
     /**
@@ -173,7 +191,18 @@ export class PostService implements IPostService
      */
     public async getCommentsFromPost(postID: string): Promise<Array<CommentInfo>> 
     {
-        return Promise.resolve(new Array());
+
+        let postData:any;
+        let commentIDs: Array<string>;
+        let commentsArray: Array<CommentInfo> = [];
+
+        postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
+        commentIDs = postData.commentIDs;
+        
+        for (var index in commentIDs){
+            commentsArray.push(await this.getComment(commentIDs[index]));
+        }
+        return Promise.resolve(commentsArray);
     }
 
     /**

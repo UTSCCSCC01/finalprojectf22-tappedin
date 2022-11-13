@@ -6,6 +6,7 @@ import {
 import FeatherIcon from "feather-icons-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Comments from "../../sections/Dashboard/Comments";
 
 export default function CommentSectionPage() 
 {
@@ -67,7 +68,7 @@ export default function CommentSectionPage()
                 .catch(function (e) {
                     console.log(e);
                 })
-            window.open("/Dashboard", "_self");
+            window.open("/CommentSection", "_self");
             
         }
         catch (e) 
@@ -96,8 +97,9 @@ export default function CommentSectionPage()
                     <div className="grid md:grid-cols-2 gap-8 mb-6">
                         <div>
                             <div className="mb-2">
-                                <label>Comment</label>
+                                <label>Comments</label>
                             </div>
+                            <Comments></Comments>
                             <textarea
                                 placeholder="Comment"
                                 cols={30}

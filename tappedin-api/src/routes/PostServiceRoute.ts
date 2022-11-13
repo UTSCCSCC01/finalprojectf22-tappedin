@@ -165,4 +165,28 @@ postServiceRouter.put("/addCommentID", async (req: Request, res: Response, next:
     }
 });
 
+postServiceRouter.get("/getCommentsFromPost", async (req: Request, res: Response, next: NextFunction) =>
+{
+    console.log("Received GET req for post");
+    try
+    {
+        let result;
+        let postID;
 
+        if (!req.query.objectid)
+            return res.status(400).send("Object ID not specified.");
+
+        postID = req.query.objectid.toString();
+
+        result = await postService.getCommentsFromPost(postID);
+        return res.status(200).send(result);
+        
+    }
+    catch (err)
+    {
+        if (err instanceof UserNotFoundError)
+            return res.status(404).send("Post was not found.");
+        else
+            next(err);
+    }
+});
