@@ -4,9 +4,6 @@ import TYPES from "../types";
 import { UserNotFoundError } from "../common/errors";
 import { IPostService } from "../services/PostService/IPostService";
 import { PartialPostInfo, PostInfo } from "../common/postDataTypes";
-import { UserIDType } from "../common/commonTypes";
-import { UserIdentifier } from "../common/userDataTypes";
-import { createUserIdentifier } from "../common/commonFunctions";
 
 export const postServiceRouter = express.Router();
 const postService: IPostService = container.get<IPostService>(TYPES.IPostService);

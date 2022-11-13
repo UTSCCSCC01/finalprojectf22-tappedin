@@ -1,14 +1,24 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FeatherIcon from 'feather-icons-react';
 
-export default function LikeButton ({ id, likeIDs }) {
-    const userId =
-        typeof localStorage !== "undefined"
+interface LikeButtonProps {
+    id: string;
+    likeIDs: Array<String>;
+}
+
+export default function LikeButton ({ id, likeIDs }: LikeButtonProps) {
+    
+    const [liked, setLiked] = useState(false);
+    const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
+    const userId = typeof localStorage !== "undefined"
             ? localStorage.getItem("userID")
             : null;
-    const [liked, setLiked] = useState(likeIDs.includes(userId));
-    const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
+
+    useEffect(() => 
+    {
+        setLiked(likeIDs.includes(userId));
+    }, []);
 
     async function handleLike() 
     {
@@ -38,7 +48,6 @@ export default function LikeButton ({ id, likeIDs }) {
             .catch(function (e) {
                 console.log(e);
             })
-
     };
 
     return (
