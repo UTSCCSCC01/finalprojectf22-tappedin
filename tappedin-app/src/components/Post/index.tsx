@@ -1,4 +1,5 @@
 import { postContainer, postImage, postContent } from "./Post.module.scss";
+import CommentSectionButton from "../CommentSectionButton";
 
 export default function Post({ post }) 
 {
@@ -18,6 +19,7 @@ export default function Post({ post })
                 }
             ></div>
             <div className={`${postContent}`}>
+                <CommentSectionButton id={post._id}></CommentSectionButton>
                 <h3 className="is-text-gradient-1 font-bold">{post.title}</h3>
                 <p className="text-sm mb-4 font-semibold">{post.name}</p>
                 <p className="pre-wrap mb-4">{post.content}</p>

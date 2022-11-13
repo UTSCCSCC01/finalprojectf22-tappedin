@@ -4,6 +4,7 @@ import TYPES from "../types";
 import { UserNotFoundError } from "../common/errors";
 import { IPostService } from "../services/PostService/IPostService";
 import { PostInfo } from "../common/postDataTypes";
+import { CommentInfo } from "../common/postDataTypes";
 
 export const postServiceRouter = express.Router();
 const postService: IPostService = container.get<IPostService>(TYPES.IPostService);
@@ -100,6 +101,68 @@ postServiceRouter.get("/getPost", async (req: Request, res: Response, next: Next
 //     }
 // });
 
+postServiceRouter.post("/addComment", async (req: Request, res: Response, next: NextFunction) =>
+{
+    console.log("Received POST req for post");
+    try
+    {
+        let result: string;
+        let authID: string;
 
+        if (!req.body.userID)
+            return res.status(400).send("User ID not specified.");
+        
+        authID = req.body.userID;
+        req.body.authID = authID;
+        delete req.body.userID;
+
+        result = await postService.addComment({ authID: authID }, req.body as CommentInfo);
+
+        return res.status(200).send(result);
+    }
+    catch (err)
+    {
+        if (err instanceof UserNotFoundError)
+            return res.status(404).send("User was not found.");
+        else
+            next(err);
+    }
+});
+
+postServiceRouter.put("/addCommentID", async (req: Request, res: Response, next: NextFunction) =>
+{
+    console.log("Received PUT req for post");
+    try
+    {
+        let result: boolean;
+        let requestBody = req.body;
+        let objectID: string;
+        let commentID: string;
+        
+        if (!req.query.objectid)
+            return res.status(400).send("Object ID not specified.");
+        
+        objectID = req.query.objectid.toString();
+
+        if (!requestBody.commentID)
+            return res.status(400).send("Comment ID not specified.");
+        
+        commentID = requestBody.commentID.toString();
+
+
+        result = false;
+
+        result = await postService.addCommentID(commentID, objectID);
+
+        return res.status(200).send(result);
+    }
+    catch (err)
+    {
+        if (err instanceof UserNotFoundError)
+            return res.status(404).send("User was not found.");
+        else
+            next(err);
+    }
+});
 
 

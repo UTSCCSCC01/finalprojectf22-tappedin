@@ -85,14 +85,54 @@ export class PostService implements IPostService
      * Return ObjectID of the comment added.
      * 
      * @param userIdentifier 
-     * @param postID 
      * 
      * @returns 
      */
-    public async addComment(userIdentifier: UserIdentifier, postID: string, data: CommentInfo): Promise<string> 
+    public async addComment(userIdentifier: UserIdentifier, data: CommentInfo): Promise<string> 
     {
-        return Promise.resolve("");
+        let userID: string;
+        let toInsert: WithUserID;
+
+        // Get the user ID
+        userID = await this._userIdentificationService.getUserId(userIdentifier);
+
+        // Attach the user ID to the data
+        toInsert = { userID: ObjectId.createFromHexString(userID), ...data };
+
+        return this._dbAccessService.createDocument(this._commentCollectionName, toInsert);
     }
+
+    /**
+     * TODO: Implement this function as needed, write documentation here.
+     * 
+     * Return ObjectID of the comment added.
+     * 
+     * @param commentID The commentID to add
+     * @param postID The post to add the comment to
+     * 
+     * @returns A flag indicating a successful or unsuccessful add
+     */
+     public async addCommentID(commentID: string, postID: string): Promise<boolean> 
+     {
+        let postData: any;
+
+        postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
+
+        //Append to current list
+        postData.commentIDs.push(commentID);
+
+        try 
+        {
+            this._dbAccessService.updateDocument(this._postCollectionName, postID, postData);
+        }
+        catch (err)
+        {
+            console.log(err);
+            return Promise.resolve(false);
+        }
+
+        return Promise.resolve(true);
+     }
 
     /**
      * TODO: Implement this function as needed, write documentation here.
