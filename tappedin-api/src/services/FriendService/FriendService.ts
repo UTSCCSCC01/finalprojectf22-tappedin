@@ -44,7 +44,20 @@ export class FriendService implements IFriendService
     */
     public async addFriend(userIdentifier: UserIdentifier, friendIdentifier: UserIdentifier): Promise<string>
     {
-        throw new Error("Method not implemented.");
+        let result: string;
+        let objectID: string;
+        let friendID: string;
+        let toInsert: WithUserID;
+ 
+        objectID = await this._userIdentificationService.getUserId(userIdentifier);
+        friendID = await this._userIdentificationService.getUserId(friendIdentifier);
+        
+        toInsert = { userID: ObjectId.createFromHexString(objectID),
+            ...{ "friendID" : ObjectId.createFromHexString(friendID) } };
+
+        result = await this._dbAccessService.createDocument(this._friendCollectionName, toInsert);
+
+        return Promise.resolve(result);
     }
 
     /** 
@@ -57,6 +70,17 @@ export class FriendService implements IFriendService
     */
     public async getFriends(userIdentifier: UserIdentifier): Promise<any[]>
     {
-        throw new Error("Method not implemented.");
+        let result;
+        let objectID: string;
+
+        objectID = await this._userIdentificationService.getUserId(userIdentifier);
+
+        // find entries under both userID and friendID
+        result = await this._dbAccessService.getCollection(this._friendCollectionName, 
+            { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+        result = result.concat(await this._dbAccessService.getCollection(this._friendCollectionName,
+            { friendID: { $eq: ObjectId.createFromHexString(objectID) } }));
+
+        return Promise.resolve(result);
     }
 }

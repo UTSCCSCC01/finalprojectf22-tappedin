@@ -13,7 +13,7 @@ friendServiceRouter.post("/addFriend", async (req: Request, res: Response, next:
     try
     {
         let result: string;
-        let authID: string | undefined = req.body.userID;;
+        let authID: string | undefined = req.body.id;
         let friendID: string | undefined = req.body.friend;
 
         if (!authID)
