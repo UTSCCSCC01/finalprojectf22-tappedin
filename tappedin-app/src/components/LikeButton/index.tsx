@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import FeatherIcon from 'feather-icons-react';
-import { likeContainer } from './LikeButton.module.scss';
+import { likeCounter } from './LikeButton.module.scss';
 
 interface LikeButtonProps {
     id: string;
@@ -33,7 +33,7 @@ export default function LikeButton ({ id, likeIDs }: LikeButtonProps) {
             <button onClick={() => handleLike()}>
                 <FeatherIcon icon="heart" fill={liked ? "#db1a24" : "none"} strokeWidth="none"></FeatherIcon>
             </button>
-            <p className={`${likeContainer}`}>{numLikes} {numLikes === 1 ? "Like" : "Likes"}</p>
+            <p className={`${likeCounter}`}>{numLikes} {numLikes === 1 ? "Like" : "Likes"}</p>
         </div>
     );
 }
