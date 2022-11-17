@@ -80,6 +80,18 @@ export class PostService implements IPostService
     }
 
     /**
+     * Get a post pertaining to the objectID
+     * 
+     * @param objectID The post ID to look for
+     * 
+     * @returns A singular post
+     */
+    public async getPostById(objectID: string): Promise<any> 
+    {
+        return this._dbAccessService.readDocument(this._postCollectionName, objectID);
+    }
+
+    /**
      * TODO: Implement this function as needed, write documentation here.
      * 
      * Return ObjectID of the comment added.

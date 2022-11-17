@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import container from "../inversify.config";
 import TYPES from "../types";
-import { UserNotFoundError } from "../common/errors";
+import { ItemNotFoundError, UserNotFoundError } from "../common/errors";
 import { IPostService } from "../services/PostService/IPostService";
 import { PartialPostInfo, PostInfo } from "../common/postDataTypes";
 
@@ -85,6 +85,29 @@ postServiceRouter.get("/getPost", async (req: Request, res: Response, next: Next
             return res.status(404).send("User was not found.");
         else
             next(err);
+    }
+});
+
+postServiceRouter.get("/getPostById", async (req: Request, res: Response, next: NextFunction) =>
+{
+    console.log("Received GET req for post");
+
+    try
+    {
+        if (!req.query.id)
+            return res.status(400).send("Object ID not specified.");
+        
+        const objectID = req.query.id.toString();
+        const post = await postService.getPostById(objectID);
+
+        return res.status(200).send(post);
+    }
+    catch (e)
+    {
+        if (e instanceof ItemNotFoundError)
+            return res.status(404).send("User was not found.");
+        else
+            next(e);
     }
 });
 

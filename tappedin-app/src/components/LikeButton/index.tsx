@@ -1,23 +1,26 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import FeatherIcon from 'feather-icons-react';
+import FeatherIcon from "feather-icons-react";
 
 interface LikeButtonProps {
     id: string;
     likeIDs: Array<String>;
 }
 
-export default function LikeButton ({ id, likeIDs }: LikeButtonProps) {
+export default function LikeButton ({ id, likeIDs }: LikeButtonProps) 
+{
     
-    const [liked, setLiked] = useState(false);
+    const [ liked, setLiked ] = useState(false);
+    const [ numLikes, setNumLikes ] = useState(0);
     const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
     const userId = typeof localStorage !== "undefined"
-            ? localStorage.getItem("userID")
-            : null;
+        ? localStorage.getItem("userID")
+        : null;
 
     useEffect(() => 
     {
         setLiked(likeIDs.includes(userId));
+        setNumLikes(likeIDs.length);
     }, []);
 
     async function handleLike() 
@@ -41,18 +44,28 @@ export default function LikeButton ({ id, likeIDs }: LikeButtonProps) {
             data: data,
         };
 
-        axios(config)
-            .then(function (response){
-                console.log(response.data);
-            })
-            .catch(function (e) {
-                console.log(e);
-            })
+        try
+        {
+            await axios(config);
+
+            if (updateMethod === "add")
+                setNumLikes(numLikes + 1);
+            else
+                setNumLikes(numLikes - 1);
+        }
+        catch (e)
+        {
+            console.error(e);
+        }
     };
 
     return (
-        <button onClick={() => handleLike()}>
-            <FeatherIcon icon="heart" fill={liked ? "#db1a24" : "none"} strokeWidth="none"></FeatherIcon>
-        </button>
+        <div className="flex">
+            <button onClick={() => handleLike()}>
+                <FeatherIcon icon="heart" fill={liked ? "#db1a24" : "none"} stroke={liked ? "#db1a24" : "black"} strokeWidth="0.5"></FeatherIcon>
+            </button>
+            <p className="ml-2 mt-1">{ numLikes }</p>
+        </div>
+        
     );
 }
