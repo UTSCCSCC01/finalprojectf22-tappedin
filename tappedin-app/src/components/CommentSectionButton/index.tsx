@@ -6,7 +6,7 @@ interface CommentButtonProps {
     id: string;
     commentIDs: Array<String>;
 }
-export default function CommentSectionButton ({ id, commentIDs }): CommentButtonProps {
+export default function CommentSectionButton ({ id, commentIDs }) {
     const [ numComments, setNumComments ] = useState(0);
 
 
@@ -26,11 +26,13 @@ export default function CommentSectionButton ({ id, commentIDs }): CommentButton
     
     return (
         <div className="flex">
+            <button>
             <FeatherIcon
                 icon="message-circle"
                 stroke="#639FAB"
                 onClick={(e) => handleSubmit(e)}
             ></FeatherIcon>
+            </button>
             <p className="ml-2 mt-1">{ numComments }</p>
         </div>
     );
