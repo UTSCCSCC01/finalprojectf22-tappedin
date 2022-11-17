@@ -64,7 +64,7 @@ export default function LikeButton ({ id, likeIDs }: LikeButtonProps)
             <button onClick={() => handleLike()}>
                 <FeatherIcon icon="heart" fill={liked ? "#db1a24" : "none"} stroke={liked ? "#db1a24" : "black"} strokeWidth="0.5"></FeatherIcon>
             </button>
-            <p className="ml-2 mt-1">{ numLikes }</p>
+            <p className="ml-2 mt-1">{ numLikes } {numLikes === 1 ? "Like": "Likes"}</p>
         </div>
         
     );
