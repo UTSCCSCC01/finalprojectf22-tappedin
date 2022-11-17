@@ -6,13 +6,14 @@ export interface IPostService
     addPost(userIdentifier: UserIdentifier, data: PostInfo): Promise<string>;
     updatePost(objectID: string, data: PartialPostInfo): Promise<string>;
     getPosts(userIdentifier: UserIdentifier): Promise<Array<PostInfo>>;
+    getPostById(objectID: string): Promise<PostInfo>;
     addComment(userIdentifier: UserIdentifier, postID: string, data: CommentInfo): Promise<string>;
     updateComment(commentID: string, data: PartialCommentInfo): Promise<string>;
     getComment(commentID: string): Promise<CommentInfo>;
     getCommentsFromUser(userIdentifier: UserIdentifier): Promise<Array<CommentInfo>>;
     getCommentsFromPost(postID: string): Promise<Array<CommentInfo>>;
-    addLike(userIdentifier: UserIdentifier, postID: string): Promise<boolean>;
-    removeLike(userIdentifier: UserIdentifier, postID: string): Promise<boolean>;
+    addLike(userIdentifier: string, postID: string): Promise<boolean>;
+    removeLike(userIdentifier: string, postID: string): Promise<boolean>;
 
     /**
      * Uncomment this and implement this if it's needed. 
