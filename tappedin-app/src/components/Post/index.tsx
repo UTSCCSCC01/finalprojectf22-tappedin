@@ -1,8 +1,10 @@
 import LikeButton from "../LikeButton";
 import { postContainer, postImage, postContent } from "./Post.module.scss";
+import LikeButton from "../LikeButton";
 
-export default function Post({ post }) 
+export default function Post({ post })
 {
+
     return (
         <div className={`${postContainer}`}>
             <div
