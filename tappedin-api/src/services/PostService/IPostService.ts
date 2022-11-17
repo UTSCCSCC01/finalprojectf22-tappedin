@@ -7,7 +7,9 @@ export interface IPostService
     updatePost(objectID: string, data: PartialPostInfo): Promise<string>;
     getPosts(userIdentifier: UserIdentifier): Promise<Array<PostInfo>>;
     getPostById(objectID: string): Promise<PostInfo>;
-    addComment(userIdentifier: UserIdentifier, postID: string, data: CommentInfo): Promise<string>;
+    // addComment(userIdentifier: UserIdentifier, postID: string, data: CommentInfo): Promise<string>;
+    addComment(userIdentifier: UserIdentifier, data: CommentInfo): Promise<string>;
+    addCommentID(commentID: string, postID: string): Promise<boolean>;
     updateComment(commentID: string, data: PartialCommentInfo): Promise<string>;
     getComment(commentID: string): Promise<CommentInfo>;
     getCommentsFromUser(userIdentifier: UserIdentifier): Promise<Array<CommentInfo>>;
