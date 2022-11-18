@@ -37,8 +37,8 @@ export class FriendService implements IFriendService
     * Given two user ids {userIdentifier} and {friendIdentifier}, add the two users to each others'
     * respective friends list in the DB. Return the ObjectID string for the document entry. 
     * 
-    * @param {UserIdentifier} userIdentifier - The first user's username/email/ObjectID.
-    * @param {UserIdentifier} friendIdentifier - The second user's username/email/ObjectID.
+    * @param {UserIdentifier} userIdentifier - The first user's authID.
+    * @param {UserIdentifier} friendIdentifier - The second user's authID.
     * 
     * @returns {Promise<string>} The hexstring of the user's DB entry if found, null otherwise. 
     */
@@ -53,7 +53,9 @@ export class FriendService implements IFriendService
         friendID = await this._userIdentificationService.getUserId(friendIdentifier);
         
         toInsert = { userID: ObjectId.createFromHexString(objectID),
-            ...{ "friendID" : ObjectId.createFromHexString(friendID) } };
+            ...{ "authID" : userIdentifier.authID,
+                "friendID" : ObjectId.createFromHexString(friendID),
+                "friendAuthID" : friendIdentifier.authID } };
 
         result = await this._dbAccessService.createDocument(this._friendCollectionName, toInsert);
 

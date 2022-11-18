@@ -5,16 +5,64 @@ import Post from "../../../components/Post";
 export default function Posts() 
 {
     const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
+    const [ friends, setFriends ] = useState([]);
     const [ posts, setPosts ] = useState([]);
+    const currentId =
+    typeof localStorage !== "undefined"
+        ? localStorage.getItem("userID")
+        : null;
+
+    useEffect(() => 
+    {
+        fetchFriends();
+    }, []);
 
     useEffect(() => 
     {
         fetchPosts();
-    }, []);
+    }, [ friends ]);
+
+    async function fetchFriends(): Promise<void>
+    {        
+        const config = {
+            method: "get",
+            url: baseURL + "/friendService/getFriends?id=" + currentId,
+            headers: {},
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            if (t.status == 400 || t.status == 404) setFriends([]);
+            else 
+            {
+                var friendList = [];
+                for (var f of t.data)
+                {
+                    for (const [ key, value ] of Object.entries(f))
+                    {
+                        if (key === "authID" || key === "friendAuthID")
+                        {
+                            friendList.push(value);
+                        }
+                    }
+                }
+                setFriends(friendList);
+            }
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
 
     async function fetchPosts() 
     {
-        const friends = [ "4ehHEyH8WgWWRq6wAGvfBuVe1903" ];
         const posts = [];
 
         for (const friend of friends) 
