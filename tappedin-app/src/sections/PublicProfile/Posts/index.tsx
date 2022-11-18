@@ -14,6 +14,7 @@ export default function Posts({ userId })
 
     async function fetchPosts() 
     {
+        // TODO: the userId of friends should be in this array
         const friends = [ userId ];
         const posts = [];
 
