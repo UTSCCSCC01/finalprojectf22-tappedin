@@ -48,7 +48,8 @@ export default function Posts()
                     {
                         if (key === "authID" || key === "friendAuthID")
                         {
-                            friendList.push(value);
+                            if (!friendList.includes(value))
+                                friendList.push(value);
                         }
                     }
                 }
