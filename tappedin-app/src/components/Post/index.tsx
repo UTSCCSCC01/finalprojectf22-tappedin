@@ -1,7 +1,10 @@
 import { postContainer, postImage, postContent } from "./Post.module.scss";
+import CommentSectionButton from "../CommentSectionButton";
+import LikeButton from "../LikeButton";
 
-export default function Post({ post }) 
+export default function Post({ post })
 {
+
     return (
         <div className={`${postContainer}`}>
             <div
@@ -18,6 +21,11 @@ export default function Post({ post })
                 }
             ></div>
             <div className={`${postContent}`}>
+                <div className="flex items-center mb-2">
+                    <CommentSectionButton id={post._id} numComments={post.commentIDs.length}></CommentSectionButton>
+                    <LikeButton id={post._id} likeIDs={post.likeIDs}></LikeButton>
+                </div>
+                
                 <h3 className="is-text-gradient-1 font-bold">{post.title}</h3>
                 <p className="text-sm mb-4 font-semibold">{post.name}</p>
                 <p className="pre-wrap mb-4">{post.content}</p>

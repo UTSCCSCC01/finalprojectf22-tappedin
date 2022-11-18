@@ -1,0 +1,24 @@
+.commentContainer
+{
+    width: 100%;
+    overflow: hidden;
+
+    border-bottom: 1px solid #dadada3d;
+
+
+    .commentContent
+    {
+        margin: 2rem;
+    }
+}
+
+.profileContainer
+{
+    width: 3rem;
+    height: 3rem;
+
+    background-color: rgba(187, 205, 229, 0.2);
+    
+    border: 2px solid #BBCDE5;
+    border-radius: 50%;
+}
