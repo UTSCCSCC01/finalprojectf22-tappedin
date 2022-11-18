@@ -1,29 +1,13 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 
-interface CommentButtonProps {
-    id: string;
-    commentIDs: Array<String>;
-}
-export default function CommentSectionButton ({ id, commentIDs }) 
+export default function CommentSectionButton ({ id, numComments }) 
 {
-    const [ numComments, setNumComments ] = useState(0);
-
-
-    useEffect(() => 
-    {
-        setNumComments(commentIDs.length);
-    }, []);
-
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => 
     {
         e.preventDefault();
         localStorage.setItem("postID", id);
         window.open("/CommentSection", "_self");
     };
-
-    
     
     return (
         <div className="cursor-pointer w-fit flex">

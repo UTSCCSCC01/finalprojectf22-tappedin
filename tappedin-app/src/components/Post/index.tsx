@@ -22,7 +22,7 @@ export default function Post({ post })
             ></div>
             <div className={`${postContent}`}>
                 <div className="flex items-center mb-2">
-                    <CommentSectionButton id={post._id} commentIDs={post.commentIDs}></CommentSectionButton>
+                    <CommentSectionButton id={post._id} numComments={post.commentIDs.length}></CommentSectionButton>
                     <LikeButton id={post._id} likeIDs={post.likeIDs}></LikeButton>
                 </div>
                 
