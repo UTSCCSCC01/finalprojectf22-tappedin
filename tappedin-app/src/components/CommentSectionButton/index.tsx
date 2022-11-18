@@ -13,7 +13,7 @@ export default function CommentSectionButton ({ id })
     };
     
     return (
-        <div className="cursor-pointer w-fit">
+        <div className="cursor-pointer w-fit mr-2">
             <FeatherIcon
                 icon="message-circle"
                 stroke="#639FAB"
