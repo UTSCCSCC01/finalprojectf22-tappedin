@@ -6,7 +6,7 @@ import {
 import FeatherIcon from "feather-icons-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Comments from "../../sections/Dashboard/Comments";
+import Comments from "../../sections/CommentSection/Comments";
 
 export default function CommentSectionPage() 
 {
@@ -62,12 +62,14 @@ export default function CommentSectionPage()
             };
 
             axios(config2)
-                .then(function (response){
+                .then(function (response)
+                {
                     console.log(response.data);
                 })
-                .catch(function (e) {
+                .catch(function (e) 
+                {
                     console.log(e);
-                })
+                });
             window.open("/CommentSection", "_self");
             
         }
@@ -94,10 +96,10 @@ export default function CommentSectionPage()
                             </label>
                         </div>
                     </a>
-                    <div className="grid md:grid-cols-2 gap-8 mb-6">
+                    <div className="grid gap-8 mb-6 mt-2">
                         <div>
                             <div className="mb-2">
-                                <label>Comments</label>
+                                <h1 className="font-bold">Comments</h1>
                             </div>
                             <Comments></Comments>
                             <textarea

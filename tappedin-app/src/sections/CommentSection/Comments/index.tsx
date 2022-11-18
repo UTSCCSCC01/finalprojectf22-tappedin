@@ -46,7 +46,7 @@ export default function Comments()
                 // "a.timestamp - b.timestamp" sort, earliest to latest comments
                 comments && comments.length != 0 ? (
                     comments
-                        .sort((a, b) => a.timestamp - b.timestamp)
+                        .sort((a, b) => b.timestamp - a.timestamp)
                         .map((comment, key) => 
                         {
                             return (

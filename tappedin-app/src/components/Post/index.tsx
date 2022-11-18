@@ -21,10 +21,9 @@ export default function Post({ post })
                 }
             ></div>
             <div className={`${postContent}`}>
-                <div className = "flex space-x-5">
-                    <LikeButton id={post._id} likeIDs={post.likeIDs}></LikeButton>
+                <div className="flex items-center mb-2">
                     <CommentSectionButton id={post._id} commentIDs={post.commentIDs}></CommentSectionButton>
-
+                    <LikeButton id={post._id} likeIDs={post.likeIDs}></LikeButton>
                 </div>
                 
                 <h3 className="is-text-gradient-1 font-bold">{post.title}</h3>

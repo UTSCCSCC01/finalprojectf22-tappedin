@@ -125,8 +125,8 @@ export class PostService implements IPostService
      * 
      * @returns A flag indicating a successful or unsuccessful add
      */
-     public async addCommentID(commentID: string, postID: string): Promise<boolean> 
-     {
+    public async addCommentID(commentID: string, postID: string): Promise<boolean> 
+    {
         let postData: any;
 
         postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
@@ -145,7 +145,7 @@ export class PostService implements IPostService
         }
 
         return Promise.resolve(true);
-     }
+    }
 
     /**
      * TODO: Implement this function as needed, write documentation here.
@@ -179,7 +179,7 @@ export class PostService implements IPostService
         let dataCreated: string;
         let timestamp: Date;
         let userData: any;
-        let username: string;
+        let fullName: string;
 
         commentData = await this._dbAccessService.readDocument(this._commentCollectionName, commentID);
         content = commentData.content;
@@ -188,8 +188,9 @@ export class PostService implements IPostService
         timestamp = commentData.timestamp;
 
         userData = await this._dbAccessService.readDocument(this._userCollectionName, userID);
-        username = userData.username;
-        return Promise.resolve({ content: content, userID: userID , dateCreated: dataCreated, timestamp: timestamp, username: username });
+        fullName = `${userData.firstName} ${userData.lastName}`;
+        return Promise.resolve({ content: content, userID: userID , 
+            dateCreated: dataCreated, timestamp: timestamp, fullName: fullName });
     }
 
     /**
@@ -211,7 +212,8 @@ export class PostService implements IPostService
         postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
         commentIDs = postData.commentIDs;
         
-        for (var index in commentIDs){
+        for (var index in commentIDs)
+        {
             commentsArray.push(await this.getComment(commentIDs[index]));
         }
         return Promise.resolve(commentsArray);

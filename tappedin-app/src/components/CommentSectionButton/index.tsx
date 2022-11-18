@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import FeatherIcon from 'feather-icons-react';
+import FeatherIcon from "feather-icons-react";
 
 interface CommentButtonProps {
     id: string;
     commentIDs: Array<String>;
 }
-export default function CommentSectionButton ({ id, commentIDs }) {
+export default function CommentSectionButton ({ id, commentIDs }) 
+{
     const [ numComments, setNumComments ] = useState(0);
 
 
@@ -25,15 +26,13 @@ export default function CommentSectionButton ({ id, commentIDs }) {
     
     
     return (
-        <div className="flex">
-            <button>
+        <div className="cursor-pointer w-fit flex">
             <FeatherIcon
                 icon="message-circle"
                 stroke="#639FAB"
                 onClick={(e) => handleSubmit(e)}
             ></FeatherIcon>
-            </button>
-            <p className="ml-2 mt-1">{ numComments }</p>
+            <p className="ml-2 mr-2 text-base">{ numComments }</p>
         </div>
     );
 }
