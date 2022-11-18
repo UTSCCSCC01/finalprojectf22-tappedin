@@ -62,9 +62,9 @@ export default function LikeButton ({ id, likeIDs }: LikeButtonProps)
     return (
         <div className="flex">
             <button onClick={() => handleLike()}>
-                <FeatherIcon icon="heart" fill={liked ? "#db1a24" : "none"} stroke={liked ? "#db1a24" : "black"} strokeWidth="0.5"></FeatherIcon>
+                <FeatherIcon icon="heart" fill={liked ? "#ff2a26" : "none"} stroke={liked ? "#ff2a26" : "#639FAB"} strokeWidth="2"></FeatherIcon>
             </button>
-            <p className="ml-2 mt-1">{ numLikes }</p>
+            <p className="ml-2 text-base">{ numLikes }</p>
         </div>
         
     );
