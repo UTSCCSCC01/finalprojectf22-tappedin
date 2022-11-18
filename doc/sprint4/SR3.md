@@ -14,7 +14,7 @@
 - Document code: either through comments or function docs. To make it easier for the reader to follow what you are doing
 - Picking up tickets earlier and finishing them (our burndown chart is messed up)
 - Creating Test Plans (?)
-- creating tests in general 
+- creating tests in general
 
 ## Stop
 
@@ -36,4 +36,8 @@
 
 ## Best Experience in Sprint 3
 
+We now have a page that displays all the information about a particular user, that is available for the public. We now have a public facing page (no need to be logged in) that many people can view.
+
 ## Worst Experience in Sprint 3
+
+Cutting it close with PR reviews and deadlines, rushing to merge everything at the end.

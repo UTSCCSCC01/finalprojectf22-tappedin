@@ -32,23 +32,23 @@
 
 These are the user stories we look to complete this sprint, along with story points assigned:
 
-- Users should be able to see "Location" section on their public profile. (**8 pts**)
-- Users should be able to see "About Me" section on their public profile. (**8 pts**)
-- Users should be able to see "Interest" section on their public profile. (**8 pts**)
-- Users should be able to create accounts and have their own information. (**3 pts**)
-- Users should have authentication on their account. (**21 pts**)
-- Users should be able to see "Work Experience" section on their public profile. (**8 pts**)
-- Users should be able to see "Education Experience" section on their public profile. (**8 pts**)
-- Users should be able to see "Socials" section on their public profile. (**8 pts**)
-- Users should be able to see "Cover Image" section on their public profile. (**8 pts**)
-- As Milo, I should be able to add contact information to my profile. (**8 pts**)
+- Social cards on the public profile page should be pointing to the public profile's socials. (**3 pts**)
+- As Milo, I should be able to see how many "Likes" I have on a post. (**8 pts**)
+- As Milo, I should be able to see how many "Comments" I have on a post. (**8 pts**)
+- As Beth, I should be able to comment on a post. (**8 pts**)
+- As Beth, I should be able to “Like” a post. (**8 pts**)
+- As Milo, I should be able to tap on the NFC tag, and view the other user’s profile. (**21 pts**)
+- As Milo, I should be able to view all community posts for the people I follow. (**21 pts**)
+- As Milo, I should be able to create a post on the community / blog page. (Backend) (**8 pts**)
+- As Milo, I should be able to create a post on the community / blog page. (Frontend) (**8 pts**)
+- As a user, I should be able to see that I'm signed in within someone else's profile (**8 pts**)
 
 Some other miscellaneous tasks to perform during this sprint:
 
-- Sprint 3 Docs
-- Remove Semi-Colon that causes errors
+- Sprint 4 Docs
+- Bug fix socials links
 
 ## Team Capacity
 
-Last sprint we took up 75 points work of stories, which was a very large amount of work. However, we were able to finish and have all planned features working on time.
-So we believe this estimation is not too far off and we can probably complete around 75 - 80 points of work each sprint. Therefore this time we have decided to take 86 points of work. We are giving ourselves more work, but we believe this is still an achievable amount of work, as we still had a little wiggle room last sprint.
+Last sprint we took up 86 points work of stories, which was a huge amount of tasks. However, we were able to finish and have all planned features working on time.
+This time we had a couple more points with a total of 93 points, with this we can change our team capacity estimate from 75 - 80 (which was the estimate last sprint) to 80 - 90 points.  If this sprint goes smoothly, we can probably up our team's capacity to around 100 points, the capacity keeps going up every sprint since all of us are getting more and more experience with the code base and tech stack.
