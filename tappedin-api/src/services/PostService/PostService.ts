@@ -16,6 +16,7 @@ export class PostService implements IPostService
 
     private readonly _postCollectionName: string = process.env.POST_COLLECTION_NAME ?? "testPostCol";
     private readonly _commentCollectionName: string = process.env.COMMENT_COLLECTION_NAME ?? "testCommentCol";
+    private readonly _userCollectionName: string = process.env.USER_COLLECTION_NAME ?? "testCol";
 
     public constructor(@inject(TYPES.IDBAccessService) dbAccessService: IDBAccessService,
                        @inject(TYPES.IUserIdentificationService) userIdentificationService: IUserIdentificationService)
@@ -97,13 +98,53 @@ export class PostService implements IPostService
      * Return ObjectID of the comment added.
      * 
      * @param userIdentifier 
-     * @param postID 
      * 
      * @returns 
      */
-    public async addComment(userIdentifier: UserIdentifier, postID: string, data: CommentInfo): Promise<string> 
+    public async addComment(userIdentifier: UserIdentifier, data: CommentInfo): Promise<string> 
     {
-        return Promise.resolve("");
+        let userID: string;
+        let toInsert: WithUserID;
+
+        // Get the user ID
+        userID = await this._userIdentificationService.getUserId(userIdentifier);
+
+        // Attach the user ID to the data
+        toInsert = { userID: ObjectId.createFromHexString(userID), ...data };
+
+        return this._dbAccessService.createDocument(this._commentCollectionName, toInsert);
+    }
+
+    /**
+     * TODO: Implement this function as needed, write documentation here.
+     * 
+     * Return ObjectID of the comment added.
+     * 
+     * @param commentID The commentID to add
+     * @param postID The post to add the comment to
+     * 
+     * @returns A flag indicating a successful or unsuccessful add
+     */
+    public async addCommentID(commentID: string, postID: string): Promise<boolean> 
+    {
+        let postData: any;
+
+        postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
+
+        //Append to current list
+        postData.commentIDs.push(commentID);
+
+        try 
+        {
+            this._dbAccessService.updateDocument(this._postCollectionName, postID, postData);
+        }
+        catch (err)
+        {
+            console.log(err);
+            return Promise.resolve(false);
+        }
+
+        return Promise.resolve(true);
     }
 
     /**
@@ -131,7 +172,25 @@ export class PostService implements IPostService
      */
     public async getComment(commentID: string): Promise<CommentInfo> 
     {
-        return Promise.resolve({ content: "", userID: "" , dateCreated: "", timestamp: new Date() });
+        
+        let commentData: any;
+        let content: string;
+        let userID: string;
+        let dataCreated: string;
+        let timestamp: Date;
+        let userData: any;
+        let fullName: string;
+
+        commentData = await this._dbAccessService.readDocument(this._commentCollectionName, commentID);
+        content = commentData.content;
+        userID = commentData.userID.toString();
+        dataCreated = commentData.dateCreated;
+        timestamp = commentData.timestamp;
+
+        userData = await this._dbAccessService.readDocument(this._userCollectionName, userID);
+        fullName = `${userData.firstName} ${userData.lastName}`;
+        return Promise.resolve({ content: content, userID: userID , 
+            dateCreated: dataCreated, timestamp: timestamp, fullName: fullName });
     }
 
     /**
@@ -145,7 +204,19 @@ export class PostService implements IPostService
      */
     public async getCommentsFromPost(postID: string): Promise<Array<CommentInfo>> 
     {
-        return Promise.resolve(new Array());
+
+        let postData:any;
+        let commentIDs: Array<string>;
+        let commentsArray: Array<CommentInfo> = [];
+
+        postData = await this._dbAccessService.readDocument(this._postCollectionName, postID);
+        commentIDs = postData.commentIDs;
+        
+        for (var index in commentIDs)
+        {
+            commentsArray.push(await this.getComment(commentIDs[index]));
+        }
+        return Promise.resolve(commentsArray);
     }
 
     /**
