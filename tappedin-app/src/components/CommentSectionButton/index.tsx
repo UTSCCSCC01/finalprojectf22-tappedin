@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
-import FeatherIcon from 'feather-icons-react';
+import FeatherIcon from "feather-icons-react";
 
-export default function CommentSectionButton ({ id }) {
+export default function CommentSectionButton ({ id }) 
+{
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => 
     {
@@ -12,10 +13,13 @@ export default function CommentSectionButton ({ id }) {
     };
     
     return (
+        <div className="cursor-pointer w-fit">
             <FeatherIcon
                 icon="message-circle"
                 stroke="#639FAB"
                 onClick={(e) => handleSubmit(e)}
             ></FeatherIcon>
+        </div>
+        
     );
 }
