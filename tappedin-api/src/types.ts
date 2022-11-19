@@ -1,7 +1,9 @@
 let TYPES = {
     IUserAccountService: Symbol("IUserAccountService"),
     IDBAccessService: Symbol("IDBAccessService"),
-    IUserAuthenticationService: Symbol("IUserAuthenticationService")
+    IPostService: Symbol("IPostService"),
+    IFriendService: Symbol("IFriendService"),
+    IUserIdentificationService: Symbol("IUserIdentificationService")
 };
 
 export default TYPES;

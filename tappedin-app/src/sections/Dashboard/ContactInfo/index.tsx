@@ -89,25 +89,25 @@ export default function ContactInfo({ contactInfoData: contactData })
                 </div>
             ) : (
                 <div>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between md:items-center flex-col md:flex-row">
                         { contactData.phone !== "" ? (
-                            <div className="flex item-center">
+                            <div className="flex item-center mb-2">
                                 <FeatherIcon icon="phone"></FeatherIcon>
                                 <h3 className="ml-4">{contactData.phone}</h3>
                             </div>
                         ) : (
-                            <div className="flex item-center">
+                            <div className="flex item-center mb-2">
                                 <FeatherIcon icon="phone"></FeatherIcon>
                                 <h3 className="ml-4">N/A</h3>
                             </div>
                         )}
                         { contactData.email !== "" ? (
-                            <div className="flex item-center">
+                            <div className="flex item-center mb-2">
                                 <FeatherIcon icon="mail"></FeatherIcon>
                                 <h3 className="ml-4">{contactData.email}</h3>
                             </div>
                         ) : (
-                            <div className="flex item-center">
+                            <div className="flex item-center mb-2">
                                 <FeatherIcon icon="mail"></FeatherIcon>
                                 <h3 className="ml-4">N/A</h3>
                             </div>

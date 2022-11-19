@@ -1,9 +1,9 @@
 import {
     customBackground,
-    editContainer,
+    dashboardContentContainer,
     customNavbar,
     profileImageContainer,
-    viewDashboardContainer
+    dashboardActionButton,
 } from "./Dashboard.module.scss";
 
 import CoverImage from "../../components/CoverImage";
@@ -19,6 +19,7 @@ import AboutMe from "../../sections/Dashboard/AboutMe";
 import EducationExperience from "../../sections/Dashboard/EducationExperience";
 import CoverImageSection from "../../sections/Dashboard/CoverImage";
 import { FirebaseAuthenticationService } from "../../sdk/services/firebaseAuthenticationService";
+import Posts from "../../sections/Dashboard/Posts";
 
 const authService = new FirebaseAuthenticationService();
 export default function DashboardPage() 
@@ -35,8 +36,8 @@ export default function DashboardPage()
     const [ fullName, setFullName ] = useState("");
     const [ userID, setUserID ] = useState("");
 
-    
-    const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
+    const baseURL =
+        process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
 
     useEffect(() => 
     {
@@ -59,20 +60,21 @@ export default function DashboardPage()
             method: "get",
             url: baseURL + "field=7&idtype=3&id=" + userID,
             headers: {},
-            validateStatus: (status) => { return status < 500; }
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
         };
 
         try 
         {
             const t = await axios(config);
 
-            if (t.status == 400 || t.status == 404)
-                setFullName("");
-            else
+            if (t.status == 400 || t.status == 404) setFullName("");
+            else 
             {
                 setFullName(`${t.data[0].firstName} ${t.data[0].lastName}`);
-            } 
-            
+            }
         }
         catch (e) 
         {
@@ -86,7 +88,10 @@ export default function DashboardPage()
             method: "get",
             url: baseURL + "field=1&idtype=3&id=" + userID,
             headers: {},
-            validateStatus: (status) => { return status < 500; }
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
         };
 
         try 
@@ -109,15 +114,17 @@ export default function DashboardPage()
             method: "get",
             url: baseURL + "field=2&idtype=3&id=" + userID,
             headers: {},
-            validateStatus: (status) => { return status < 500; }
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
         };
 
         try 
         {
             const t = await axios(config);
 
-            if (t.status == 400 || t.status == 404)
-                setLocationData(null);
+            if (t.status == 400 || t.status == 404) setLocationData(null);
             else setLocationData(t.data[0]); // Since we can only have 1 location
         }
         catch (e) 
@@ -132,7 +139,10 @@ export default function DashboardPage()
             method: "get",
             url: baseURL + "field=0&idtype=3&id=" + userID,
             headers: {},
-            validateStatus: (status) => { return status < 500; }
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
         };
 
         try 
@@ -148,22 +158,24 @@ export default function DashboardPage()
             console.error(e);
         }
     }
-    
+
     async function fetchAboutMe(userID: string): Promise<void> 
     {
         const config = {
             method: "get",
             url: baseURL + "field=3&idtype=3&id=" + userID,
             headers: {},
-            validateStatus: (status) => { return status < 500; }
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
         };
 
         try 
         {
             const t = await axios(config);
 
-            if (t.status == 404 || t.status == 400)
-                setAboutMeData(null);
+            if (t.status == 404 || t.status == 400) setAboutMeData(null);
             else setAboutMeData(t.data);
         }
         catch (e) 
@@ -174,22 +186,25 @@ export default function DashboardPage()
 
     async function fetchCoverImage(userID: string): Promise<void> 
     {
-
         const config = {
             method: "get",
-            url: process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?field=6&idtype=3&id=" + userID,
+            url:
+                process.env.NEXT_PUBLIC_SERVER_ADDRESS +
+                "/userFieldServices?field=6&idtype=3&id=" +
+                userID,
             headers: {},
-            validateStatus: (status) => { return status < 500; }
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
         };
 
         try 
         {
             const t = await axios(config);
 
-            if (t.status == 400 || t.status == 404)
-                setCoverImageData(null);
+            if (t.status == 400 || t.status == 404) setCoverImageData(null);
             else setCoverImageData(t.data[0]);
-
         }
         catch (e) 
         {
@@ -203,15 +218,17 @@ export default function DashboardPage()
             method: "get",
             url: baseURL + "field=5&idtype=3&id=" + userID,
             headers: {},
-            validateStatus: (status) => { return status < 500; }
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
         };
 
         try 
         {
             const t = await axios(config);
 
-            if (t.status == 404 || t.status == 400)
-                setInterestsData(null);
+            if (t.status == 404 || t.status == 400) setInterestsData(null);
             else setInterestsData(t.data);
         }
         catch (e) 
@@ -226,15 +243,17 @@ export default function DashboardPage()
             method: "get",
             url: baseURL + "field=8&idtype=3&id=" + userID,
             headers: {},
-            validateStatus: (status) => { return status < 500; }
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
         };
 
         try 
         {
             const t = await axios(config);
 
-            if (t.status == 404 || t.status == 400)
-                setContactInfoData(null);
+            if (t.status == 404 || t.status == 400) setContactInfoData(null);
             else setContactInfoData(t.data[0]); // only one entry per user
         }
         catch (e) 
@@ -249,15 +268,17 @@ export default function DashboardPage()
             method: "get",
             url: baseURL + "field=4&idtype=3&id=" + userID,
             headers: {},
-            validateStatus: (status) => { return status < 500; }
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
         };
 
         try 
         {
             const t = await axios(config);
 
-            if (t.status == 404 || t.status == 400)
-                setSocialData(null);
+            if (t.status == 404 || t.status == 400) setSocialData(null);
             else setSocialData(t.data);
         }
         catch (e) 
@@ -265,7 +286,7 @@ export default function DashboardPage()
             console.error(e);
         }
     }
-    
+
     async function signOut() 
     {
         authService.signOut();
@@ -274,9 +295,13 @@ export default function DashboardPage()
         window.open("/", "_self");
     }
 
+    const [ dashboardMode, setDashboardMode ] = useState("Feed");
+
     return (
         <div className={`${customBackground}`}>
-            <CoverImage publicProfile={false} existingImage={coverImageData}
+            <CoverImage
+                publicProfile={false}
+                existingImage={coverImageData}
             ></CoverImage>
             <div className="container mx-auto px-4 lg:px-0">
                 <div className="grid grid-cols-1 lg:gap-10 lg:grid-cols-4">
@@ -292,53 +317,108 @@ export default function DashboardPage()
                         <h2 className="text-center font-bold">{fullName}</h2>
 
                         <div className="mt-16 w-full">
-                            <button className="button is-blue is-dashed">
+                            <button
+                                className={`button is-blue ${
+                                    dashboardMode == "Feed" ? "" : "is-dashed"
+                                }`}
+                                onClick={() => setDashboardMode("Feed")}
+                            >
                                 Feed
                             </button>
-                            <button className="button is-blue mt-3">
+                            <button
+                                className={`button is-blue ${
+                                    dashboardMode == "Edit" ? "" : "is-dashed"
+                                } mt-3`}
+                                onClick={() => setDashboardMode("Edit")}
+                            >
                                 Edit
                             </button>
                         </div>
 
                         <div className="mt-16 w-full">
-                            
-                            <div className="flex items-center cursor-pointer" onClick={() => signOut()}>
+                            <div
+                                className="flex items-center cursor-pointer"
+                                onClick={() => signOut()}
+                            >
                                 <FeatherIcon
                                     icon="log-out"
                                     stroke="#BBCDE5"
                                 ></FeatherIcon>
                                 <label className="ml-3 cursor-pointer">
-                                        Sign Out
+                                    Sign Out
                                 </label>
                             </div>
-                            
                         </div>
                     </div>
                     <div className="flex flex-col col-span-3">
-                        <h1 className="mb-3 font-bold">Edit</h1>
-                        <div className={`${editContainer} mb-12`}>
-                            <a href={`/PublicProfile?id=${userID}`}>
-                                <div className="flex justify-end">
-                                    <div className={`flex justify-center items-center ${viewDashboardContainer} cursor-pointer`}>
-                                        <FeatherIcon
-                                            icon="eye"
-                                            stroke="#639FAB"
-                                            width="30"
-                                            height="30"
-                                            strokeWidth="1.5"
-                                        ></FeatherIcon>
-                                    </div>
+                        <h1 className="mb-3 font-bold">{dashboardMode}</h1>
+                        <div className={`${dashboardContentContainer} mb-12`}>
+                            {(dashboardMode == "Edit" && (
+                                <div>
+                                    <a href={`/PublicProfile?id=${userID}`}>
+                                        <div className="flex justify-end">
+                                            <div
+                                                className={`flex justify-center items-center ${dashboardActionButton} cursor-pointer`}
+                                            >
+                                                <FeatherIcon
+                                                    icon="eye"
+                                                    stroke="#639FAB"
+                                                    width="30"
+                                                    height="30"
+                                                    strokeWidth="1.5"
+                                                ></FeatherIcon>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <CoverImageSection
+                                        coverImageData={coverImageData}
+                                    ></CoverImageSection>
+                                    <AboutMe
+                                        aboutMeData={aboutMeData}
+                                    ></AboutMe>
+                                    <ContactInfo
+                                        contactInfoData={contactInfoData}
+                                    ></ContactInfo>
+                                    <Social socialData={socialData}></Social>
+                                    <WorkExperience
+                                        workExperiencesData={
+                                            workExperiencesData
+                                        }
+                                    ></WorkExperience>
+                                    <EducationExperience
+                                        educationExperiencesData={
+                                            educationExperiencesData
+                                        }
+                                    ></EducationExperience>
+                                    <Location
+                                        locationData={locationData}
+                                    ></Location>
+                                    <Interests
+                                        interestsData={interestsData}
+                                    ></Interests>
                                 </div>
-                            </a>
-                            
-                            <CoverImageSection coverImageData={coverImageData}></CoverImageSection>
-                            <AboutMe aboutMeData={aboutMeData}></AboutMe>
-                            <ContactInfo contactInfoData={contactInfoData}></ContactInfo>
-                            <Social socialData={socialData}></Social>
-                            <WorkExperience workExperiencesData={workExperiencesData}></WorkExperience>
-                            <EducationExperience educationExperiencesData={educationExperiencesData}></EducationExperience>
-                            <Location locationData={locationData}></Location>
-                            <Interests interestsData={interestsData}></Interests>
+                            )) ||
+                                (dashboardMode == "Feed" && (
+                                    <div>
+                                        <a href="/CreatePost">
+                                            <div className="flex justify-end">
+                                                <div
+                                                    className={`flex justify-center items-center ${dashboardActionButton} cursor-pointer`}
+                                                >
+                                                    <FeatherIcon
+                                                        icon="plus"
+                                                        stroke="#639FAB"
+                                                        width="30"
+                                                        height="30"
+                                                        strokeWidth="1.5"
+                                                    ></FeatherIcon>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <Posts></Posts>
+                                    </div>
+                                ))}
                         </div>
                     </div>
                 </div>

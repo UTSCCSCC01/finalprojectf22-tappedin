@@ -22,12 +22,15 @@ export default function Social( { socialData: socialData } )
     const [ githubURL, setGithubURL ] = useState("");
     useEffect(() => 
     {
-        fetchSocial();
+        const userID: string = new URLSearchParams(
+            window.location.search
+        ).get("id");
+        fetchSocial(userID);
     }, []);
 
-    async function fetchSocial(): Promise<any> 
+    async function fetchSocial(userID: string): Promise<any> 
     {
-        const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
+        // const userID: string | null = (typeof localStorage !== "undefined") ? localStorage.getItem("userID") : null;
 
         if (!userID)
             return;

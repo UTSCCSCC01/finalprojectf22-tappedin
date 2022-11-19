@@ -10,48 +10,131 @@ import Interests from "../../sections/PublicProfile/Interests";
 import Socials from "../../sections/PublicProfile/Socials";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import SignInModule from "../../components/SignInModule";
+import Posts from "../../sections/PublicProfile/Posts";
 
 export default function PublicProfile() 
 {
-    const baseURL = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
-    
+    const baseURL =
+        process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/userFieldServices?";
+
+    const [ friends, setFriends ] = useState([]);
     const [ fullName, setFullName ] = useState("");
+    const [ userId, setUserId ] = useState("");
+    const currentId =
+    typeof localStorage !== "undefined"
+        ? localStorage.getItem("userID")
+        : null;
 
     useEffect(() => 
     {
-        const userID: string = new URLSearchParams(
-            window.location.search
-        ).get("id");
+        setUserId(new URLSearchParams(window.location.search).get("id"));
 
-        fetchFullName(userID);
+        fetchFullName();
+        fetchFriends();
     }, []);
 
-    async function fetchFullName(userID: string): Promise<void> 
+    async function fetchFullName(): Promise<void> 
     {
+        const userId = new URLSearchParams(window.location.search).get("id");
+
         const config = {
             method: "get",
-            url: baseURL + "field=7&idtype=3&id=" + userID,
+            url: baseURL + "field=7&idtype=3&id=" + userId,
             headers: {},
-            validateStatus: (status) => { return status < 500; }
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
         };
 
         try 
         {
             const t = await axios(config);
 
-            if (t.status == 400 || t.status == 404)
-                setFullName("");
-            else
+            if (t.status == 400 || t.status == 404) setFullName("");
+            else 
             {
                 setFullName(`${t.data[0].firstName} ${t.data[0].lastName}`);
-            } 
-            
+            }
         }
         catch (e) 
         {
             console.error(e);
         }
     }
+
+    async function fetchFriends(): Promise<void>
+    {        
+        const config = {
+            method: "get",
+            url: process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/friendService/getFriends?id=" + currentId,
+            headers: {},
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            if (t.status == 400 || t.status == 404) setFriends([]);
+            else 
+            {
+                var friendList = [];
+                for (var f of t.data)
+                {
+                    for (const [ key, value ] of Object.entries(f))
+                    {
+                        if (key === "authID" || key === "friendAuthID" )
+                        {
+                            friendList.push(value);
+                        }
+                    }
+                }
+                setFriends(friendList);
+            }
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
+
+    const handleSubmit = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => 
+    {
+        if (!currentId) // TODO notify user they're not logged in
+            return;
+
+        var data = JSON.stringify({
+            "id": currentId,
+            "friend": userId
+        });
+        
+        const url = process.env.NEXT_PUBLIC_SERVER_ADDRESS + "/friendService/addFriend";
+        var config = {
+            method: "post",
+            url: url,
+            headers: { 
+                "Content-Type": "application/json"
+            },
+            data : data
+        };
+
+        axios(config)
+            .then(function (response) 
+            {
+                window.open("/PublicProfile?id="+userId, "_self");
+            })
+            .catch(function (error) 
+            {
+                console.log(error);
+            });
+    };
 
     return (
         <div>
@@ -62,9 +145,19 @@ export default function PublicProfile()
                         <div className={`${profileImageContainer}`}></div>
                     </div>
                     <div className="col-span-1 md:col-span-2"></div>
-                    <button className="button col-span-2 md:col-span-1">
-                        Connect
-                    </button>
+                    { ( userId === currentId ? (                        
+                        <div className="col-span-2 md:col-span-1"></div>
+                    ) : friends.includes(userId) ? (
+                        <button className="button is-blue col-span-2 md:col-span-1" disabled>
+                            {/* TODO: Unfriend function once DELETE requests are implemented */}
+                            Connected!
+                        </button>
+                    ) : (
+                        <button className="button col-span-2 md:col-span-1" type="submit" onClick={(e) => handleSubmit(e)}>
+                            Connect
+                        </button>
+                    ))}
+                    <br></br>
                 </div>
 
                 <div className="grid grid-cols-3 mb-12">
@@ -94,8 +187,11 @@ export default function PublicProfile()
                     <EducationExperience></EducationExperience>
                     <Location></Location>
                     <Interests></Interests>
+                    {userId && <Posts userId={userId}></Posts>}
                     <div className="py-3"></div>
                 </div>
+
+                <SignInModule></SignInModule>
             </div>
         </div>
     );
