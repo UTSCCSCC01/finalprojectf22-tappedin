@@ -156,7 +156,8 @@ export default function PublicProfile()
                         <button className="button col-span-2 md:col-span-1" type="submit" onClick={(e) => handleSubmit(e)}>
                             Connect
                         </button>
-                    ))};
+                    ))}
+                    <br></br>
                 </div>
 
                 <div className="grid grid-cols-3 mb-12">

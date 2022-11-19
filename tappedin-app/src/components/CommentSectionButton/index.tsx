@@ -10,13 +10,16 @@ export default function CommentSectionButton ({ id, numComments })
     };
     
     return (
-        <div className="cursor-pointer w-fit flex">
-            <FeatherIcon
-                icon="message-circle"
-                stroke="#639FAB"
-                onClick={(e) => handleSubmit(e)}
-            ></FeatherIcon>
-            <p className="ml-2 mr-2 text-base">{ numComments }</p>
+        <div className="w-fit flex">
+            <div className="cursor-pointer">
+                <FeatherIcon
+                    icon="message-circle"
+                    stroke="#639FAB"
+                    onClick={(e) => handleSubmit(e)}
+                ></FeatherIcon>
+            </div>
+            
+            <p className="ml-2 mr-4 text-base">{ numComments }</p>
         </div>
     );
 }

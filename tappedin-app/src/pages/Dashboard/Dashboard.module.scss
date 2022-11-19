@@ -11,7 +11,12 @@ $layout-breakpoint-small: 960px;
     background-color: white;
     border-radius: 20px;
 
-    padding: 3rem;
+    padding: 1rem;
+
+    @media (min-width: $layout-breakpoint-small) 
+    {
+        padding: 3rem;
+    }
 }
 
 .customNavbar
