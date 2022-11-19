@@ -1,6 +1,8 @@
 {
     "scripts": {
         "dev": "nodemon --exec next dev",
+        "build": "next build",
+        "start": "next start",
         "lint": "eslint ./src/**/*.tsx && eslint ./src/**/**/*.tsx",
         "lint:fix": "eslint --fix ./src/**/*.tsx && eslint --fix ./src/**/**/*.tsx"
     },
