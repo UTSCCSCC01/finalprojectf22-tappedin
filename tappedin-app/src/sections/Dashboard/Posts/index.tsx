@@ -15,12 +15,8 @@ export default function Posts()
     useEffect(() => 
     {
         fetchFriends();
-    }, []);
-
-    useEffect(() => 
-    {
         fetchPosts();
-    }, [ friends ]);
+    }, []);
 
     async function fetchFriends(): Promise<void>
     {        
