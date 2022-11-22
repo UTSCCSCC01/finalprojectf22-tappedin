@@ -22,7 +22,7 @@
       "ecmaFeatures": {
         "jsx": true
       },
-      "project": "tappedin-app/tsconfig.json"
+      "tsconfigRootDir": "__dirname"
     },
     "rules": {
       "indent": ["warn", 4],
