@@ -15,8 +15,12 @@ export default function Posts()
     useEffect(() => 
     {
         fetchFriends();
-        fetchPosts();
     }, []);
+
+    useEffect(() => 
+    {
+        fetchPosts();
+    }, [ friends ]);
 
     async function fetchFriends(): Promise<void>
     {        
@@ -49,6 +53,7 @@ export default function Posts()
                         }
                     }
                 }
+                friendList.push(currentId);
                 setFriends(friendList);
             }
         }
