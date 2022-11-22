@@ -42,6 +42,7 @@ export default function Posts()
             else 
             {
                 var friendList = [];
+                friendList.push(currentId);
                 for (var f of t.data)
                 {
                     for (const [ key, value ] of Object.entries(f))
@@ -53,7 +54,6 @@ export default function Posts()
                         }
                     }
                 }
-                friendList.push(currentId);
                 setFriends(friendList);
             }
         }
