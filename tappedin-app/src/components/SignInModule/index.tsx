@@ -6,11 +6,16 @@ import {
 import { useEffect, useState } from "react";
 import FeatherIcon from "feather-icons-react";
 import axios from "axios";
+import ProfileImage from "../ProfileImage/ProfileImage";
 
 export default function SignInModule() 
 {
     const [ signedInUserFullName, setSignedInFullUserName ] = useState("");
     const [ moduleIsOpen, setModuleIsOpen ] = useState(false);
+    const currentId =
+    typeof localStorage !== "undefined"
+        ? localStorage.getItem("userID")
+        : null;
 
     useEffect(() => 
     {
@@ -100,8 +105,14 @@ export default function SignInModule()
                             </div>
                             <div className="flex items-center mr-16">
                                 <div
-                                    className={`${profileImageContainerSmall} mr-4`}
-                                ></div>
+                                    className={"mr-4"}
+                                >
+                                    {
+                                        currentId &&
+                                        <ProfileImage size="sm" userId={currentId}></ProfileImage>
+                                    }
+                                    
+                                </div>
                                 <h3 className="font-bold">
                                     {signedInUserFullName}
                                 </h3>
