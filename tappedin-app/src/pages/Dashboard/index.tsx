@@ -20,6 +20,8 @@ import EducationExperience from "../../sections/Dashboard/EducationExperience";
 import CoverImageSection from "../../sections/Dashboard/CoverImage";
 import { FirebaseAuthenticationService } from "../../sdk/services/firebaseAuthenticationService";
 import Posts from "../../sections/Dashboard/Posts";
+import ProfileImage from "../../components/ProfileImage/ProfileImage";
+import ProfileImageSection from "../../sections/Dashboard/ProfileImage";
 
 const authService = new FirebaseAuthenticationService();
 export default function DashboardPage() 
@@ -31,6 +33,7 @@ export default function DashboardPage()
     const [ educationExperiencesData, setEducationExperiencesData ] = useState();
     const [ locationData, setLocationData ] = useState();
     const [ coverImageData, setCoverImageData ] = useState();
+    const [ profileImageData, setProfileImageData ] = useState();
 
     const [ contactInfoData, setContactInfoData ] = useState();
     const [ fullName, setFullName ] = useState("");
@@ -52,6 +55,7 @@ export default function DashboardPage()
         fetchContactInfo(userID);
         fetchFullName(userID);
         fetchCoverImage(userID);
+        fetchProfileImage(userID);
     }, []);
 
     async function fetchFullName(userID: string): Promise<void> 
@@ -212,6 +216,34 @@ export default function DashboardPage()
         }
     }
 
+    async function fetchProfileImage(userID: string): Promise<void> 
+    {
+        const config = {
+            method: "get",
+            url:
+                process.env.NEXT_PUBLIC_SERVER_ADDRESS +
+                "/userFieldServices?field=9&idtype=3&id=" +
+                userID,
+            headers: {},
+            validateStatus: (status) => 
+            {
+                return status < 500;
+            },
+        };
+
+        try 
+        {
+            const t = await axios(config);
+
+            if (t.status == 400 || t.status == 404) setProfileImageData(null);
+            else setProfileImageData(t.data[0]);
+        }
+        catch (e) 
+        {
+            console.error(e);
+        }
+    }
+
     async function fetchInterests(userID: string): Promise<void> 
     {
         const config = {
@@ -306,13 +338,19 @@ export default function DashboardPage()
             <div className="container mx-auto px-4 lg:px-0">
                 <div className="grid grid-cols-1 lg:gap-10 lg:grid-cols-4">
                     <div
-                        className={`${customNavbar} flex flex-col items-center justify-center mb-10`}
+                        className={`${customNavbar} flex flex-col items-center jusstify-center mb-10`}
                     >
                         <h1 className="font-bold text-center mb-6">
                             Tapped
                             <span style={{ color: "#639FAB" }}>In.</span>
                         </h1>
-                        <div className={`${profileImageContainer} mb-10`}></div>
+                        <div className={"mb-10"}>
+                            {
+                                userID &&
+                                <ProfileImage userId={userID}></ProfileImage>
+                            }
+                            
+                        </div>
                         <p>Welcome back</p>
                         <h2 className="text-center font-bold">{fullName}</h2>
 
@@ -374,6 +412,9 @@ export default function DashboardPage()
                                     <CoverImageSection
                                         coverImageData={coverImageData}
                                     ></CoverImageSection>
+                                    <ProfileImageSection
+                                        profileImageData={profileImageData}
+                                    ></ProfileImageSection>
                                     <AboutMe
                                         aboutMeData={aboutMeData}
                                     ></AboutMe>

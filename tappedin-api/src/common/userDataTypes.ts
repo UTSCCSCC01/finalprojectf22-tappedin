@@ -73,6 +73,11 @@ export interface CoverImage
     imageUrl?: string;
 }
 
+export interface ProfileImage
+{
+    imageUrl?: string;
+}
+
 export type UserFields = EducationInfo | WorkInfo | AboutMeInfo | LocationInfo | CoverImage | InterestInfo;
 
 export enum UserFieldTypes
@@ -85,5 +90,6 @@ export enum UserFieldTypes
     INTEREST_INFO    = 5,
     COVER_IMAGE_INFO = 6,
     USER_INFO        = 7,
-    CONTACT_INFO     = 8
+    CONTACT_INFO     = 8,
+    PROFILE_IMAGE_INFO     = 9
 }
