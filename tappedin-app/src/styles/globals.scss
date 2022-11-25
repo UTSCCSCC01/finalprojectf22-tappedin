@@ -11,6 +11,8 @@ $black: #252525;
 $red: #EF626C;
 $blue: #007AFF;
 
+$layout-breakpoint-small: 960px;
+
 // GENERAL
 html 
 {
@@ -87,8 +89,13 @@ textarea::placeholder
 
 .title 
 {
-    font-size: 64px;
+    font-size: 48px;
     font-weight: bold;
+
+    @media (min-width: $layout-breakpoint-small) 
+    {
+        font-size: 64px;
+    }
 }
 
 .pre-wrap
@@ -142,12 +149,8 @@ li
 
     &.link
     {
-        width: 15rem;
-        height: 4rem;
-
         color: #252525;
         background-color: transparent;
-        font-size: 24px;
     }
 }
 

@@ -4,23 +4,31 @@ export default function Hero()
 {
     return (
         <section>
-            <div className="flex flex-row">
-                <div className="px-10">
+            <div className="grid grid-cols-1 md:grid-cols-2">
+                <div className="px-4 md:px-10">
                     <div
-                        className={ `${styles["customNavbar"]} py-7 px-3` }
+                        className={ `${styles["customNavbar"]} py-6 px-4` }
                     >
-                        <div className="columns-3 flex justify-between items-center">
+                        <div className="flex items-center justify-between">
                             <div>
                                 <h1 className="font-bold">
                                     Tapped
+                                    
                                     <span style={{ color: "#639FAB" }}>
                                         In.
                                     </span>
                                 </h1>
                             </div>
-                            <div className="columns-2">
-                                <h3>About Us</h3>
-                                <h3>FAQ</h3>
+                            <div className="hidden md:block">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <a href="/#AboutUs">
+                                        <h3>About Us</h3>
+                                    </a>
+                                    <a href="/#Faq">
+                                        <h3>FAQ</h3>
+                                    </a>
+                                </div>
+                                
                             </div>
                             <div>
                                 <a href="/Login">
@@ -30,43 +38,44 @@ export default function Hero()
                         </div>
                     </div>
                     <div
-                        className="flex items-center"
-                        style={{ height: "40rem" }}
+                        className="flex items-center h-full pb-32 px-4"
                     >
                         <div>
-                            <h1 className="title pb-5">
+                            <h1 className="title pb-6">
                                 {" "}
-                                Lorem ipsum, <br /> consectetur adipiscing,{" "}
+                                Establishing <br /> Friendships & Connections,{" "}
                                 <br />
-                                sed do eiusmod.
+                                all in one <span style={{ color: "#639FAB" }}>Tap</span>
                             </h1>
-                            <ul>
+                            <div>
                                 <div className="flex items-center pb-3">
-                                    <div className={styles["circle"]}></div>
-                                    <li className="pl-3">
-                                        Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit.
-                                    </li>
+                                    <div className={`${styles["circle"]}`}></div>
+                                    <h3 className="pl-3 w-fit">
+                                        NFC-Powered Portfolio to share your information with a single tap
+                                    </h3>
                                 </div>
                                 <div className="flex items-center pb-10">
                                     <div className={styles["circle"]}></div>
-                                    <li className="pl-3">
-                                        sed do eiusmod tempor incididunt.
-                                    </li>
+                                    <h3 className="pl-3 w-fit">
+                                        A Social Media platform to share your best moments with your connections
+                                    </h3>
                                 </div>
-                            </ul>
-                            <a href="/Register">
-                                <button className="button large">
+                            </div>
+                            <div className="grid grid-cols-2">
+                                <a href="/Register">
+                                    <button className="button">
                                     Sign Up
-                                </button>
-                            </a>
-                            <a href="/Login">
-                                <button className="button link">Sign In</button>
-                            </a>
+                                    </button>
+                                </a>
+                                <a href="/Login">
+                                    <button className="button link">Sign In</button>
+                                </a>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
-                <div className={ `${styles["background"]}` }></div>
+                <div className={ `${styles["background"]} hidden md:block` }></div>
             </div>
         </section>
     );
