@@ -10,6 +10,8 @@ export default function ProfileImageSection({ profileImageData: profileImageData
 
     async function handleSubmit() 
     {
+        console.log("BRUHH");
+
         const data = JSON.stringify({
             imageUrl: imageUrl,
         });
@@ -30,7 +32,7 @@ export default function ProfileImageSection({ profileImageData: profileImageData
             method: `${profileImageData ? "put" : "post"}`,
             url: `${
                 profileImageData
-                    ? `http://localhost:3001/userFieldServices?field=6&objectid=${profileImageData._id}`
+                    ? `http://localhost:3001/userFieldServices?field=9&objectid=${profileImageData._id}`
                     : url
             }`,
             headers: {
@@ -84,7 +86,12 @@ export default function ProfileImageSection({ profileImageData: profileImageData
                             className="input"
                             placeholder="http://www.image.com"
                             value={imageUrl}
-                            onChange={(t) => setImageUrl(t.target.value)}
+                            onChange={(t) => 
+                            {
+                                setImageUrl(t.target.value);
+                                console.log(t.target.value);
+                            }
+                            }
                         />
                     </div>
                     <button className="button" onClick={() => handleSubmit()}>
