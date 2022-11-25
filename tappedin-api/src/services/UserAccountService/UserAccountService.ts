@@ -25,7 +25,8 @@ export class UserAccountService implements IUserAccountService
     private readonly _interestCollectionName: string = process.env.INTEREST_COLLECTION_NAME ?? "testInterestCol";
     private readonly _locationCollectionName: string = process.env.LOCATION_COLLECTION_NAME ?? "testLocationCol";
     private readonly _coverImageCollectionName: string = process.env.COVER_IMAGE_COLLECTION_NAME ?? "testCoverImageCol";
-    private readonly _contactInfoCollectionName: string = process.env.CONTACTINFO_COLLECTION_NAME ?? "testContactInfoCol";
+    private readonly _contactInfoCollectionName: string = process.env.CONTACT_INFO_COLLECTION_NAME ?? "testContactInfoCol";
+    private readonly _profileImageCollectionName: string = process.env.PROFILE_IMAGE_COLLECTION_NAME ?? "testProfileImageCol";
 
     /**
      * @constructor
@@ -178,6 +179,10 @@ export class UserAccountService implements IUserAccountService
         case UserFieldTypes.USER_INFO:
             result = [ await this.getUserInfo(userIdentifier) ];
             break;
+        case UserFieldTypes.PROFILE_IMAGE_INFO:
+            result = await this._dbAccessService.getCollection(this._profileImageCollectionName, 
+                { userID: { $eq: ObjectId.createFromHexString(objectID) } });
+            break;
         default:
             throw new Error("Invalid Field Passed.");
         }
@@ -229,6 +234,9 @@ export class UserAccountService implements IUserAccountService
         case UserFieldTypes.CONTACT_INFO:
             result = await this._dbAccessService.createDocument(this._contactInfoCollectionName, toInsert);
             break;
+        case UserFieldTypes.PROFILE_IMAGE_INFO:
+            result = await this._dbAccessService.createDocument(this._profileImageCollectionName, toInsert);
+            break;
         default:
             throw new Error("Invalid Field Passed.");
         }
@@ -278,6 +286,9 @@ export class UserAccountService implements IUserAccountService
             break;
         case UserFieldTypes.USER_INFO:
             result = await this.updateUserInfo({ userID: objectID }, data);
+            break;
+        case UserFieldTypes.PROFILE_IMAGE_INFO:
+            result = await this._dbAccessService.updateDocument(this._profileImageCollectionName, objectID, data);
             break;
         default:
             throw new Error("Invalid Field Passed.");
