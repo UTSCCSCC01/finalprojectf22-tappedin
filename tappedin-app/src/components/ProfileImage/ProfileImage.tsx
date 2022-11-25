@@ -22,7 +22,6 @@ export default function ProfileImage({ size, userId }: ProfileImageProps)
 
     async function fetchProfileImage(): Promise<void>
     {
-
         const config = {
             method: "get",
             url:
@@ -51,7 +50,7 @@ export default function ProfileImage({ size, userId }: ProfileImageProps)
 
     return(
         <div>
-            <div className={`${profileImageContainer} ${size == "lg" && lg} ${size == "sm" && sm}`} style={ profileImageUrl && { backgroundImage: `url(${profileImageUrl})` }  }></div>
+            <div className={`${profileImageContainer} ${size == "lg" && lg} ${size == "sm" && sm}`} style={{ backgroundImage: `url(${profileImageUrl})` }}></div>
         </div>
     );
 }
