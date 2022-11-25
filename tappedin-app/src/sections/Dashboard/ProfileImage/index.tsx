@@ -1,9 +1,9 @@
 import FeatherIcon from "feather-icons-react";
 import { useState } from "react";
-import { addCoverImageContainer } from "./CoverImage.module.scss";
+import { addProfileImageContainer } from "./ProfileImage.module.scss";
 import axios from "axios";
 
-export default function CoverImageSection({ coverImageData: coverImageData }) 
+export default function ProfileImageSection({ profileImageData: profileImageData }) 
 {
     const [ isEdit, setIsEdit ] = useState(false);
     const [ imageUrl, setImageUrl ] = useState("");
@@ -23,14 +23,14 @@ export default function CoverImageSection({ coverImageData: coverImageData })
 
         const url =
             process.env.NEXT_PUBLIC_SERVER_ADDRESS +
-            "/userFieldServices?field=6&idtype=3&id=" +
+            "/userFieldServices?field=9&idtype=3&id=" +
             userID;
 
         const config = {
-            method: `${coverImageData ? "put" : "post"}`,
+            method: `${profileImageData ? "put" : "post"}`,
             url: `${
-                coverImageData
-                    ? `http://localhost:3001/userFieldServices?field=6&objectid=${coverImageData._id}`
+                profileImageData
+                    ? `http://localhost:3001/userFieldServices?field=6&objectid=${profileImageData._id}`
                     : url
             }`,
             headers: {
@@ -56,12 +56,12 @@ export default function CoverImageSection({ coverImageData: coverImageData })
             <div className="mb-4">
                 <div className="flex items-center">
                     <FeatherIcon icon="image"></FeatherIcon>
-                    <h2 className="font-bold ml-2">Cover Image</h2>
+                    <h2 className="font-bold ml-2">Profile Image</h2>
                 </div>
             </div>
 
             <div
-                className={`${addCoverImageContainer} 
+                className={`${addProfileImageContainer} 
                                 flex items-center justify-center mb-3`}
             >
                 <div

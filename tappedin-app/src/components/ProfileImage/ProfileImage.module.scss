@@ -1,0 +1,25 @@
+.profileImageContainer
+{
+    height: 10rem;
+    width: 10rem;
+
+    border-radius: 50%;
+
+    background: rgba(187, 205, 229, 0.2);
+    background-position: center;
+    background-size: cover;
+
+    border: 2px solid #BBCDE5;
+
+    &.lg
+    {
+        height: 15rem;
+        width: 15rem;
+    }
+
+    &.sm
+    {
+        height: 3.75rem;
+        width: 3.75rem;
+    }
+}

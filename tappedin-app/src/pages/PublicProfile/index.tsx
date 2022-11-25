@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import SignInModule from "../../components/SignInModule";
 import Posts from "../../sections/PublicProfile/Posts";
+import ProfileImage from "../../components/ProfileImage/ProfileImage";
 
 export default function PublicProfile() 
 {
@@ -142,7 +143,12 @@ export default function PublicProfile()
             <div className="container mx-auto px-5 md:px-0">
                 <div className="grid grid-cols-5 mb-8">
                     <div className="col-span-2">
-                        <div className={`${profileImageContainer}`}></div>
+                        <div className={`${profileImageContainer}`}>
+                            {
+                                userId &&
+                                <ProfileImage size="lg" userId={userId}></ProfileImage>
+                            }
+                        </div>
                     </div>
                     <div className="col-span-1 md:col-span-2"></div>
                     { ( userId === currentId ? (                        
