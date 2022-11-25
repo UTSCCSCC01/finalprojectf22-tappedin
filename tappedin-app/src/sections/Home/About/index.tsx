@@ -3,12 +3,13 @@ import styles from "./About.module.scss";
 export default function About() 
 {
     return (
-        <section className="section">
-            <div className="container mx-auto py-24 xl">
+        <section className="section px-4">
+            <div className="px-4 md:px-10 py-32 xl">
                 <div className="grid md:grid-cols-2 gap-24 grid-cols-1">
-                    <div>
-                        <h1 className="font-bold pb-3">About Us</h1>
-                        <h2>
+                    <div className="flex items-center">
+                        <div>
+                            <h1 className="font-bold pb-6">About Us</h1>
+                            <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit, sed do eiusmod tempor incididunt ut labore et
                             dolore magna aliqua. Integer malesuada nunc vel
@@ -22,7 +23,9 @@ export default function About()
                             Tincidunt ornare massa eget egestas purus viverra
                             accumsan. Vivamus at augue eget arcu dictum varius.
                             Dictum fusce ut placerat orci nulla.
-                        </h2>
+                            </p>
+                        </div>
+                        
                     </div>
                     <div className={ `${styles["imageContainer"]}` }>
                         

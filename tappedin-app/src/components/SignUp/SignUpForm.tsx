@@ -7,6 +7,8 @@ import FormError from "./FormError";
 
 const authService = new FirebaseAuthenticationService();
 
+import FeatherIcon from "feather-icons-react";
+
 export default function SignUpForm() 
 {
     const [ firstName, setFirstName ] = useState("");
@@ -15,7 +17,7 @@ export default function SignUpForm()
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ confirmPassword, setConfirmPassword ] = useState("");
-    const [ type, setType ] = useState("");
+    const [ type, setType ] = useState("business");
     const [ errors, setErrors ] = useState([]);
 
     const verifyForm = (): Object[] => 
@@ -137,9 +139,12 @@ export default function SignUpForm()
     // style={{display: 'flex', flexDirection: 'column' ,alignItems: 'center', justifyContent: 'space-around'}}
     return (
         <div className="container mt-4 p-2">
-            <h1 className="text-[30px] font-bold">Sign Up</h1>
-            <div className="my-2">If you already have an account: Login</div>
-            <div className="mt-6">Personal Information:</div>
+            <h1 className="text-[30px] font-semibold mb-4">Sign Up</h1>
+            <p>Have an account with us? <a href="/Login"><span className="font-semibold">Sign In</span></a></p>
+            <div className="flex mt-8 mb-4">
+                <FeatherIcon icon="user" color="#639FAB"></FeatherIcon>
+                <p className="font-semibold ml-2">Personal Information</p>
+            </div>
             <div className="flex flex-col content-evenly">
                 <div className="grid grid-cols-2 justify-center my-2 w-full">
                     <div className="mr-3">
@@ -151,7 +156,7 @@ export default function SignUpForm()
                             name="firstName"
                             id="firstName"
                             placeholder="First Name"
-                            className="border-2 border-blue-200 rounded-lg p-1 w-full hover:ring"
+                            className="border-2 border-blue-200 rounded-lg p-4 w-full hover:ring"
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                         />
@@ -165,14 +170,14 @@ export default function SignUpForm()
                             name="lastName"
                             id="lastName"
                             placeholder="Last Name"
-                            className="border-2 border-blue-200 rounded-lg p-1 w-full hover:ring"
+                            className="border-2 border-blue-200 rounded-lg p-4 w-full hover:ring"
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                         />
                     </div>
                 </div>
                 <div>
-                    <label htmlFor="username" className="block mb-1">
+                    <label htmlFor="username" className="block mt-2">
                         Username
                     </label>
                     <input
@@ -181,12 +186,12 @@ export default function SignUpForm()
                         id="username"
                         placeholder="Username"
                         value={username}
-                        className="border-2 border-blue-200 rounded-lg p-1 w-full hover:ring"
+                        className="border-2 border-blue-200 rounded-lg p-4 w-full hover:ring"
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
                 <div>
-                    <label htmlFor="email" className="block my-1">
+                    <label htmlFor="email" className="block mt-2">
                         Email
                     </label>
                     <input
@@ -195,12 +200,12 @@ export default function SignUpForm()
                         id="email"
                         placeholder="Email"
                         value={email}
-                        className="border-2 border-blue-200 rounded-lg p-1 w-full hover:ring"
+                        className="border-2 border-blue-200 rounded-lg p-4 w-full hover:ring"
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div>
-                    <label htmlFor="password" className="block my-1">
+                    <label htmlFor="password" className="block mt-2">
                         Password
                     </label>
                     <input
@@ -209,12 +214,12 @@ export default function SignUpForm()
                         id="password"
                         placeholder="Password"
                         value={password}
-                        className="border-2 border-blue-200 rounded-lg p-1 w-full hover:ring"
+                        className="border-2 border-blue-200 rounded-lg p-4 w-full hover:ring"
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
                 <div>
-                    <label htmlFor="confirmPassword" className="block my-1">
+                    <label htmlFor="confirmPassword" className="block mt-2">
                         Confirm Password
                     </label>
                     <input
@@ -223,30 +228,9 @@ export default function SignUpForm()
                         id="confirmPassword"
                         placeholder="Confirm Password"
                         value={confirmPassword}
-                        className="border-2 border-blue-200 rounded-lg p-1 w-full hover:ring"
+                        className="border-2 border-blue-200 rounded-lg p-4 w-full hover:ring"
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
-                </div>
-                <div className="my-1">
-                    <label htmlFor="type">Choose Account Type:</label>
-                    <div className="flex flex-row justify-evenly my-2">
-                        <input
-                            type="radio"
-                            name="type"
-                            id="business"
-                            value="business"
-                            onChange={(e) => setType(e.target.value)}
-                        />{" "}
-                        Business
-                        <input
-                            type="radio"
-                            name="type"
-                            id="social"
-                            value="social"
-                            onChange={(e) => setType(e.target.value)}
-                        />
-                        Social
-                    </div>
                 </div>
                 <div>
                     <>
@@ -260,14 +244,8 @@ export default function SignUpForm()
                             ))}
                     </>
                 </div>
-                <div>
-                    <button
-                        type="submit"
-                        className="p-1 rounded-md hover:ring bg-red-500 text-white text-center w-1/3"
-                        onClick={(e) => handleSubmit(e)}
-                    >
-                        Create Account
-                    </button>
+                <div className="mt-8 grid grid-cols-2 md:grid-cols-3">
+                    <button className="button" onClick={(e) => handleSubmit(e)}>Create Account</button>
                 </div>
             </div>
         </div>
